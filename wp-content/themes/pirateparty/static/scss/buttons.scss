@@ -1,0 +1,320 @@
+
+@mixin border_radius($radius){
+  border-radius:$radius;
+  -webkit-border-radius:$radius;
+  -moz-border-radius:$radius;
+}
+
+
+$height: 28px;
+
+
+input.button {
+  height: $height + 2px;
+  font-family: 'Droid Sans', Arial;
+}
+
+.button {
+  $radius: 4px;
+  line-height: $height;
+  padding: 0 15px 0 15px;
+  text-align: center;
+  display: inline-block;
+  font-size: 1.1em;
+  text-decoration: none;
+  @include border_radius($radius);
+  margin: 0 4px 8px 0;
+  outline: none; /*Remove Chrome and Safari glows on focus*/
+  text-shadow: 0 0 0 transparent, 0 1px 0 rgba(0, 0, 0, 0.45);
+}
+
+@mixin button_base($color, $border-color, $background-color) {
+  color:$color !important;
+  border: solid 1px;
+  border-color: $border-color;
+  background-color: $background-color;
+  text-decoration: none;
+}
+
+@mixin button_gradient($p1, $p2) {
+  background-image: linear-gradient(top, $p1, $p2);
+  background-image: -moz-linear-gradient(top, $p1, $p2);
+  background-image: -ms-linear-gradient(top, $p1, $p2);
+  background-image: -o-linear-gradient(top, $p1, $p2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($p1), to($p2));
+  background-image: -webkit-linear-gradient(top, $p1, $p2);
+  text-decoration: none;
+}
+
+@mixin button_gradient_3($p1, $p2, $p3, $percent, $frac) {
+  background-image: linear-gradient(top, $p1, $p2 $percent, $p3);
+  background-image: -moz-linear-gradient(top, $p1, $p2 $percent, $p3);
+  background-image: -ms-linear-gradient(top, $p1, $p2 $percent, $p3);
+  background-image: -o-linear-gradient(top, $p1, $p2 $percent, $p3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($p1), color-stop($frac, $p2), to($p3));
+  background-image: -webkit-linear-gradient(top, $p1, $p2 $percent, $p3);
+}
+
+@mixin box_shadow_br($size){
+  box-shadow: 0 $size 0 rgba(0, 0, 0, 0.1), 0 $size 0 rgba(255, 255, 255, 0.5) inset; 
+  -moz-box-shadow: 0 $size 0 rgba(0, 0, 0, 0.1), 0 $size 0 rgba(255, 255, 255, 0.5) inset; 
+  -webkit-box-shadow: 0 $size 0 rgba(0, 0, 0, 0.1), 0 $size 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+@mixin box_shadow_button($size){
+  box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 0 rgba(255, 255, 255, 0.5);
+  -moz-box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 0 rgba(255, 255, 255, 0.5); 
+  -webkit-box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.button-flat-grey, .button-flat-grey:visited {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #BBBBBB, #aaa);
+  border-radius: 3px 3px 3px 3px; 
+  box-shadow: 0 0 1px 1px #F6F6F6 inset;
+}
+
+.button-flat-grey:hover, .button-flat-grey:active, .button-flat-grey:focus {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #BBBBBB, #bbb);
+  border-radius: 3px 3px 3px 3px; 
+  box-shadow: 0 0 1px 1px #F6F6F6 inset;
+}
+
+
+
+.button-grey, .button-grey:visited {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #333, #ddd);
+  
+  /* $p1, $p2, $p3, $percent, $frac */
+  @include button_gradient(#aaa, #777);
+  
+  box-shadow: 0 1px 2px rgba(5, 5, 5, 0.2);
+}
+
+.button-grey:hover {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #333, #ddd);
+  
+  /* $p1, $p2, $p3, $percent, $frac */
+  @include button_gradient(#aaa, #555);
+}
+
+
+.button-grey:active, .button-grey:focus {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #333, #ddd);
+  
+  /* $p1, $p2, $p3, $percent, $frac */
+  @include button_gradient(#aaa, #555);
+  
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+
+
+.button-green, .button-green:visited {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #0D7C1E, #2FBC44);
+  
+  /* $p1, $p2 */
+  @include button_gradient(#50E566, #2FBC44);
+  
+  box-shadow: 0 1px 2px rgba(5, 5, 5, 0.2);
+}
+
+.button-green:hover {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #0D7C1E, #2FBC44);
+
+  /* $p1, $p2 */
+  @include button_gradient(#75e586, #2FBC44);
+}
+
+.button-green:active, .button-green:focus {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #0D7C1E, #2FBC44);
+
+  /* $p1, $p2 */
+  @include button_gradient(#75e586, #2FBC44);
+  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+
+
+.button-orange, .button-orange:visited {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #D36C0C, #f6891f);
+  
+  /* $p1, $p2 */
+  @include button_gradient(#f6b06c, #f6891f);
+  
+  box-shadow: 0 1px 2px rgba(5, 5, 5, 0.2);
+}
+
+.button-orange:hover {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #D36C0C, #f6891f);
+
+  /* $p1, $p2 */
+  @include button_gradient(#f6bf8a, #f6891f);
+}
+
+.button-orange:active, .button-orange:focus {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #D36C0C, #f6891f);
+
+  /* $p1, $p2 */
+  @include button_gradient(#f6bf8a, #f6891f);
+  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+
+
+
+.button-blue, .button-blue:visited {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #3b6aaa, #2b62ae);
+  
+  /* $p1, $p2 */
+  @include button_gradient(#679eea, #2b62ae);
+  
+  box-shadow: 0 1px 2px rgba(5, 5, 5, 0.2);
+}
+
+.button-blue:hover {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #3b6aaa, #2b62ae);
+
+  /* $p1, $p2 */
+  @include button_gradient(#679eea, #3a72c0);
+}
+
+button-blue:active, .button-blue:focus {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #3b6aaa, #2b62ae);
+
+  /* $p1, $p2 */
+  @include button_gradient(#679eea, #3a72c0);
+  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+
+
+.button-red, .button-red:visited {
+  /* $color, $border-color, $background-color */
+  @include button_base(#fff, #A83A3A, #AD2B2B);
+  
+  /* $p1, $p2 */
+  @include button_gradient(#E86868, #AD2B2B);
+  
+  box-shadow: 0 1px 2px rgba(5, 5, 5, 0.2);
+}
+
+.button-red:hover {
+  /* $p1, $p2 */
+  @include button_gradient(#E86868, #BF3B3B);
+}
+
+button-red:active, .button-red:focus {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+.sidebar-action-item {
+	line-height: 40px;
+	margin: 0;
+	font-size: 1.1em;
+	text-shadow: rgba(0, 0, 0, 0.7) 1px 1px 1px !important;
+	font-weight: bold;
+}
+
+
+@mixin icon_base_32($filename){
+	display: inline-block;
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: inherit;
+	width: 32px;
+	height: 32px;
+	background-image: url(../img/icons/iconsweets2/32/#{$filename});
+	background-position: 0px -10px;
+	margin: 1px 3px 0px 3px;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-repeat: no-repeat;
+}
+
+.is2-group {
+	@include icon_base_32("group.png");
+}
+
+.is2-donate {
+	@include icon_base_32("donate.png");
+}
+
+.is2-tv {
+	@include icon_base_32("tv.png");
+	background-position: 0px 0px;
+	margin-top: -6px;
+}
+
+.lt-ie10 .is2-donate, .lt-ie10 .is2-group, .lt-ie10 .is2-tv
+{
+	margin: 1px 5px 0px 1px;
+}
+
+@media (min-width: 768px) and (max-width: 1146px) {
+	#column #join-donate a {
+	width: 91%;
+	
+	display: block;
+	}
+	
+	#column #join-donate a.pig {
+		margin-top: 10px;
+	}
+}
+
+@media (min-width: 1144px) {
+	#column #join-donate a.pig {
+		margin-left: 10px;
+	}
+}
+
+.btn-primary {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #2b62ae;
+  background-image: -moz-linear-gradient(top, #679eea, #3a72c0);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#679eea), to(#3a72c0));
+  background-image: -webkit-linear-gradient(top, #679eea, #3a72c0);
+  background-image: -o-linear-gradient(top, #679eea, #3a72c0);
+  background-image: linear-gradient(to bottom, #679eea, #3a72c0);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff679eea', endColorstr='#ff3a72c0', GradientType=0);
+  border-color: #3a72c0 #3a72c0 #2b62ae;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #3a72c0;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  color: #ffffff;
+  background-color: #3a72c0;
+  *background-color: #343eac;
+}
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #2e3799 \9;
+}
