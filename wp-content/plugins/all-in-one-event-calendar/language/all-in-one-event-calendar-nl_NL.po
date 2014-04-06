@@ -610,7 +610,7 @@ msgstr "Labels:"
 
 #: app/view/event-map.php:2
 msgid "Click to view map"
-msgstr "Klik om kaart weer te geven"
+msgstr "Klik om kaart weer te geven<br /><br /><font size=\"1\">(Dit opent Google Maps)</font>"
 
 #: app/view/event-map.php:9
 msgid "View Full-Size Map »"
