@@ -25,7 +25,7 @@ kun je mailen naar <ict@piratenpartij.nl>
 
 **Via Git(Hub)**
 Ben je nog niet bekend met Git, en heb je 15 minuten? Kijk dan eens op
-<https://try.github.io> voor een snelcursus van de basis. Je kan ook
+<http://try.github.io> voor een snelcursus van de basis. Je kan ook
 altijd het ICT-team om hulp vragen, zie onder voor contactinformatie.
 
 (Noot: onderstaande gaat uit van command line Git - er zijn als je de
