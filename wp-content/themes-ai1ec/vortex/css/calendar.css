@@ -117,7 +117,7 @@
   display: none;
   font-size: 11pt !important;
   font-weight: normal;
-  color: #876FA1 !important;
+  color: #507295 !important;
   cursor: pointer;
   text-decoration: none !important;
 }
@@ -327,7 +327,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
 .ai1ec-week-view a.ai1ec-event-container,
 .ai1ec-oneday-view a.ai1ec-event-container {
   border: none !important;
-  color: #876FA1 !important;
+  color: #507295 !important;
   display: block;
   font-size: 9pt;
   text-decoration: none !important;
@@ -350,7 +350,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
 .ai1ec-month-view .ai1ec-multiday .ai1ec-event,
 .ai1ec-week-view .ai1ec-multiday .ai1ec-event,
 .ai1ec-oneday-view .ai1ec-multiday .ai1ec-event {
-  background-color: #876FA1;
+  background-color: #507295;
   color: #ffffff !important;
 }
 .ai1ec-month-view .ai1ec-category-colors,
@@ -528,9 +528,9 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
   position: absolute;
 }
 .ai1ec-month-view .ai1ec-multiday-arrow1 {
-  background: #876FA1;
+  background: #507295;
   border: 7px solid #ffffff;
-  border-left-color: #876FA1;
+  border-left-color: #507295;
   border-right-width: 0;
   height: 1px;
   position: absolute;
@@ -539,7 +539,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
   width: 0;
 }
 .ai1ec-month-view .ai1ec-multiday-arrow2 {
-  border: 7px solid #876FA1;
+  border: 7px solid #507295;
   border-left-color: #ffffff;
   border-right-width: 2px;
   height: 1px;
@@ -549,7 +549,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
   width: 0;
 }
 .ai1ec-month-view .ai1ec-multiday-bar {
-  background: #876FA1;
+  background: #507295;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -712,7 +712,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
   background-repeat: no-repeat;
 }
 .ai1ec-agenda-view h3.ai1ec-date-title {
-  border: 2px solid #876FA1;
+  border: 2px solid #7695cd;
   -webkit-border-radius: 0 0 5px 5px;
   -moz-border-radius: 0 0 5px 5px;
   border-radius: 0 0 5px 5px;
@@ -740,7 +740,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
 }
 .ai1ec-agenda-view .ai1ec-month {
   color: #ffffff;
-  background: #876FA1;
+  background: #7695cd;
   font-size: 0.8em !important;
   letter-spacing: 0.2em;
   padding: 0.1em;
@@ -757,7 +757,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
 }
 .ai1ec-agenda-view .ai1ec-year {
   color: #ffffff;
-  background: #876FA1;
+  background: #7695cd;
   font-size: 0.7em !important;
   letter-spacing: 0.15em;
   padding: 0.05em 0.1em 0;
@@ -786,7 +786,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
 .ai1ec-agenda-view .ai1ec-event .ai1ec-event-click {
   cursor: pointer;
   line-height: 1.4em;
-  color: #876FA1;
+  color: #507295;
   text-shadow: 0 1px 0 #ffffff;
 }
 .ai1ec-agenda-view .ai1ec-event .ai1ec-event-click:hover > .ai1ec-event-expand {
@@ -816,7 +816,7 @@ table.ai1ec-oneday-view-original.tablescroll_body tr:first-child td {
 }
 .ai1ec-agenda-view .ai1ec-event.ai1ec-allday .ai1ec-event-click {
   color: #ffffff;
-  background: #876FA1;
+  background: #507295;
   padding: 0.1em 0.4em;
   -webkit-border-radius: 0.3em;
   -moz-border-radius: 0.3em;
