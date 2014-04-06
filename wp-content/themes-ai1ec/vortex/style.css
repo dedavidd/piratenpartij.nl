@@ -308,11 +308,11 @@
   background-color: #ffffff;
 }
 .timely a {
-  color: #876FA1;
+  color: #572B85;
   text-decoration: none;
 }
 .timely a:hover {
-  color: #572B85;
+  color: #354c63;
   text-decoration: underline;
 }
 .timely p {
@@ -1273,7 +1273,7 @@
   width: 0.9em;
 }
 .ai1ec-tag {
-  color: #876FA1 !important;
+  color: #572B85 !important;
   line-height: 1.3em;
   cursor: pointer;
   white-space: nowrap;
@@ -1285,7 +1285,7 @@
   display: inline-block;
 }
 .ai1ec-tag:hover {
-  color: #572B85 !important;
+  color: #354c63 !important;
   text-decoration: none;
 }
 .ai1ec-tag.ai1ec-selected {
@@ -1412,7 +1412,7 @@
   position: relative;
 }
 .ai1ec-agenda-widget-view .ai1ec-event a {
-  color: #876FA1;
+  color: #572B85;
   display: block;
   background: #ffffff;
   border: 1px solid #d4d4d4;
@@ -1424,7 +1424,7 @@
 }
 .ai1ec-agenda-widget-view .ai1ec-event a:hover {
   border-color: #aeaeae;
-  color: #572B85;
+  color: #354c63;
   text-decoration: none !important;
 }
 .ai1ec-agenda-widget-view .ai1ec-event .ai1ec-event-time {
@@ -1434,12 +1434,12 @@
   font-weight: normal;
 }
 .ai1ec-agenda-widget-view .ai1ec-event.ai1ec-allday a {
-  background: #876FA1;
+  background: #572B85;
   border: 1px solid transparent;
   color: #ffffff;
 }
 .ai1ec-agenda-widget-view .ai1ec-event.ai1ec-allday a:hover {
-  background: #572B85;
+  background: #354c63;
 }
 .ai1ec-agenda-widget-view .ai1ec-event.ai1ec-allday a .ai1ec-event-time {
   color: #ffffff;
