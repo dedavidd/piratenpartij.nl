@@ -3,8 +3,8 @@ piratenpartij.nl
 
 Codebase voor piratenpartij.nl
 
-Upstreamsysteem: WordPress
-Bron: upstream
+* Upstreamsysteem: WordPress
+* Bron: upstream
 
 Licentie
 --------
@@ -19,15 +19,11 @@ Je kunt op twee manieren bijdragen: door een patchfile te mailen, of
 middels Git. Git heeft in verband met de snellere workflow onze
 voorkeur.
 
-Via patches
-___________
-
+**Via patches**
 Maak je wijzigingen, en maak een patchfile met `diff` en `patch`. Deze
 kun je mailen naar <ict@piratenpartij.nl>
 
-Via Git(Hub)
-____________
-
+**Via Git(Hub)**
 Ben je nog niet bekend met Git, en heb je 15 minuten? Kijk dan eens op
 <https://try.github.io> voor een snelcursus van de basis. Je kan ook
 altijd het ICT-team om hulp vragen, zie onder voor contactinformatie.
@@ -64,15 +60,11 @@ continuous integration-systeem. Deze test de wijzigingen in deze
 branches (en voor pull requests), en voert automatisch de wijzigingen
 door op de server als er geen grote problemen gevonden zijn.
 
-master
-______
-
+**master**
 De hoofd-ontwikkelbranch. Commits moeten uiteindelijk hier uitkomen.
 De testomgeving is te vinden op <https://testing.piratenpartij.nl>.
 
-deploy
-______
-
+**deploy**
 De live-omgeving. Hier mag niet rechtstreeks een commit naar gestuurd
 worden; wel kun je mergen vanuit master (eventueel kun je specifieke
 commits mergen) nadat je op de testomgeving hebt gekeken of er geen
@@ -91,8 +83,8 @@ De live omgeving is te vinden op <https://piratenpartij.nl>.
 Contact
 -------
 
-Mail: <ict@piratenpartij.nl>
-IRC:  <ircs://nl.pirateirc.net:994/#ppnl-irc>
+* Mail: <ict@piratenpartij.nl>
+* IRC:  <ircs://nl.pirateirc.net:994/#ppnl-irc>
 
 Ook kun je kijken op het ICT-subforum op
 <https://forum.piratenpartij.nl>.
