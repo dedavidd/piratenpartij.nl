@@ -3,7 +3,7 @@
  * Defines all profile and upload settings.
  *
  * @package WP User Avatar
- * @version 1.8.8
+ * @version 1.9.1
  */
 
 class WP_User_Avatar {
@@ -13,7 +13,7 @@ class WP_User_Avatar {
     if($this->wpua_is_author_or_above() || ((bool) $wpua_allow_upload == 1 && is_user_logged_in())) {
       // Profile functions and scripts
       add_action('show_user_profile', array('wp_user_avatar', 'wpua_action_show_user_profile'));
-      add_action('edit_user_profile', array($this, 'wpua_action_show_user_profile'));
+      add_action('edit_user_profile', array('wp_user_avatar', 'wpua_action_show_user_profile'));
       add_action('personal_options_update', array($this, 'wpua_action_process_option_update'));
       add_action('edit_user_profile_update', array($this, 'wpua_action_process_option_update'));
       // Admin scripts
@@ -22,9 +22,9 @@ class WP_User_Avatar {
         add_action('admin_enqueue_scripts', array($this, 'wpua_media_upload_scripts'));
       }
       // Front pages
-      if(!is_admin()){
-        add_action('show_user_profile', array($this, 'wpua_media_upload_scripts'));
-        add_action('edit_user_profile', array($this, 'wpua_media_upload_scripts'));
+      if(!is_admin()) {
+        add_action('show_user_profile', array('wp_user_avatar', 'wpua_media_upload_scripts'));
+        add_action('edit_user_profile', array('wp_user_avatar', 'wpua_media_upload_scripts'));
       }
       if(!$this->wpua_is_author_or_above()) {
         // Upload errors
@@ -39,13 +39,16 @@ class WP_User_Avatar {
   // Avatars have no parent posts
   public function wpua_media_view_settings($settings) {
     global $post, $wpua_is_profile;
-    $settings['post']['id'] = !is_admin() && $wpua_is_profile == 1 ? 0 : $post->ID;
+    // Get post ID so not to interfere with media uploads
+    $post_id = is_object($post) ? $post->ID : 0;
+    // Don't use post ID on front pages if there's a WPUA uploader
+    $settings['post']['id'] = (!is_admin() && $wpua_is_profile == 1) ? 0 : $post_id;
     return $settings;
   }
 
   // Media Uploader
   public static function wpua_media_upload_scripts($user="") {
-    global $current_user, $mustache_admin, $pagenow, $post, $show_avatars, $wp_user_avatar, $wpua_admin, $wpua_is_profile, $wpua_upload_size_limit;
+    global $current_user, $mustache_admin, $pagenow, $post, $show_avatars, $wp_user_avatar, $wpua_admin, $wpua_functions, $wpua_is_profile, $wpua_upload_size_limit;
     // This is a profile page
     $wpua_is_profile = true;
     $user = ($pagenow == 'user-edit.php' && isset($_GET['user_id'])) ? get_user_by('id', $_GET['user_id']) : $current_user;
@@ -64,7 +67,7 @@ class WP_User_Avatar {
       wp_enqueue_script('jquery-ui-slider');
       wp_enqueue_style('wp-user-avatar-jqueryui', WPUA_URL.'css/jquery.ui.slider.css', "", null);
       // Remove/edit settings
-      $wpua_custom_scripts = array('section' => __('Default Avatar'), 'edit_image' => __('Edit Image'), 'select_image' => __('Select Image'), 'avatar_thumb' => $mustache_admin);
+      $wpua_custom_scripts = array('section' => __('Default Avatar'), 'edit_image' => __('Choose Image'), 'select_image' => __('Select Image'), 'avatar_thumb' => $mustache_admin);
       wp_localize_script('wp-user-avatar', 'wpua_custom', $wpua_custom_scripts);
       // Settings control
       wp_enqueue_script('wp-user-avatar-admin', WPUA_URL.'js/wp-user-avatar-admin.js', array('wp-user-avatar'), WPUA_VERSION, true);
@@ -72,21 +75,23 @@ class WP_User_Avatar {
       wp_localize_script('wp-user-avatar-admin', 'wpua_admin', $wpua_admin_scripts);
     } else {
       // User remove/edit settings
-      $avatar_medium_src = (bool) $show_avatars == 1 ? wpua_get_avatar_original($user->user_email, 96) : includes_url().'images/blank.gif';
-      $wpua_custom_scripts = array('section' => $user->display_name, 'edit_image' => __('Edit Image'), 'select_image' => __('Select Image'), 'avatar_thumb' => $avatar_medium_src);
+      $avatar_medium_src = (bool) $show_avatars == 1 ? $wpua_functions->wpua_get_avatar_original($user->user_email, 96) : includes_url().'images/blank.gif';
+      $wpua_custom_scripts = array('section' => $user->display_name, 'edit_image' => __('Choose Image'), 'select_image' => __('Select Image'), 'avatar_thumb' => $avatar_medium_src);
       wp_localize_script('wp-user-avatar', 'wpua_custom', $wpua_custom_scripts);
     }
   }
 
   // Add to edit user profile
   public static function wpua_action_show_user_profile($user) {
-    global $blog_id, $current_user, $post, $show_avatars, $wpdb, $wp_user_avatar, $wpua_allow_upload, $wpua_edit_avatar, $wpua_upload_size_limit_with_units;
+    global $blog_id, $current_user, $show_avatars, $wpdb, $wp_user_avatar, $wpua_allow_upload, $wpua_edit_avatar, $wpua_functions, $wpua_upload_size_limit_with_units;
     // Get WPUA attachment ID
     $wpua = get_user_meta($user->ID, $wpdb->get_blog_prefix($blog_id).'user_avatar', true);
     // Show remove button if WPUA is set
     $hide_remove = !has_wp_user_avatar($user->ID) ? 'wpua-hide' : "";
+    // Hide image tags if show avatars is off
+    $hide_images = !has_wp_user_avatar($user->ID) && (bool) $show_avatars == 0 ? 'wpua-no-avatars' : "";
     // If avatars are enabled, get original avatar image or show blank
-    $avatar_medium_src = (bool) $show_avatars == 1 ? wpua_get_avatar_original($user->user_email, 96) : includes_url().'images/blank.gif';
+    $avatar_medium_src = (bool) $show_avatars == 1 ? $wpua_functions->wpua_get_avatar_original($user->user_email, 96) : includes_url().'images/blank.gif';
     // Check if user has wp_user_avatar, if not show image from above
     $avatar_medium = has_wp_user_avatar($user->ID) ? get_wp_user_avatar_src($user->ID, 'medium') : $avatar_medium_src;
     // Check if user has wp_user_avatar, if not show image from above
@@ -109,16 +114,18 @@ class WP_User_Avatar {
     <?php elseif((bool) $wpua_edit_avatar == 1 && !$wp_user_avatar->wpua_is_author_or_above() && has_wp_user_avatar($current_user->ID) && $wp_user_avatar->wpua_author($wpua, $current_user->ID)) : // Edit button ?>
       <p id="wpua-edit-button"><button type="button" class="button" id="wpua-edit" name="wpua-edit" onclick="window.open('<?php echo $edit_attachment_link; ?>', '_self');"><?php _e('Edit Image'); ?></button></p>
     <?php endif; ?>
-    <p id="wpua-preview">
-      <img src="<?php echo $avatar_medium; ?>" alt="" />
-      <?php _e('Original Size'); ?>
-    </p>
-    <p id="wpua-thumbnail">
-      <img src="<?php echo $avatar_thumbnail; ?>" alt="" />
-      <?php _e('Thumbnail'); ?>
-    </p>
-    <p id="wpua-remove-button" class="<?php echo $hide_remove; ?>"><button type="button" class="button" id="wpua-remove" name="wpua-remove"><?php _e('Remove Image'); ?></button></p>
-    <p id="wpua-undo-button"><button type="button" class="button" id="wpua-undo" name="wpua-undo"><?php _e('Undo'); ?></button></p>
+    <div id="wpua-images" class="<?php echo $hide_images; ?>">
+      <p id="wpua-preview">
+        <img src="<?php echo $avatar_medium; ?>" alt="" />
+        <span class="description"><?php _e('Original Size'); ?></span>
+      </p>
+      <p id="wpua-thumbnail">
+        <img src="<?php echo $avatar_thumbnail; ?>" alt="" />
+        <span class="description"><?php _e('Thumbnail'); ?></span>
+      </p>
+      <p id="wpua-remove-button" class="<?php echo $hide_remove; ?>"><button type="button" class="button" id="wpua-remove" name="wpua-remove"><?php _e('Remove Image'); ?></button></p>
+      <p id="wpua-undo-button"><button type="button" class="button" id="wpua-undo" name="wpua-undo"><?php _e('Undo'); ?></button></p>
+    </div>
     <?php do_action('wpua_after_avatar'); ?>
   <?php
   }
@@ -168,7 +175,7 @@ class WP_User_Avatar {
       // Remove old attachment postmeta
       delete_metadata('post', null, '_wp_attachment_wp_user_avatar', $user_id, true);
       // Create new attachment postmeta
-      update_post_meta($wpua_id, '_wp_attachment_wp_user_avatar', $user_id);
+      add_post_meta($wpua_id, '_wp_attachment_wp_user_avatar', $user_id);
       // Update usermeta
       update_user_meta($user_id, $wpdb->get_blog_prefix($blog_id).'user_avatar', $wpua_id);
     } else {
@@ -268,7 +275,7 @@ class WP_User_Avatar {
   }
 
   // Check if current user has at least Author privileges
-  private function wpua_is_author_or_above() {
+  public function wpua_is_author_or_above() {
     $is_author_or_above = (current_user_can('edit_published_posts') && current_user_can('upload_files') && current_user_can('publish_posts') && current_user_can('delete_published_posts')) ? true : false;
     return $is_author_or_above;
   }
