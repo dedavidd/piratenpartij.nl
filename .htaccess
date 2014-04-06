@@ -10,3 +10,7 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
+
+# Deze moeten nog ff goedgezet worden wanneer PWM weer werkt
+Redirect permanent /registreren https://pwm.piratenpartij.nl
+Redirect permanent /wachtwoord-vergeten https://pwm.piratenpartij.nl
