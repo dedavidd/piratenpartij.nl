@@ -60,15 +60,14 @@ continuous integration-systeem. Deze test de wijzigingen in deze
 branches (en voor pull requests), en voert automatisch de wijzigingen
 door op de server als er geen grote problemen gevonden zijn.
 
-**master**
-De hoofd-ontwikkelbranch. Commits moeten uiteindelijk hier uitkomen.
-De testomgeving is te vinden op <https://testing.piratenpartij.nl>.
+**master**: De hoofd-ontwikkelbranch. Commits moeten uiteindelijk hier
+uitkomen. De testomgeving is te vinden op
+<https://testing.piratenpartij.nl>.
 
-**deploy**
-De live-omgeving. Hier mag niet rechtstreeks een commit naar gestuurd
-worden; wel kun je mergen vanuit master (eventueel kun je specifieke
-commits mergen) nadat je op de testomgeving hebt gekeken of er geen
-problemen zijn.
+**deploy**: De live-omgeving. Hier mag niet rechtstreeks een commit
+naar gestuurd worden; wel kun je mergen vanuit master (eventueel kun
+je specifieke commits mergen) nadat je op de testomgeving hebt gekeken
+of er geen problemen zijn.
 
 De enige uitzondering hierop, is dat de server zelf af en toe `deploy`
 kan committen. Dit gebeurt wanneer de software wijzigingen maakt aan
