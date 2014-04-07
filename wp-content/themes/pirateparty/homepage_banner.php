@@ -62,10 +62,10 @@ THE TOOL KIT
 		</div>
 		
 		<div class="span4 t1 last">
-			<p style="margin-top: 25px;"><strong>Ontvang onze persberichten</strong></p>
+			<p style="margin-top: 25px;"><strong>Ontvang onze nieuwsbrief</strong></p>
 			<p>direct in je inbox!</p>
 			<p class="read-more">
-				<a href="https://lists.piratenpartij.nl/listinfo/persberichten/" class="btn btn-primary">abonneren</a>
+				<a href="nieuwsbrief/" class="btn btn-primary">abonneren</a>
 			</p>
 		</div>
 		
