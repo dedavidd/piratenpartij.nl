@@ -2,112 +2,13 @@
 # This file is distributed under the same license as the Twenty Thirteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-08-13 12:28:15+0000\n"
+"PO-Revision-Date: 2014-03-19 04:20:07+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Twenty Thirteen\n"
-
-#: 404.php:16
-msgid "Not Found"
-msgstr ""
-
-msgid "The 2013 theme for WordPress takes us back to the blog, featuring a full range of post formats, each displayed beautifully in their own unique way. Design details abound, starting with a vibrant color scheme and matching header images, beautiful typography and icons, and a flexible layout that looks great on any device, big or small."
-msgstr "Het 2013 thema voor WordPress neemt ons terug naar de blog met alle post formats actief en elke post format wordt op een eigen unieke en prachtige manier getoond. Design details zijn er ten overvloed beginnend met een hoog-contrastkleuren schema en bijpassende header afbeeldingen, prachtige typografie en iconen verpakt in een flexibele layout die op elk device fantastisch toont; groot of klein."
-
-#: functions.php:237
-msgid "Appears in the footer section of the site."
-msgstr "Verschijnt in het footer gedeelte van de site."
-
-msgid "http://wordpress.org/themes/twentythirteen"
-msgstr "http://wordpress.org/themes/twentythirteen"
-
-#: image.php:38
-msgid "Link to full-size image"
-msgstr "Link naar volledig formaat afbeelding"
-
-#: functions.php:235
-msgid "Main Widget Area"
-msgstr "Hoofd widgetgebied"
-
-#: functions.php:245
-msgid "Secondary Widget Area"
-msgstr "Secondaire widgetgebied"
-
-#: functions.php:247
-msgid "Appears on posts and pages in the sidebar."
-msgstr "Verschijnt bij berichten en pagina's in de zijbalk."
-
-#: image.php:39
-msgid "Full resolution"
-msgstr "Volledige resolutie"
-
-#: inc/back-compat.php:41 inc/back-compat.php:53 inc/back-compat.php:68
-msgid "Twenty Thirteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
-msgstr "Twenty Thirteen vereist minimaal WordPress 3.6. De huidige installatie is versie %s. Werk de installatie bij en probeer opnieuw."
-
-#: 404.php:21
-msgid "This is somewhat embarrassing, isn&rsquo;t it?"
-msgstr "Helaas, hier ging iets mis."
-
-#: 404.php:22
-msgid "It looks like nothing was found at this location. Maybe try a search?"
-msgstr "Het lijkt erop dat hier niets kon worden gevonden. Probeer het eens met de zoekfunctie."
-
-#: archive.php:29
-msgid "Daily Archives: %s"
-msgstr "Dagelijks archief: %s"
-
-#: archive.php:31
-msgid "Monthly Archives: %s"
-msgstr "Maandelijks archief: %s"
-
-#: archive.php:31
-msgctxt "monthly archives date format"
-msgid "F Y"
-msgstr "F Y"
-
-#: archive.php:33
-msgid "Yearly Archives: %s"
-msgstr "Jaarlijks archief: %s"
-
-#: archive.php:33
-msgctxt "yearly archives date format"
-msgid "Y"
-msgstr "Y"
-
-#: archive.php:35
-msgid "Archives"
-msgstr "Archief"
-
-#: author-bio.php:26
-msgid "About %s"
-msgstr "Over %s"
-
-#: author-bio.php:30
-msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
-msgstr "Bekijk alle berichten van %s <span class=\"meta-nav\">&rarr;</span>"
-
-#: author.php:31
-msgid "All posts by %s"
-msgstr "Alle berichten van %s"
-
-#: category.php:19
-msgid "Category Archives: %s"
-msgstr "Categorie archief: %s"
-
-#: comments.php:25
-msgctxt "comments title"
-msgid "One thought on &ldquo;%2$s&rdquo;"
-msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
-msgstr[0] "Een gedachte over &ldquo;%2$s&rdquo;"
-msgstr[1] "%1$s gedachten over &ldquo;%2$s&rdquo;"
-
-#: comments.php:45
-msgid "Comment navigation"
-msgstr "Reactienavigatie"
 
 #: comments.php:46
 msgid "&larr; Older Comments"
@@ -140,10 +41,6 @@ msgstr "Pagina&#39;s:"
 #: content-video.php:35 content.php:31 image.php:44 page.php:39
 msgid "Edit"
 msgstr "Bewerken"
-
-#: functions.php:379
-msgid "Permalink to %s"
-msgstr "Permalink naar %s"
 
 #: content-gallery.php:36 content-image.php:32 content-quote.php:22
 #: content-video.php:32 content.php:49
@@ -206,6 +103,22 @@ msgstr "aan"
 msgid "Page %s"
 msgstr "Pagina %s"
 
+#: functions.php:235
+msgid "Main Widget Area"
+msgstr "Hoofd widgetgebied"
+
+#: functions.php:237
+msgid "Appears in the footer section of the site."
+msgstr "Verschijnt in het footer gedeelte van de site."
+
+#: functions.php:245
+msgid "Secondary Widget Area"
+msgstr "Secondaire widgetgebied"
+
+#: functions.php:247
+msgid "Appears on posts and pages in the sidebar."
+msgstr "Verschijnt bij berichten en pagina's in de zijbalk."
+
 #: functions.php:272
 msgid "Posts navigation"
 msgstr "Berichtennavigatie"
@@ -249,6 +162,10 @@ msgctxt "1: post format name. 2: date"
 msgid "%1$s on %2$s"
 msgstr "%1$s op %2$s"
 
+#: functions.php:379
+msgid "Permalink to %s"
+msgstr "Permalink naar %s"
+
 #: header.php:43
 msgid "Menu"
 msgstr "Menu"
@@ -261,6 +178,14 @@ msgstr "Naar de inhoud springen"
 msgid "<span class=\"attachment-meta\">Published on <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> in <a href=\"%3$s\" title=\"Return to %4$s\" rel=\"gallery\">%5$s</a></span>"
 msgstr "<span class=\"attachment-meta\">Gepubliceerd op <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> in <a href=\"%3$s\" title=\"Terug naar %4$s\" rel=\"gallery\">%5$s</a></span>"
 
+#: image.php:38
+msgid "Link to full-size image"
+msgstr "Link naar volledig formaat afbeelding"
+
+#: image.php:39
+msgid "Full resolution"
+msgstr "Volledige resolutie"
+
 #: image.php:51
 msgid "<span class=\"meta-nav\">&larr;</span> Previous"
 msgstr "<span class=\"meta-nav\">&larr;</span> Vorige"
@@ -268,6 +193,10 @@ msgstr "<span class=\"meta-nav\">&larr;</span> Vorige"
 #: image.php:52
 msgid "Next <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Volgende <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/back-compat.php:41 inc/back-compat.php:53 inc/back-compat.php:68
+msgid "Twenty Thirteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
+msgstr "Twenty Thirteen vereist minimaal WordPress 3.6. De huidige installatie is versie %s. Werk de installatie bij en probeer opnieuw."
 
 #: inc/custom-header.php:51
 msgctxt "header image description"
@@ -299,5 +228,76 @@ msgstr "%s Archief"
 msgid "Twenty Thirteen"
 msgstr "Twenty Thirteen"
 
+msgid "http://wordpress.org/themes/twentythirteen"
+msgstr "http://wordpress.org/themes/twentythirteen"
+
+msgid "The 2013 theme for WordPress takes us back to the blog, featuring a full range of post formats, each displayed beautifully in their own unique way. Design details abound, starting with a vibrant color scheme and matching header images, beautiful typography and icons, and a flexible layout that looks great on any device, big or small."
+msgstr "Het 2013 thema voor WordPress neemt ons terug naar de blog met alle post formats actief en elke post format wordt op een eigen unieke en prachtige manier getoond. Design details zijn er ten overvloed beginnend met een hoog-contrastkleuren schema en bijpassende header afbeeldingen, prachtige typografie en iconen verpakt in een flexibele layout die op elk device fantastisch toont; groot of klein."
+
 msgid "the WordPress team"
 msgstr "het WordPress team"
+
+#: 404.php:16
+msgid "Not Found"
+msgstr ""
+
+#: 404.php:21
+msgid "This is somewhat embarrassing, isn&rsquo;t it?"
+msgstr "Helaas, hier ging iets mis."
+
+#: 404.php:22
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "Het lijkt erop dat hier niets kon worden gevonden. Probeer het eens met de zoekfunctie."
+
+#: archive.php:29
+msgid "Daily Archives: %s"
+msgstr "Dagelijks archief: %s"
+
+#: archive.php:31
+msgid "Monthly Archives: %s"
+msgstr "Maandelijks archief: %s"
+
+#: archive.php:31
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "F Y"
+
+#: archive.php:33
+msgid "Yearly Archives: %s"
+msgstr "Jaarlijks archief: %s"
+
+#: archive.php:33
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y"
+
+#: archive.php:35
+msgid "Archives"
+msgstr "Archief"
+
+#: author-bio.php:26
+msgid "About %s"
+msgstr "Over %s"
+
+#: author-bio.php:30
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Bekijk alle berichten van %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: author.php:31
+msgid "All posts by %s"
+msgstr "Alle berichten van %s"
+
+#: category.php:19
+msgid "Category Archives: %s"
+msgstr "Categorie archief: %s"
+
+#: comments.php:25
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "Een gedachte over &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s gedachten over &ldquo;%2$s&rdquo;"
+
+#: comments.php:45
+msgid "Comment navigation"
+msgstr "Reactienavigatie"
