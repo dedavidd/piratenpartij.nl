@@ -571,7 +571,7 @@ input:-moz-placeholder {
   border: 10px solid #eaeaea;
   background-image: url(../img/banner/vote_banner.png);
   min-height: 150px;
-  font-size: 35px;
+  font-size: 30px;
   padding: 0 5%; }
 
 #banner .m1 p, #banner .m2 p, #banner .m3 p {
@@ -583,8 +583,7 @@ input:-moz-placeholder {
 
 #banner .m2 {
   border: 10px solid #eaeaea;
-  background-color: #685545;
-  background-image: url(../img/banner/right_sept_2013.png);
+  background-image: url(../img/banner/bootkandidaten3.jpg);
   background-repeat: no-repeat;
   background-size: 100% auto;
   -webkit-background-size: cover;
@@ -593,7 +592,7 @@ input:-moz-placeholder {
   background-size: cover;
   background-position: 50% 90%;
   min-height: 150px;
-  font-size: 35px;
+  font-size: 30px;
   padding: 0 5%; }
 
 #banner .m3 {
