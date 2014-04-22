@@ -23,18 +23,6 @@ get_header(); ?>
 	
 			<?php
 			rewind_posts();
-			// If a user has filled out their description, show a bio on their entries.
-			if ( get_the_author_meta( 'description' ) ) : ?>
-			<div id="author-info" class="row">
-				<h2 class="span8"><?php printf( __( 'Over %s', 'the-bootstrap' ), get_the_author() ); ?></h2>
-				<div id="author-avatar" class="span1">
-					<?php echo get_avatar( get_the_author_meta( 'user_email' ), apply_filters( 'the-bootstrap_author_bio_avatar_size', 70 ) ); ?>
-				</div><!-- #author-avatar -->
-				<div id="author-description" class="span7">
-					<?php the_author_meta( 'description' ); ?>
-				</div><!-- #author-description	-->
-			</div><!-- #author-info -->
-			<?php endif;
 			
 			while ( have_posts() ) {
 				the_post();

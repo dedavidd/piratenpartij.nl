@@ -26,7 +26,7 @@
 								<a href="/privacybeleid">Privacybeleid</a> | <a href="/anbi">ANBI</a>
               </p>
               <p>
-               &nbsp;
+               Hosting gesponsord door <a href="http://www.seeas.nl/" target="_blank">Seeas BV</a><br/><a href="http://www.seeas.nl/" target="_blank"><img src="<?= static_url() ?>img/logo_seeaskl.png" style="height: 15px; border: 1px solid black;"/></a>
 							</p>
 						</div>
 						<div class="span6">
