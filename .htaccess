@@ -14,3 +14,4 @@ RewriteRule . /index.php [L]
 # Deze moeten nog ff goedgezet worden wanneer PWM weer werkt
 Redirect permanent /registreren https://pwm.piratenpartij.nl
 Redirect permanent /wachtwoord-vergeten https://pwm.piratenpartij.nl
+Redirect permanent /content/europese-parlementsverkiezingen https://piratenpartij.nl/standpunten

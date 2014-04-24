@@ -6,3 +6,5 @@
 
 20-04-2014 11:19:48 - ERROR - 5,1 MB - mail> SMTP connect() failed.
 20-04-2014 11:44:27 - ERROR - 5,0 MB - mail> SMTP connect() failed.
+23-04-2014 18:23:49 - ERROR - 14,2 MB - mail> SMTP connect() failed.
+23-04-2014 19:15:49 - ERROR - 14,8 MB - mail> SMTP connect() failed.
