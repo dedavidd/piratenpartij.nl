@@ -25,7 +25,7 @@ get_header(); ?>
 			</header><!-- .page-header -->
 
 			<div class="entry-content">
-				<p><?php _e( 'We kunnen blijkbaar deze pagina niet vinden. Probeer anders de zoekfunctie, of &eacute;&eacute;n van de links hieronder.', 'the-bootstrap' ); ?></p>
+				<p><?php _e( 'We kunnen blijkbaar deze pagina niet vinden. Op dit moment wordt de website van de Piratenpartij verbouwd. Hierdoor kan het voorkomen dat bepaalde pagina\'s niet bereikbaar zijn. We doen er alles aan om de content die je zocht zo snel mogelijk weer beschikbaar te maken. Onze welgemeende excuses voor het ongemak! Probeer anders de zoekfunctie, of &eacute;&eacute;n van de links hieronder.', 'the-bootstrap' ); ?></p>
 
 				<?php
 				get_search_form();
