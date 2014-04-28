@@ -11,6 +11,20 @@
 /** Make sure that the WordPress bootstrap has run before continuing. */
 require( dirname(__FILE__) . '/wp-load.php' );
 
+//If this page is directly accessed, redirect to home page.
+ function possibly_redirect(){
+  global $pagenow;
+  if( 'wp-login.php' == $pagenow ) {
+    if ( isset( $_POST['wp-submit'] ) ||   // in case of LOGIN
+      ( isset($_GET['action']) && $_GET['action']=='logout') ||   // in case of LOGOUT
+      ( isset($_GET['checkemail']) && $_GET['checkemail']=='confirm') ||   // in case of LOST PASSWORD
+      ( isset($_GET['checkemail']) && $_GET['checkemail']=='registered') ) return;    // in case of REGISTER
+    else wp_redirect( home_url() ); // or wp_redirect(home_url('/login'));
+    exit();
+  }
+}
+add_action('init','possibly_redirect');
+
 // Redirect to https login if forced to use SSL
 if ( force_ssl_admin() && ! is_ssl() ) {
 	if ( 0 === strpos($_SERVER['REQUEST_URI'], 'http') ) {
