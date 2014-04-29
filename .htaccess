@@ -1,4 +1,3 @@
-
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -18,3 +17,4 @@ Redirect permanent /wachtwoord-vergeten https://pwm.piratenpartij.nl
 Redirect permanent /content/europese-parlementsverkiezingen https://piratenpartij.nl/standpunten
 Redirect permanent /cryptoparty	https://wiki.piratenpartij.nl/werkgroep:crypto:handouts
 Redirect permanent /afdeling/$1 https://piratenpartij.nl/regionaal/$1
+Redirect permanent /rss.xml https://piratenpartij.nl/feed/

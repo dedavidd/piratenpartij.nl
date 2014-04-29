@@ -1,0 +1,62 @@
+28-04-2014 13:01:06 - DEBUG - 5,4 MB - Confirmation for:
+28-04-2014 13:01:06 - DEBUG - 5,4 MB - stdClass Object
+(
+    [id] => 27
+    [email] => sander.plas@piratenpartij.nl
+    [name] => 
+    [surname] => 
+    [sex] => n
+    [status] => S
+    [created] => 2014-04-27 19:13:48
+    [token] => c74578e84d
+    [feed] => 0
+    [feed_time] => 0
+    [country] => 
+    [list_1] => 0
+    [list_2] => 0
+    [list_3] => 0
+    [list_4] => 0
+    [list_5] => 0
+    [list_6] => 0
+    [list_7] => 0
+    [list_8] => 0
+    [list_9] => 0
+    [list_10] => 0
+    [list_11] => 0
+    [list_12] => 0
+    [list_13] => 0
+    [list_14] => 0
+    [list_15] => 0
+    [list_16] => 0
+    [list_17] => 0
+    [list_18] => 0
+    [list_19] => 0
+    [list_20] => 0
+    [profile_1] => 
+    [profile_2] => 
+    [profile_3] => 
+    [profile_4] => 
+    [profile_5] => 
+    [profile_6] => 
+    [profile_7] => 
+    [profile_8] => 
+    [profile_9] => 
+    [profile_10] => 
+    [profile_11] => 
+    [profile_12] => 
+    [profile_13] => 
+    [profile_14] => 
+    [profile_15] => 
+    [profile_16] => 
+    [profile_17] => 
+    [profile_18] => 
+    [profile_19] => 
+    [profile_20] => 
+    [referrer] => 
+    [http_referer] => 
+    [wp_user_id] => 0
+    [ip] => 
+    [test] => 0
+    [flow] => 0
+)
+
