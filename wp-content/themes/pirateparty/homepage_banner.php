@@ -34,7 +34,7 @@ THE TOOL KIT
 
 <div id="banner">
 
-	<a href="https://piratenpartij.nl/kandidaten/" title="Ontmoet je kandidaten">><div class="m1">
+	<a href="https://piratenpartij.nl/kandidaten/" title="Ontmoet je kandidaten" style:"color=fff"><div class="m1">
 		<p class="first"><strong>Ontmoet je kandidaten</strong></p>
 		<p>Kieslijst EP 2014
 			<span style="margin-left: 360px">
@@ -43,7 +43,7 @@ THE TOOL KIT
 		</p>
 	</div></a>
 
-	<a href="https://piratenpartij.nl/ai1ec_event/pirates-on-tour/?instance_id=4" title="Pirates on Tour"><div class="m2">
+	<a href="https://piratenpartij.nl/ai1ec_event/pirates-on-tour/?instance_id=4" title="Pirates on Tour"style:"color=fff"><div class="m2">
 		<p class="first"><strong>Pirates on Tour</strong></p>
 		<p>Varend naar jouw stad
                 	<span style="margin-left: 265px">
