@@ -1,4 +1,3 @@
-
 <?php /*
 
 THE TOOL KIT
@@ -20,7 +19,7 @@ THE TOOL KIT
 	</div>
 </div>
 
-# SECRET / SPYING / SURVIELLANCE BLOCK
+# SECRET / SPYING / SURVEILLANCE BLOCK
 
 <div class="span4 t3">
 <p style="margin-top: 15px;"><strong>The Government wants<br>to spy on you 24/7</strong></p>
@@ -35,23 +34,23 @@ THE TOOL KIT
 
 <div id="banner">
 
-	<div class="m1">
+	<a href="https://piratenpartij.nl/kandidaten/" title="Ontmoet je kandidaten">><div class="m1">
 		<p class="first"><strong>Ontmoet je kandidaten</strong></p>
 		<p>Kieslijst EP 2014
 			<span style="margin-left: 360px">
 				<a href="/kandidaten/" class="btn btn-primary">meer informatie</a>
 			</span>
 		</p>
-	</div>
+	</div></a>
 
-	<div class="m2">
+	<a href="https://piratenpartij.nl/ai1ec_event/pirates-on-tour/?instance_id=4" title="Pirates on Tour"><div class="m2">
 		<p class="first"><strong>Pirates on Tour</strong></p>
 		<p>Varend naar jouw stad
                 	<span style="margin-left: 265px">
 		                <a href="/ai1ec_event/pirates-on-tour/?instance_id=4" class="btn btn-primary">meer informatie</a>
                         </span>
                 </p>
-        </div>
+        </div></a>
 	
 	<div class="row-fluid lower">
 	
