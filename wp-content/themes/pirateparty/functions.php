@@ -1114,5 +1114,22 @@ function _the_bootstrap_version() {
 }
 
 
+if ( is_admin() )
+  add_action( 'init', 'disable_password_fields', 10 );
+
+function disable_password_fields() {
+  if ( ! current_user_can( 'administrator' ) )
+    $show_password_fields = add_filter( 'show_password_fields', '__return_false' );
+}
+
+function annointed_admin_bar_remove() {
+        global $wp_admin_bar;
+
+        /* Remove their stuff */
+        $wp_admin_bar->remove_menu('wp-logo');
+}
+
+add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+
 /* End of file functions.php */
 /* Location: ./wp-content/themes/the-bootstrap/functions.php */
