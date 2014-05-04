@@ -23,8 +23,8 @@ tha_entry_before(); ?>
 
 	<div class="entry-content clearfix">
 	<?php	$imageMargin = array(
-	'style'	=> 'margin-right: 7px');?>
-		<p style="float: left;"> <?php echo get_the_post_thumbnail($postId, 'medium', $imageMargin); ?> </p>  
+	'style'	=> 'margin-left: 7px');?>
+		<p style="float: right;"> <?php echo get_the_post_thumbnail($postId, 'medium', $imageMargin); ?> </p>  
 		<?php
 		the_content();
 		the_bootstrap_link_pages(); ?>
