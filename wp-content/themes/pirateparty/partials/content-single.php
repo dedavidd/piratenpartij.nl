@@ -21,7 +21,7 @@ tha_entry_before(); ?>
 	</header><!-- .entry-header -->
 
 	<div class="entry-content clearfix">
-		<p style="float: left;"> <?php echo get_the_post_thumbnail(the_ID(), 'medium', 'style="margin-right: 7px;"'); ?> </p>  
+		<p style="float: left;"> <?php echo get_the_post_thumbnail('', 'medium', 'style="margin-right: 7px;"'); ?> </p>  
 		<?php
 		the_content();
 		the_bootstrap_link_pages(); ?>
