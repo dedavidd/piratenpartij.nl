@@ -248,7 +248,7 @@ if ( ! IS_PROFILE_PAGE ) {
 	</tr>
 <?php endif; ?>
 <?php if ( count($_wp_admin_css_colors) > 1 && has_action('admin_color_scheme_picker') ) : ?>
-<tr>
+<!--<tr>
 <th scope="row"><?php _e('Admin Color Scheme')?></th>
 <?php
 /**
@@ -261,14 +261,14 @@ if ( ! IS_PROFILE_PAGE ) {
  */
 ?>
 <td><?php do_action( 'admin_color_scheme_picker', $user_id ); ?></td>
-</tr>
+</tr>-->
 <?php
 endif; // $_wp_admin_css_colors
 if ( !( IS_PROFILE_PAGE && !$user_can_edit ) ) : ?>
-<tr>
+<!--<tr>
 <th scope="row"><?php _e( 'Keyboard Shortcuts' ); ?></th>
 <td><label for="comment_shortcuts"><input type="checkbox" name="comment_shortcuts" id="comment_shortcuts" value="true" <?php if ( ! empty( $profileuser->comment_shortcuts ) ) checked( 'true', $profileuser->comment_shortcuts ); ?> /> <?php _e('Enable keyboard shortcuts for comment moderation.'); ?></label> <?php _e('<a href="http://codex.wordpress.org/Keyboard_Shortcuts" target="_blank">More information</a>'); ?></td>
-</tr>
+</tr>-->
 <?php endif; ?>
 <tr class="show-admin-bar">
 <th scope="row"><?php _e('Toolbar')?></th>

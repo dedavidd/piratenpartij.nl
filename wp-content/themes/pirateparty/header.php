@@ -63,7 +63,7 @@
 							<a href="https://twitter.com/piratenpartij"><img src="<?= static_url() ?>img/icons/social/twitter_32.png"></a>
 							<!---<a href="https://plus.google.com/u/0/b/114061517635295816057/114061517635295816057/posts"><img src="<?= static_url() ?>img/icons/social/google_plus_2_32.png"></a>-->
 							<a href="http://www.youtube.com/user/depiratenpartij"><img src="<?= static_url() ?>img/icons/social/youtube_32x32.png"></a>
-							<a href="https://testing.piratenpartij.nl/feed"><img src="<?= static_url() ?>img/icons/social/rss_32.png"></a>
+							<a href="https://piratenpartij.nl/feed"><img src="<?= static_url() ?>img/icons/social/rss_32.png"></a>
 						</div>
 					</div>
 				</div>
