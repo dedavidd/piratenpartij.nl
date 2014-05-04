@@ -11,7 +11,8 @@
 
 tha_entry_before(); ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php tha_entry_top(); ?>
+	<?php tha_entry_top();
+	$postId = get_the_ID(); ?>
 	
 	<header class="page-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
@@ -21,7 +22,7 @@ tha_entry_before(); ?>
 	</header><!-- .entry-header -->
 
 	<div class="entry-content clearfix">
-		<p style="float: left;"> <?php echo get_the_post_thumbnail('medium', 'style="margin-right: 7px;"'); ?> </p>  
+		<p style="float: left;"> <?php echo get_the_post_thumbnail($postId, 'medium', 'style="margin-right: 7px;"'); ?> </p>  
 		<?php
 		the_content();
 		the_bootstrap_link_pages(); ?>
