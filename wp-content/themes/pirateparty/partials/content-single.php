@@ -15,11 +15,14 @@ tha_entry_before(); ?>
 	
 	<header class="page-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+		
+		
 		<div class="muted"><?php the_bootstrap_posted_on(); ?></div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
 
 	<div class="entry-content clearfix">
 		<?php
+		echo get_the_post_thumbnail($post_id, 'medium');
 		the_content();
 		the_bootstrap_link_pages(); ?>
 	</div><!-- .entry-content -->
