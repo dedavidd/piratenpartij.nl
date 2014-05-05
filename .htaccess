@@ -19,3 +19,11 @@ Redirect permanent /afdeling/$1 https://piratenpartij.nl/regionaal/$1
 Redirect permanent /rss.xml https://piratenpartij.nl/feed/
 Redirect permanent /doneren/ideal https://piratenpartij.nl/wp-content/themes/pirateparty/static/ideal/ideal.php
 Redirect permanent /EP14/kandidaten/MatthijsPontier https://piratenpartij.nl/kandidaten/matthijs-pontier
+Redirect permanent /EP14/kandidaten/JanmaartenBatstra https://piratenpartij.nl/kandidaten/janmaarten-batstra
+Redirect permanent /EP14/kandidaten/CharifMews https://piratenpartij.nl/kandidaten/charif-mews
+Redirect permanent /EP14/kandidaten/GerbenBrands https://piratenpartij.nl/kandidaten/gerben-brands
+Redirect permanent /EP14/kandidaten/StevenRusschenberg https://piratenpartij.nl/kandidaten/steven-russchenberg
+Redirect permanent /EP14/kandidaten/GijsPeskens https://piratenpartij.nl/kandidaten/gijs-peskens
+Redirect permanent /EP14/kandidaten/WielMaessen https://piratenpartij.nl/kandidaten/wiel-maessen
+Redirect permanent /EP14/kandidaten/RogierHuurman https://piratenpartij.nl/kandidaten/rogier-huurman
+Redirect permanent /EP14/kandidaten/DirkPoot https://piratenpartij.nl/kandidaten/dirk-poot
