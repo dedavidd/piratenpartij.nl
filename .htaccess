@@ -17,3 +17,4 @@ Redirect permanent /content/europese-parlementsverkiezingen https://piratenparti
 Redirect permanent /cryptoparty	https://wiki.piratenpartij.nl/werkgroep:crypto:handouts
 Redirect permanent /afdeling/$1 https://piratenpartij.nl/regionaal/$1
 Redirect permanent /rss.xml https://piratenpartij.nl/feed/
+Redirect permanent /doneren/ideal https://piratenpartij.nl/wp-content/themes/pirateparty/static/ideal
