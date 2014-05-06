@@ -10,7 +10,7 @@
 // echo 'request uri: '.$_SERVER['REQUEST_URI'];
 // echo 'origAuteur: '.$_GET['origAuteur'];
 
-preg_match('/^\/blog\/([A-Za-z0-9-]+)\/([A-Za-z0-9-]+)/' , $_SERVER['REQUEST_URI'], $matches);
+preg_match('/^\/blog\/([A-Za-z0-9-\.]+)\/([A-Za-z0-9-\.]+)/' , $_SERVER['REQUEST_URI'], $matches);
 // echo 'matches: '.join(',', $matches);
 if(count($matches) == 3) {
 	header('HTTP/1.0 307 Temporary Redirect');
@@ -18,7 +18,7 @@ if(count($matches) == 3) {
 	die();
 }
 
-preg_match('/^\/([A-Za-z0-9-]+)/' , $_SERVER['REQUEST_URI'], $matches);
+preg_match('/^\/([A-Za-z0-9-\.]+)/' , $_SERVER['REQUEST_URI'], $matches);
 // echo 'matches: '.join(',', $matches);
 if (count($matches) == 2 && strlen($_GET['origAuteur'])>0) {
 	header('HTTP/1.0 307 Temporary Redirect');
