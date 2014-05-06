@@ -7,6 +7,15 @@
  * @package		The Bootstrap
  * @since		1.0.0 - 07.02.2012
  */
+echo 'request uri: '+$_SERVER['REQUEST_URI'];
+echo 'origAuteur: '+$_POST['origAuteur'];
+
+preg_match('^/blog/([A-Za-z0-9-]+)' , $_SERVER['REQUEST_URI'], $matches)
+echo 'matches: '+$matches;
+if(strlen($_POST['origAuteur'])>0) {
+	header('HTTP/1.0 307 Temporary Redirect');  
+	header('Location: https://oud.piratenpartij.nl/'+$_POST['origAuteur']+'/');
+}
 
 get_header(); ?>
 
