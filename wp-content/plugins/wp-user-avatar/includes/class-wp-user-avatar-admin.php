@@ -3,25 +3,22 @@
  * Defines all of administrative, activation, and deactivation settings.
  *
  * @package WP User Avatar
- * @version 1.9.5
+ * @version 1.9.12
  */
 
 class WP_User_Avatar_Admin {
   /**
    * Constructor
+   * @since 1.8
    * @uses bool $show_avatars
-   * @uses bool $wpua_allow_upload
-   * @uses bool $wpua_tinymce
    * @uses add_action()
    * @uses add_filter()
-   * @uses current_user_can()
-   * @uses is_admin()
    * @uses load_plugin_textdomain()
    * @uses register_activation_hook()
    * @uses register_deactivation_hook()
    */
   public function __construct() {
-    global $show_avatars, $wpua_allow_upload, $wpua_tinymce;
+    global $show_avatars;
     // Initialize default settings
     register_activation_hook(WPUA_DIR.'wp-user-avatar.php', array($this, 'wpua_options'));
     // Settings saved to wp_options
@@ -40,20 +37,17 @@ class WP_User_Avatar_Admin {
     add_filter('plugin_action_links', array($this, 'wpua_action_links'), 10, 2);
     add_filter('plugin_row_meta', array($this, 'wpua_row_meta'), 10, 2);
     // Hide column in Users table if default avatars are enabled
-    if((bool) $show_avatars == 0 && is_admin()) {
+    if((bool) $show_avatars == 0) {
       add_filter('manage_users_columns', array($this, 'wpua_add_column'), 10, 1);
       add_filter('manage_users_custom_column', array($this, 'wpua_show_column'), 10, 3);
     }
     // Media states
     add_filter('display_media_states', array($this, 'wpua_add_media_state'), 10, 1);
-    // Load TinyMCE only if enabled and user has editing privileges
-    if((bool) $wpua_tinymce == 1 && current_user_can('edit_posts') && current_user_can('edit_pages')) {
-      include_once(WPUA_INC.'wpua-tinymce.php');
-    }
   }
 
   /**
    * Settings saved to wp_options
+   * @since 1.4
    * @uses add_option()
    */
   public function wpua_options() {
@@ -71,6 +65,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * On deactivation
+   * @since 1.4
    * @uses int $blog_id
    * @uses object $wpdb
    * @uses get_blog_prefix()
@@ -91,6 +86,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Add options page and settings
+   * @since 1.4
    * @uses add_menu_page()
    * @uses add_submenu_page()
    */
@@ -104,17 +100,19 @@ class WP_User_Avatar_Admin {
 
   /**
    * Checks if current page is settings page
+   * @since 1.8.3
    * @uses string $pagenow
    * @return bool
    */
   public function wpua_is_menu_page() {
     global $pagenow;
     $is_menu_page = ($pagenow == 'admin.php' && isset($_GET['page']) && $_GET['page'] == 'wp-user-avatar') ? true : false;
-    return $is_menu_page;
+    return (bool) $is_menu_page;
   }
 
   /**
    * Media page
+   * @since 1.8
    */
   public function wpua_media_page() {
     require_once(WPUA_INC.'wpua-media-page.php');
@@ -122,6 +120,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Avatars per page
+   * @since 1.8.10
    * @uses add_screen_option()
    */
   public function wpua_media_screen_option() {
@@ -136,6 +135,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Save per page setting
+   * @since 1.8.10
    * @param int $status
    * @param string $option
    * @param int $value
@@ -148,6 +148,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Options page
+   * @since 1.4
    */
   public function wpua_options_page() {
     require_once(WPUA_INC.'wpua-options-page.php');
@@ -155,6 +156,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Whitelist settings
+   * @since 1.9
    * @uses apply_filters()
    * @uses register_setting()
    * @return array
@@ -176,6 +178,7 @@ class WP_User_Avatar_Admin {
     $settings[] = register_setting('wpua-settings-group', 'wp_user_avatar_upload_size_limit', 'intval');
     /**
      * Filter admin whitelist settings
+     * @since 1.9
      * @param array $settings
      */
     return apply_filters('wpua_register_settings', $settings);
@@ -183,6 +186,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Add default avatar
+   * @since 1.4
    * @uses string $avatar_default
    * @uses string $mustache_admin
    * @uses string $mustache_medium
@@ -254,6 +258,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Add default avatar_default to whitelist
+   * @since 1.4
    * @param array $options
    * @return array $options
    */
@@ -264,6 +269,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Add actions links on plugin page
+   * @since 1.6.6
    * @param array $links
    * @param string $file
    * @return array $links
@@ -277,6 +283,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Add row meta on plugin page
+   * @since 1.6.6
    * @param array $links
    * @param string $file
    * @return array $links
@@ -291,6 +298,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Add column to Users table
+   * @since 1.4
    * @param array $columns
    * @return array
    */
@@ -300,6 +308,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Show thumbnail in Users table
+   * @since 1.4
    * @param string $value
    * @param string $column_name
    * @param int $user_id
@@ -323,6 +332,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Get list table
+   * @since 1.8
    * @param string $class
    * @param array $args
    * @return object
@@ -335,6 +345,7 @@ class WP_User_Avatar_Admin {
 
   /**
    * Add media states
+   * @since 1.4
    * @param array $states
    * @uses object $post
    * @uses int $wpua_avatar_default
@@ -353,6 +364,7 @@ class WP_User_Avatar_Admin {
     }
     /**
      * Filter media states
+     * @since 1.4
      * @param array $states
      */
     return apply_filters('wpua_add_media_state', $states);
@@ -361,6 +373,7 @@ class WP_User_Avatar_Admin {
 
 /**
  * Initialize
+ * @since 1.9.2
  */
 function wpua_admin_init() {
   global $wpua_admin;
