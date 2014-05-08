@@ -65,8 +65,8 @@ THE TOOL KIT
 		</div>
 		
 		<div class="span4" style="background-color: #643794;">
-			<p class="first centre" style="margin-top: 15px;font-size: 22px; line-height: 26px;"><strong>Waarom Piraten?</strong></p>
-			<p class="first centre" style="margin-top: 15px;font-size: 18px; line-height: 22px;">Onze standpunten</p>
+			<p class="first centre" style="margin-top: 15px;font-size: 18px; line-height: 24px;"><strong>Waarom Piraten?</strong></p>
+			<p class="first centre" style="margin-top: 15px;font-size: 14px; line-height: 20px;">Onze standpunten</p>
 			<p class="read-more centre" style="margin-top: 10px;">
 				<a href="/standpunten/" class="btn btn-primary">
 					lees meer
