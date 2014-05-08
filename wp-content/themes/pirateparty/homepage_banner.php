@@ -55,8 +55,8 @@ THE TOOL KIT
 	<div class="row-fluid lower">
 	
 		<div class="span4 centre" style="background-color: #643794;">
-			<p class="first centre" style="margin-top: 15px;font-size: 22px;line-height:26px;"><strong>Wie houdt ons nog tegen?</strong></p>
-			<p class="first centre" style="margin-top: 15px;font-size: 18px;line-height:22px;">Stem Piratenpartij</p>
+			<p class="first centre" style="margin-top: 15px;font-size: 18px;line-height:24px;"><strong>Wie houdt ons nog tegen?</strong></p>
+			<p class="first centre" style="margin-top: 15px;font-size: 14px;line-height:20px;">Stem Piratenpartij</p>
 			<p class="read-more centre" style="margin-top: 10px;">
 				<a href="/insayno-piratenpartij/" class="btn btn-primary">
 					beluisteren
