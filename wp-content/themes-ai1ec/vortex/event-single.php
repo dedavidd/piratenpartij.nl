@@ -5,7 +5,7 @@
 			<th scope="row" class="ai1ec-time"><?php _e( 'When:', AI1EC_PLUGIN_NAME ) ?></th>
 			<td colspan="2" class="ai1ec-time">
 				<a class="ai1ec-calendar-link btn pull-right" href="<?php echo $calendar_url ?>">
-					<i class="timely-icon-arrow-left"></i> <?php _e( 'Back to Calendar', AI1EC_PLUGIN_NAME ) ?>
+					<i class="timely-icon-arrow-left"></i> <?php _e( 'Terug naar kalender', AI1EC_PLUGIN_NAME ) ?>
 				</a>
 				<?php echo $event->timespan_html ?>
 			</td>
