@@ -52,7 +52,10 @@ define( 'ARRAY_N', 'ARRAY_N' );
 class wpdb {
 
 	/**
-	 * Whether to show SQL/DB errors
+	 * Whether to show SQL/DB errors.
+	 *
+	 * Default behavior is to show errors if both WP_DEBUG and WP_DEBUG_DISPLAY
+	 * evaluated to true.
 	 *
 	 * @since 0.71
 	 * @access private
@@ -929,7 +932,6 @@ class wpdb {
 				break;
 			default :
 				return array();
-				break;
 		}
 
 		if ( $prefix ) {
@@ -1511,7 +1513,6 @@ class wpdb {
 		 */
 		$query = apply_filters( 'query', $query );
 
-		$return_val = 0;
 		$this->flush();
 
 		// Log how the function was called
@@ -1783,7 +1784,7 @@ class wpdb {
 		if ( ! is_array( $where ) )
 			return false;
 
-		$bits = $wheres = array();
+		$wheres = array();
 
 		$where_formats = $where_format = (array) $where_format;
 
