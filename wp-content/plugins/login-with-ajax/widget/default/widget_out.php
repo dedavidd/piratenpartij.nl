@@ -38,10 +38,10 @@
 						<?php if( !empty($lwa_data['remember']) ): ?>
 						<a href="wachtwoord-vergeten" title="<?php esc_attr_e('Password Lost and Found','login-with-ajax') ?>"><?php esc_attr_e('Lost your password?','login-with-ajax') ?></a>
 						<?php endif; ?>
-                        //<?php if ( get_option('users_can_register') && !empty($lwa_data['registration']) ) : ?>
+                        <!---<?php if ( get_option('users_can_register') && !empty($lwa_data['registration']) ) : -->
 						<br />
 						<a href="registreren"><?php esc_html_e('Register','login-with-ajax') ?></a>
-                        //<?php endif; ?>
+                        <!---<?php endif; ?>-->
                     </td>
                 </tr>
             </table>
