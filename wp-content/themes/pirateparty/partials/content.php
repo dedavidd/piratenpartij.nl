@@ -26,7 +26,7 @@ tha_entry_before(); ?>
 		
 		if ( 'post' == get_post_type() ) : ?>
 		<div class="muted">
-			<?php the_bootstrap_posted_on(); ?>
+			<?php the_bootstrap_posted_on(); ?> <?php the_author(); ?>
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
