@@ -92,7 +92,7 @@ if ( ! function_exists( 'the_bootstrap_posted_on' ) ) :
 * @return	void
 */
 function the_bootstrap_posted_on() {
-	printf( __( '<span class="sep">Gepubliceerd op </span><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a> door <?php get_the author; ?>', 'the-bootstrap' ),
+	printf( __( '<span class="sep">Gepubliceerd op </span><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="sep"> door </span><span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span>', 'the-bootstrap' ),
 			esc_url( get_permalink() ),
 			esc_attr( get_the_time() ),
 			esc_attr( get_the_date( 'c' ) ),
