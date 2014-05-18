@@ -40,6 +40,12 @@ function static_url()
 	return get_template_directory_uri() . '/static/';
 }
 
+/*
+ * iDeal integratie
+ */
+require_once('inc/ideal/ideal.php');
+add_shortcode('ideal', 'ideal_shortcode_handler');
+
 if ( ! function_exists( 'the_bootstrap_setup' ) ):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
