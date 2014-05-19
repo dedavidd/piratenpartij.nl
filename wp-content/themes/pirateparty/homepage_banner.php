@@ -34,19 +34,19 @@ THE TOOL KIT
 
 <div id="banner">
 
-	<div class="m1">
+	<div class="m1 clearfix">
 		<p class="first"><strong>Ontmoet je kandidaten</strong></p>
 		<p>Kieslijst EP 2014
-			<span style="margin-left: 360px">
+			<span style="float:right;margin-bottom:20px">
 				<a href="/kandidaten/" class="btn btn-primary">meer informatie</a>
 			</span>
 		</p>
 	</div>
 
-	<div class="m2">
+	<div class="m2 clearfix">
 		<p class="first"><strong>Pirates on Tour</strong></p>
 		<p>Varend naar jouw stad
-                	<span style="margin-left: 265px">
+                	<span style="float:right;margin-bottom:20px">
 		                <a href="/ai1ec_event/pirates-on-tour/?instance_id=4" class="btn btn-primary">meer informatie</a>
                         </span>
                 </p>
