@@ -885,7 +885,12 @@ input:-moz-placeholder {
 
 .dropdown-menu .active > a {
   background-color: #ccc;
-  background-image: -moz-linear-gradient(center top, #eeeeee, #e8e8e8);
+  background-image: linear-gradient(top, #eeeeee, #e8e8e8);
+  background-image: -moz-linear-gradient(top, #eeeeee, #e8e8e8);
+  background-image: -ms-linear-gradient(top, #eeeeee, #e8e8e8);
+  background-image: -o-linear-gradient(top, #eeeeee, #e8e8e8);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#e8e8e8));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #e8e8e8);
   background-repeat: repeat-x;
   color: #777 !important;
   text-shadow: none !important;

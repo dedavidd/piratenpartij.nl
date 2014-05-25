@@ -24,9 +24,14 @@
 				</div>
 				<div style="float: left; font-size: 20px; padding-top: 25px;" >
 					<form class="form-inline" action="/doneren/" method="post">
-						<label for="inBedrag" id="txtBedrag" >Donatiebedrag: &euro;</span>
-						<input id="inBedrag" class="textfield" name="amount" type="text" value="10,00">
-						<input id="btnDoneer" class="btn btn-primary" type="submit" value="Doneer!" >
+            <div class="input-group">
+              <label for="inBedrag">Donatiebedrag:</label>
+              <div class="input-append input-prepend">
+                <span class="add-on">&euro;</span>
+                <input id="inBedrag" class="input-small" name="amount" type="text" placeholder="10,00">
+                <input id="btnDoneer" class="btn btn-primary" type="submit" value="Doneer!">
+              </div>
+            </div>
 					</form>
 				</div>
 				<div style="clear: both;" ></div>';
