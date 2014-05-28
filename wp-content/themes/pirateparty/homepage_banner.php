@@ -38,7 +38,7 @@ THE TOOL KIT
 		<p class="first"><strong>Jouw stem telt</strong></p>
 		<p>ALV 6 juli</p>
 			<span style="float:right;margin-bottom:20px">
-				<a href="https://piratenpartij.nl/ai1ec_event/algemene-ledenvergadering-alv/?instance_id=69">
+				<a href="https://piratenpartij.nl/ai1ec_event/algemene-ledenvergadering-alv/?instance_id=69">meer informatie</a>
 			</span>
 		</p>
 	</div>
