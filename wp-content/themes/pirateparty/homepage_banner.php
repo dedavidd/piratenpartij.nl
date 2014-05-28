@@ -35,8 +35,8 @@ THE TOOL KIT
 <div id="banner">
 
 	<div class="m1 clearfix">
-		<p class="first"><strong>Jouw stem telt</strong></p>
-		<p>ALV 6 juli
+		<p class="first"><strong>Algemene Ledenvergadering (ALV)</strong></p>
+		<p>6 juli 2014 - Jouw stem telt!
 			<span style="float:right;margin-bottom:20px">
 				<a href="https://piratenpartij.nl/ai1ec_event/algemene-ledenvergadering-alv/?instance_id=69" class="btn btn-primary">meer informatie</a>
 			</span>
