@@ -655,7 +655,7 @@ msgstr "Agendapunten in deze categorie zijn te herkennen aan deze kleur"
 
 #: app/view/agenda-widget.php:11
 msgid "There are no upcoming events."
-msgstr "Er zijn toekomstige agendapunten"
+msgstr "Er zijn geen toekomstige agendapunten"
 
 #: app/view/agenda-widget.php:59
 msgid "View Calendar »"

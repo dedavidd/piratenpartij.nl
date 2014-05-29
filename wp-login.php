@@ -14,14 +14,14 @@ require( dirname(__FILE__) . '/wp-load.php' );
 
 //If this page is directly accessed, redirect to home page.
 
-  if( 'wp-login.php' == basename($_SERVER['PHP_SELF']) ) {
+/*  if( 'wp-login.php' == basename($_SERVER['PHP_SELF']) ) {
     if ( isset( $_POST['wp-submit'] ) ||   // in case of LOGIN
       ( isset($_GET['action']) && $_GET['action']=='logout') ||   // in case of LOGOUT
       ( isset($_GET['checkemail']) && $_GET['checkemail']=='confirm') ||   // in case of LOST PASSWORD
       ( isset($_GET['checkemail']) && $_GET['checkemail']=='registered') ) return;    // in case of REGISTER
     else wp_redirect( home_url() ); // or wp_redirect(home_url('/login'));
     exit();
-  }
+  }*/
 
 // Redirect to https login if forced to use SSL
 if ( force_ssl_admin() && ! is_ssl() ) {

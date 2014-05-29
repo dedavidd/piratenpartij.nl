@@ -127,12 +127,6 @@ if ( ! CUSTOM_TAGS ) {
 			'open' => true,
 			'xml:lang' => true,
 		),
-		'div' => array(
-			'align' => true,
-			'dir' => true,
-			'lang' => true,
-			'xml:lang' => true,
-		),
 		'dl' => array(),
 		'dt' => array(),
 		'em' => array(),
@@ -260,12 +254,6 @@ if ( ! CUSTOM_TAGS ) {
 		),
 		's' => array(),
 		'samp' => array(),
-		'span' => array(
-			'dir' => true,
-			'align' => true,
-			'lang' => true,
-			'xml:lang' => true,
-		),
 		'section' => array(
 			'align' => true,
 			'dir' => true,

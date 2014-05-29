@@ -34,39 +34,25 @@ THE TOOL KIT
 
 <div id="banner">
 
-	<div class="m1">
-		<p class="first"><strong>Ontmoet je kandidaten</strong></p>
-		<p>Kieslijst EP 2014
-			<span style="margin-left: 360px">
-				<a href="/kandidaten/" class="btn btn-primary">meer informatie</a>
+	<div class="m1 clearfix">
+		<p class="first"><strong>Algemene Ledenvergadering (ALV)</strong></p>
+		<p>6 juli 2014 - Jouw stem telt!
+			<span style="float:right;margin-bottom:20px">
+				<a href="https://piratenpartij.nl/ai1ec_event/algemene-ledenvergadering-alv/?instance_id=69" class="btn btn-primary">meer informatie</a>
 			</span>
 		</p>
 	</div>
 
-	<div class="m2">
-		<p class="first"><strong>Pirates on Tour</strong></p>
-		<p>Varend naar jouw stad
-                	<span style="margin-left: 265px">
-		                <a href="/ai1ec_event/pirates-on-tour/?instance_id=4" class="btn btn-primary">meer informatie</a>
-                        </span>
-                </p>
-        </div>
-	
 	<div class="row-fluid lower">
 	
 		<div class="span4 centre" style="background-color: #643794;">
-			<p class="first centre" style="margin-top: 15px;font-size: 18px;line-height:24px;"><strong>Wie houdt ons nog tegen?</strong></p>
-			<p class="first centre" style="margin-top: 15px;font-size: 14px;line-height:20px;">Stem Piratenpartij</p>
-			<p class="read-more centre" style="margin-top: 10px;">
-				<a href="/insayno-piratenpartij/" class="btn btn-primary">
-					beluisteren
-				</a>
-			</p>
+			<p class="first centre" style="margin-top: 20px;font-size: 26px;line-height:26px;"><strong>Doneer aan de Piratenpartij</strong></p>
+			<p style="margin-top: 10px;"><a class="btn btn-success sidebar-action-item pig" href="<?php echo donate_page_uri() ?>"><i class="is2-donate"></i>Doneren</a></p>
 		</div>
 		
 		<div class="span4" style="background-color: #643794;">
-			<p class="first centre" style="margin-top: 15px;font-size: 18px; line-height: 24px;"><strong>Waarom Piraten?</strong></p>
-			<p class="first centre" style="margin-top: 15px;font-size: 14px; line-height: 20px;">Onze standpunten</p>
+			<p class="first centre" style="margin-top: 15px;font-size: 22px; line-height: 26px;"><strong>Waarom Piraten?</strong></p>
+			<p class="first centre" style="margin-top: 15px;font-size: 18px; line-height: 22px;">Onze standpunten</p>
 			<p class="read-more centre" style="margin-top: 10px;">
 				<a href="/standpunten/" class="btn btn-primary">
 					lees meer
