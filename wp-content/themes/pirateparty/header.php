@@ -29,7 +29,7 @@
 	<link href="<?php bloginfo('stylesheet_url');?>" rel="stylesheet">
 	
 	<script src="<?= static_url() ?>js/vendor/modernizr-2.6.2.min.js"></script>
-	<script type="text/javascript" src="<?= static_url() }>js/konami.js"></script>
+	<script type="text/javascript" src="<?= static_url() ?>js/konami.js"></script>
 	<script type="text/javascript">
 		// <![CDATA[
 			konami = new Konami()
