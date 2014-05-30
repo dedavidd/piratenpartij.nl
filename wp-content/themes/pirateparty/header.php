@@ -29,14 +29,6 @@
 	<link href="<?php bloginfo('stylesheet_url');?>" rel="stylesheet">
 	
 	<script src="<?= static_url() ?>js/vendor/modernizr-2.6.2.min.js"></script>
-	<script type="text/javascript" src="<?= static_url() ?>js/konami.js"></script>
-	<script type="text/javascript">
-		// <![CDATA[
-			konami = new Konami()
-				konami.load("https://piratenpartij.nl/godmode");
-			}
-		// ]]
-	</script>
 	<link rel="shortcut icon" href="<?= static_url() ?>favicon.ico"/>
 	<link rel="image_src" href="<?= static_url() ?>img/logo.png"/>
 	
