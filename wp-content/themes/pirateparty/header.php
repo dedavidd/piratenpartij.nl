@@ -33,8 +33,7 @@
 	<script type="text/javascript">
 		// <![CDATA[
 			konami = new Konami()
-			konami.code = function () {
-				alert("GOD MODE ACTIVATED")
+				konami.load("https://piratenpartij.nl/godmode");
 			}
 		// ]]
 	</script>
