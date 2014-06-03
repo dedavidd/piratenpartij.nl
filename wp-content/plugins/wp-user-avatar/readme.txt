@@ -5,7 +5,7 @@ Donate link: http://siboliban.org/donate
 Tags: author image, author photo, author avatar, avatar, bbPress, profile avatar, profile image, user avatar, user image, user photo, widget
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 1.9.12
+Stable tag: 1.9.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -381,6 +381,10 @@ This would output:
 
 == Changelog ==
 
+= 1.9.13 =
+* Bug Fix: Load _load_wp_includes mostly only on front pages
+* Bug Fix: Check for edit_posts capability before enabling filters for Subscribers
+
 = 1.9.12 =
 * Add: wpua_edit_user_redirect_url filter
 * Add: wpua_edit_user_safe_redirect filter
@@ -550,7 +554,7 @@ This would output:
 
 = 1.5.5 =
 * Bug Fix: Hide "Edit Image" button if Contributors & Subscribers can't edit avatar
-* Bug Fix: Remove edit_posts capability if Contributors & Subscribers can't edit avatar
+* Bug Fix: Remove edit_posts capability if Subscribers can't edit avatar
 
 = 1.5.4 =
 * Add: Option to enable avatar editing privilege for Contributors & Subscribers
