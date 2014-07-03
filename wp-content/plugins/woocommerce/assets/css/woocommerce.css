@@ -648,7 +648,8 @@ p.demo_store {
 .woocommerce-page div.product form.cart .variations td.label,
 .woocommerce #content div.product form.cart .variations td.label,
 .woocommerce-page #content div.product form.cart .variations td.label {
-  padding-right: 1em;
+  padding: 0.5em 1em 0 1em;
+  margin-right: 1em;
 }
 .woocommerce div.product form.cart .variations td,
 .woocommerce-page div.product form.cart .variations td,
