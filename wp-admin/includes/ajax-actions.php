@@ -6,14 +6,17 @@
  * @subpackage Administration
  */
 
-/*
- * No-privilege Ajax handlers.
- */
+//
+// No-privilege Ajax handlers.
+//
 
 /**
- * Heartbeat API (experimental)
+ * Ajax handler for the (experimental) Heartbeat API in
+ * the no-privilege context.
  *
  * Runs when the user is not logged in.
+ *
+ * @since 3.6.0
  */
 function wp_ajax_nopriv_heartbeat() {
 	$response = array();
@@ -67,8 +70,14 @@ function wp_ajax_nopriv_heartbeat() {
 	wp_send_json($response);
 }
 
-/*
- * GET-based Ajax handlers.
+//
+// GET-based Ajax handlers.
+//
+
+/**
+ * Ajax handler for fetching a list table.
+ *
+ * @since 3.1.0
  */
 function wp_ajax_fetch_list() {
 	global $wp_list_table;
@@ -87,9 +96,13 @@ function wp_ajax_fetch_list() {
 
 	wp_die( 0 );
 }
-function wp_ajax_ajax_tag_search() {
-	global $wpdb;
 
+/**
+ * Ajax handler for tag search.
+ *
+ * @since 3.1.0
+ */
+function wp_ajax_ajax_tag_search() {
 	if ( isset( $_GET['tax'] ) ) {
 		$taxonomy = sanitize_key( $_GET['tax'] );
 		$tax = get_taxonomy( $taxonomy );
@@ -120,6 +133,11 @@ function wp_ajax_ajax_tag_search() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for compression testing.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_wp_compression_test() {
 	if ( !current_user_can( 'manage_options' ) )
 		wp_die( -1 );
@@ -165,6 +183,11 @@ function wp_ajax_wp_compression_test() {
 	wp_die( 0 );
 }
 
+/**
+ * Ajax handler for image editor previews.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_imgedit_preview() {
 	$post_id = intval($_GET['postid']);
 	if ( empty($post_id) || !current_user_can('edit_post', $post_id) )
@@ -179,6 +202,11 @@ function wp_ajax_imgedit_preview() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for oEmbed caching.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_oembed_cache() {
 	global $wp_embed;
 
@@ -186,6 +214,11 @@ function wp_ajax_oembed_cache() {
 	wp_die( $return );
 }
 
+/**
+ * Ajax handler for user autocomplete.
+ *
+ * @since 3.4.0
+ */
 function wp_ajax_autocomplete_user() {
 	if ( ! is_multisite() || ! current_user_can( 'promote_users' ) || wp_is_large_network( 'users' ) )
 		wp_die( -1 );
@@ -241,6 +274,11 @@ function wp_ajax_autocomplete_user() {
 	wp_die( json_encode( $return ) );
 }
 
+/**
+ * Ajax handler for dashboard widgets.
+ *
+ * @since 3.4.0
+ */
 function wp_ajax_dashboard_widgets() {
 	require_once ABSPATH . 'wp-admin/includes/dashboard.php';
 
@@ -257,13 +295,18 @@ function wp_ajax_dashboard_widgets() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for Customizer preview logged-in status.
+ *
+ * @since 3.4.0
+ */
 function wp_ajax_logged_in() {
 	wp_die( 1 );
 }
 
-/*
- * Ajax helper.
- */
+//
+// Ajax helpers.
+//
 
 /**
  * Sends back current comment total and new page links if they need to be updated.
@@ -325,10 +368,15 @@ function _wp_ajax_delete_comment_response( $comment_id, $delta = -1 ) {
 	$x->send();
 }
 
-/*
- * POST-based Ajax handlers.
- */
+//
+// POST-based Ajax handlers.
+//
 
+/**
+ * Ajax handler for adding a hierarchical term.
+ *
+ * @since 3.1.0
+ */
 function _wp_ajax_add_hierarchical_term() {
 	$action = $_POST['action'];
 	$taxonomy = get_taxonomy(substr($action, 4));
@@ -408,6 +456,11 @@ function _wp_ajax_add_hierarchical_term() {
 	$x->send();
 }
 
+/**
+ * Ajax handler for deleting a comment.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_delete_comment() {
 	$id = isset( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 
@@ -451,6 +504,11 @@ function wp_ajax_delete_comment() {
 	wp_die( 0 );
 }
 
+/**
+ * Ajax handler for deleting a tag.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_delete_tag() {
 	$tag_id = (int) $_POST['tag_ID'];
 	check_ajax_referer( "delete-tag_$tag_id" );
@@ -471,6 +529,11 @@ function wp_ajax_delete_tag() {
 		wp_die( 0 );
 }
 
+/**
+ * Ajax handler for deleting a link.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_delete_link() {
 	$id = isset( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 
@@ -488,6 +551,11 @@ function wp_ajax_delete_link() {
 		wp_die( 0 );
 }
 
+/**
+ * Ajax handler for deleting meta.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_delete_meta() {
 	$id = isset( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 
@@ -502,6 +570,13 @@ function wp_ajax_delete_meta() {
 	wp_die( 0 );
 }
 
+/**
+ * Ajax handler for deleting a post.
+ *
+ * @since 3.1.0
+ *
+ * @param string $action Action to perform.
+ */
 function wp_ajax_delete_post( $action ) {
 	if ( empty( $action ) )
 		$action = 'delete-post';
@@ -520,6 +595,13 @@ function wp_ajax_delete_post( $action ) {
 		wp_die( 0 );
 }
 
+/**
+ * Ajax handler for sending a post to the trash.
+ *
+ * @since 3.1.0
+ *
+ * @param string $action Action to perform.
+ */
 function wp_ajax_trash_post( $action ) {
 	if ( empty( $action ) )
 		$action = 'trash-post';
@@ -543,6 +625,13 @@ function wp_ajax_trash_post( $action ) {
 	wp_die( 0 );
 }
 
+/**
+ * Ajax handler to restore a post from the trash.
+ *
+ * @since 3.1.0
+ *
+ * @param string $action Action to perform.
+ */
 function wp_ajax_untrash_post( $action ) {
 	if ( empty( $action ) )
 		$action = 'untrash-post';
@@ -567,6 +656,11 @@ function wp_ajax_delete_page( $action ) {
 		wp_die( 0 );
 }
 
+/**
+ * Ajax handler to dim a comment.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_dim_comment() {
 	$id = isset( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 
@@ -604,6 +698,13 @@ function wp_ajax_dim_comment() {
 	wp_die( 0 );
 }
 
+/**
+ * Ajax handler for deleting a link category.
+ *
+ * @since 3.1.0
+ *
+ * @param string $action Action to perform.
+ */
 function wp_ajax_add_link_category( $action ) {
 	if ( empty( $action ) )
 		$action = 'add-link-category';
@@ -634,6 +735,11 @@ function wp_ajax_add_link_category( $action ) {
 	$x->send();
 }
 
+/**
+ * Ajax handler to add a tag.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_add_tag() {
 	global $wp_list_table;
 
@@ -686,6 +792,11 @@ function wp_ajax_add_tag() {
 	$x->send();
 }
 
+/**
+ * Ajax handler for getting a tagcloud.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_get_tagcloud() {
 	if ( isset( $_POST['tax'] ) ) {
 		$taxonomy = sanitize_key( $_POST['tax'] );
@@ -722,6 +833,13 @@ function wp_ajax_get_tagcloud() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for getting comments.
+ *
+ * @since 3.1.0
+ *
+ * @param string $action Action to perform.
+ */
 function wp_ajax_get_comments( $action ) {
 	global $wp_list_table, $post_id;
 	if ( empty( $action ) )
@@ -766,8 +884,15 @@ function wp_ajax_get_comments( $action ) {
 	$x->send();
 }
 
+/**
+ * Ajax handler for replying to a comment.
+ *
+ * @since 3.1.0
+ *
+ * @param string $action Action to perform.
+ */
 function wp_ajax_replyto_comment( $action ) {
-	global $wp_list_table, $wpdb;
+	global $wp_list_table;
 	if ( empty( $action ) )
 		$action = 'replyto-comment';
 
@@ -860,6 +985,11 @@ function wp_ajax_replyto_comment( $action ) {
 	$x->send();
 }
 
+/**
+ * Ajax handler for editing a comment.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_edit_comment() {
 	global $wp_list_table;
 
@@ -900,6 +1030,11 @@ function wp_ajax_edit_comment() {
 	$x->send();
 }
 
+/**
+ * Ajax handler for adding a menu item.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_add_menu_item() {
 	check_ajax_referer( 'add-menu_item', 'menu-settings-column-nonce' );
 
@@ -972,6 +1107,11 @@ function wp_ajax_add_menu_item() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for adding meta.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_add_meta() {
 	check_ajax_referer( 'add-meta', '_ajax_nonce-add-meta' );
 	$c = 0;
@@ -1055,6 +1195,13 @@ function wp_ajax_add_meta() {
 	$x->send();
 }
 
+/**
+ * Ajax handler for adding a user.
+ *
+ * @since 3.1.0
+ *
+ * @param string $action Action to perform.
+ */
 function wp_ajax_add_user( $action ) {
 	global $wp_list_table;
 	if ( empty( $action ) )
@@ -1090,6 +1237,11 @@ function wp_ajax_add_user( $action ) {
 	$x->send();
 }
 
+/**
+ * Ajax handler for closed post boxes.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_closed_postboxes() {
 	check_ajax_referer( 'closedpostboxes', 'closedpostboxesnonce' );
 	$closed = isset( $_POST['closed'] ) ? explode( ',', $_POST['closed']) : array();
@@ -1117,6 +1269,11 @@ function wp_ajax_closed_postboxes() {
 	wp_die( 1 );
 }
 
+/**
+ * Ajax handler for hidden columns.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_hidden_columns() {
 	check_ajax_referer( 'screen-options-nonce', 'screenoptionnonce' );
 	$hidden = explode( ',', isset( $_POST['hidden'] ) ? $_POST['hidden'] : '' );
@@ -1134,6 +1291,11 @@ function wp_ajax_hidden_columns() {
 	wp_die( 1 );
 }
 
+/**
+ * Ajax handler for updating whether to display the welcome panel.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_update_welcome_panel() {
 	check_ajax_referer( 'welcome-panel-nonce', 'welcomepanelnonce' );
 
@@ -1145,6 +1307,11 @@ function wp_ajax_update_welcome_panel() {
 	wp_die( 1 );
 }
 
+/**
+ * Ajax handler for retrieving menu meta boxes.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_menu_get_metabox() {
 	if ( ! current_user_can( 'edit_theme_options' ) )
 		wp_die( -1 );
@@ -1188,6 +1355,11 @@ function wp_ajax_menu_get_metabox() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for internal linking.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_wp_link_ajax() {
 	check_ajax_referer( 'internal-linking', '_ajax_linking_nonce' );
 
@@ -1209,6 +1381,11 @@ function wp_ajax_wp_link_ajax() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for menu locations save.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_menu_locations_save() {
 	if ( ! current_user_can( 'edit_theme_options' ) )
 		wp_die( -1 );
@@ -1219,6 +1396,11 @@ function wp_ajax_menu_locations_save() {
 	wp_die( 1 );
 }
 
+/**
+ * Ajax handler for saving the meta box order.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_meta_box_order() {
 	check_ajax_referer( 'meta-box-order' );
 	$order = isset( $_POST['order'] ) ? (array) $_POST['order'] : false;
@@ -1244,6 +1426,11 @@ function wp_ajax_meta_box_order() {
 	wp_die( 1 );
 }
 
+/**
+ * Ajax handler for menu quick searching.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_menu_quick_search() {
 	if ( ! current_user_can( 'edit_theme_options' ) )
 		wp_die( -1 );
@@ -1255,12 +1442,22 @@ function wp_ajax_menu_quick_search() {
 	wp_die();
 }
 
+/**
+ * Ajax handler to retrieve a permalink.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_get_permalink() {
 	check_ajax_referer( 'getpermalink', 'getpermalinknonce' );
 	$post_id = isset($_POST['post_id'])? intval($_POST['post_id']) : 0;
 	wp_die( add_query_arg( array( 'preview' => 'true' ), get_permalink( $post_id ) ) );
 }
 
+/**
+ * Ajax handler to retrieve a sample permalink.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_sample_permalink() {
 	check_ajax_referer( 'samplepermalink', 'samplepermalinknonce' );
 	$post_id = isset($_POST['post_id'])? intval($_POST['post_id']) : 0;
@@ -1269,6 +1466,11 @@ function wp_ajax_sample_permalink() {
 	wp_die( get_sample_permalink_html( $post_id, $title, $slug ) );
 }
 
+/**
+ * Ajax handler for quick edit saving for a post.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_inline_save() {
 	global $wp_list_table;
 
@@ -1343,6 +1545,11 @@ function wp_ajax_inline_save() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for quick edit saving for a term.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_inline_save_tax() {
 	global $wp_list_table;
 
@@ -1388,6 +1595,11 @@ function wp_ajax_inline_save_tax() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for finding posts.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_find_posts() {
 	check_ajax_referer( 'find-posts' );
 
@@ -1446,6 +1658,11 @@ function wp_ajax_find_posts() {
 	wp_send_json_success( $html );
 }
 
+/**
+ * Ajax handler for saving the widgets order.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_widgets_order() {
 	check_ajax_referer( 'save-sidebar-widgets', 'savewidgets' );
 
@@ -1477,6 +1694,11 @@ function wp_ajax_widgets_order() {
 	wp_die( -1 );
 }
 
+/**
+ * Ajax handler for saving a widget.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_save_widget() {
 	global $wp_registered_widgets, $wp_registered_widget_controls, $wp_registered_widget_updates;
 
@@ -1561,11 +1783,21 @@ function wp_ajax_save_widget() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for saving a widget.
+ *
+ * @since 3.9.0
+ */
 function wp_ajax_update_widget() {
 	global $wp_customize;
 	$wp_customize->widgets->wp_ajax_update_widget();
 }
 
+/**
+ * Ajax handler for uploading attachments
+ *
+ * @since 3.3.0
+ */
 function wp_ajax_upload_attachment() {
 	check_ajax_referer( 'media-form' );
 
@@ -1631,6 +1863,11 @@ function wp_ajax_upload_attachment() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for image editing.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_image_editor() {
 	$attachment_id = intval($_POST['postid']);
 	if ( empty($attachment_id) || !current_user_can('edit_post', $attachment_id) )
@@ -1658,6 +1895,11 @@ function wp_ajax_image_editor() {
 	wp_die();
 }
 
+/**
+ * Ajax handler for setting the featured image.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_set_post_thumbnail() {
 	$json = ! empty( $_REQUEST['json'] ); // New-style request
 
@@ -1689,14 +1931,29 @@ function wp_ajax_set_post_thumbnail() {
 	wp_die( 0 );
 }
 
+/**
+ * Ajax handler for date formatting.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_date_format() {
 	wp_die( date_i18n( sanitize_option( 'date_format', wp_unslash( $_POST['date'] ) ) ) );
 }
 
+/**
+ * Ajax handler for time formatting.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_time_format() {
 	wp_die( date_i18n( sanitize_option( 'time_format', wp_unslash( $_POST['date'] ) ) ) );
 }
 
+/**
+ * Ajax handler for saving posts from the fullscreen editor.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_wp_fullscreen_save_post() {
 	$post_id = isset( $_POST['post_ID'] ) ? (int) $_POST['post_ID'] : 0;
 
@@ -1731,6 +1988,11 @@ function wp_ajax_wp_fullscreen_save_post() {
 	wp_send_json_success( array( 'last_edited' => $last_edited ) );
 }
 
+/**
+ * Ajax handler for removing a post lock.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_wp_remove_post_lock() {
 	if ( empty( $_POST['post_ID'] ) || empty( $_POST['active_post_lock'] ) )
 		wp_die( 0 );
@@ -1760,6 +2022,11 @@ function wp_ajax_wp_remove_post_lock() {
 	wp_die( 1 );
 }
 
+/**
+ * Ajax handler for dismissing a WordPress pointer.
+ *
+ * @since 3.1.0
+ */
 function wp_ajax_dismiss_wp_pointer() {
 	$pointer = $_POST['pointer'];
 	if ( $pointer != sanitize_key( $pointer ) )
@@ -1780,7 +2047,7 @@ function wp_ajax_dismiss_wp_pointer() {
 }
 
 /**
- * Get an attachment.
+ * Ajax handler for getting an attachment.
  *
  * @since 3.5.0
  */
@@ -1807,7 +2074,7 @@ function wp_ajax_get_attachment() {
 }
 
 /**
- * Query for attachments.
+ * Ajax handler for querying for attachments.
  *
  * @since 3.5.0
  */
@@ -1846,7 +2113,7 @@ function wp_ajax_query_attachments() {
 }
 
 /**
- * Save attachment attributes.
+ * Ajax handler for saving attachment attributes.
  *
  * @since 3.5.0
  */
@@ -1890,7 +2157,7 @@ function wp_ajax_save_attachment() {
 }
 
 /**
- * Save backwards compatible attachment attributes.
+ * Ajax handler for saving backwards compatible attachment attributes.
  *
  * @since 3.5.0
  */
@@ -1936,6 +2203,11 @@ function wp_ajax_save_attachment_compat() {
 	wp_send_json_success( $attachment );
 }
 
+/**
+ * Ajax handler for saving the attachment order.
+ *
+ * @since 3.5.0
+ */
 function wp_ajax_save_attachment_order() {
 	if ( ! isset( $_REQUEST['post_id'] ) )
 		wp_send_json_error();
@@ -1968,9 +2240,11 @@ function wp_ajax_save_attachment_order() {
 }
 
 /**
+ * Ajax handler for sending an attachment to the editor.
+ *
  * Generates the HTML to send an attachment to the editor.
- * Backwards compatible with the media_send_to_editor filter and the chain
- * of filters that follow.
+ * Backwards compatible with the media_send_to_editor filter
+ * and the chain of filters that follow.
  *
  * @since 3.5.0
  */
@@ -2023,6 +2297,8 @@ function wp_ajax_send_attachment_to_editor() {
 }
 
 /**
+ * Ajax handler for sending a link to the editor.
+ *
  * Generates the HTML to send a non-image embed link to the editor.
  *
  * Backwards compatible with the following filters:
@@ -2033,6 +2309,8 @@ function wp_ajax_send_attachment_to_editor() {
  * @since 3.5.0
  */
 function wp_ajax_send_link_to_editor() {
+	global $post, $wp_embed;
+
 	check_ajax_referer( 'media-send-to-editor', 'nonce' );
 
 	if ( ! $src = wp_unslash( $_POST['src'] ) )
@@ -2047,9 +2325,20 @@ function wp_ajax_send_link_to_editor() {
 	if ( ! $title = trim( wp_unslash( $_POST['title'] ) ) )
 		$title = wp_basename( $src );
 
-	$html = '';
-	if ( $title )
+	$post = get_post( isset( $_POST['post_id'] ) ? $_POST['post_id'] : 0 );
+	// ping WordPress for an embed
+	$check_embed = $wp_embed->run_shortcode( '[embed]'. $src .'[/embed]' );
+	// fallback that WordPress creates when no oEmbed was found
+	$fallback = $wp_embed->maybe_make_link( $src );
+
+	if ( $check_embed !== $fallback ) {
+		// TinyMCE view for [embed] will parse this
+		$html = '[embed]' . $src . '[/embed]';
+	} elseif ( $title ) {
 		$html = '<a href="' . esc_url( $src ) . '">' . $title . '</a>';
+	} else {
+		$html = '';
+	}
 
 	// Figure out what filter to run:
 	$type = 'file';
@@ -2064,9 +2353,11 @@ function wp_ajax_send_link_to_editor() {
 }
 
 /**
- * Heartbeat API (experimental)
+ * Ajax handler for the (experimental) Heartbeat API.
  *
  * Runs when the user is logged in.
+ *
+ * @since 3.6.0
  */
 function wp_ajax_heartbeat() {
 	if ( empty( $_POST['_nonce'] ) )
@@ -2129,6 +2420,11 @@ function wp_ajax_heartbeat() {
 	wp_send_json($response);
 }
 
+/**
+ * Ajax handler for getting revision diffs.
+ *
+ * @since 3.6.0
+ */
 function wp_ajax_get_revision_diffs() {
 	require ABSPATH . 'wp-admin/includes/revision.php';
 
@@ -2157,9 +2453,10 @@ function wp_ajax_get_revision_diffs() {
 }
 
 /**
- * Auto-save the selected color scheme for a user's own profile.
+ * Ajax handler for auto-saving the selected color scheme for
+ * a user's own profile.
  *
- * @since  3.8.0
+ * @since 3.8.0
  */
 function wp_ajax_save_user_color_scheme() {
 	global $_wp_admin_css_colors;
@@ -2177,7 +2474,7 @@ function wp_ajax_save_user_color_scheme() {
 }
 
 /**
- * Get themes from themes_api().
+ * Ajax handler for getting themes from themes_api().
  *
  * @since 3.9.0
  */
@@ -2219,4 +2516,28 @@ function wp_ajax_query_themes() {
 	}
 
 	wp_send_json_success( $api );
+}
+
+/**
+ * Apply [embed] handlers to a string.
+ *
+ * @since 4.0.0
+ */
+function wp_ajax_parse_embed() {
+	global $post, $wp_embed;
+
+	if ( ! $post = get_post( (int) $_REQUEST['post_ID'] ) ) {
+		wp_send_json_error();
+	}
+
+	if ( ! current_user_can( 'read_post', $post->ID ) ) {
+		wp_send_json_error();
+	}
+
+	setup_postdata( $post );
+
+	$parsed = $wp_embed->run_shortcode( $_POST['content'] );
+	$parsed = do_shortcode( $parsed );
+
+	wp_send_json_success( $parsed );
 }

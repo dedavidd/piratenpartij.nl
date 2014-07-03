@@ -31,12 +31,12 @@
   					href="<?php echo esc_attr( $subscribe_url ) ?>"
   					title="<?php _e( 'Add this event to your favourite calendar program (iCal, Outlook, etc.)', AI1EC_PLUGIN_NAME ) ?>" />
   					<?php _e( '✔ Add to Calendar', AI1EC_PLUGIN_NAME ) ?></a>
-  				<a class="btn btn-small ai1ec-subscribe-google" target="_blank"
+  				<!---<a class="btn btn-small ai1ec-subscribe-google" target="_blank"
   					href="<?php echo esc_attr( $google_url ) ?>"
   					title="<?php _e( 'Add this event to your Google Calendar', AI1EC_PLUGIN_NAME ) ?>" />
   					<img src="<?php echo $this->get_theme_img_url( 'google-calendar.png' ) ?>" />
   					<?php _e( 'Add to Google Calendar', AI1EC_PLUGIN_NAME ) ?>
-  				</a>
+  				</a>-->
 				<?php endif ?>
 			</td>
 		</tr>

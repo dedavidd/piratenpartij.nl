@@ -518,8 +518,6 @@ function bulk_edit_posts( $post_data = null ) {
  * @return WP_Post Post object containing all the default post data as attributes
  */
 function get_default_post_to_edit( $post_type = 'post', $create_in_db = false ) {
-	global $wpdb;
-
 	$post_title = '';
 	if ( !empty( $_REQUEST['post_title'] ) )
 		$post_title = esc_html( wp_unslash( $_REQUEST['post_title'] ));
@@ -733,7 +731,6 @@ function write_post() {
  * @return unknown
  */
 function add_meta( $post_ID ) {
-	global $wpdb;
 	$post_ID = (int) $post_ID;
 
 	$metakeyselect = isset($_POST['metakeyselect']) ? wp_unslash( trim( $_POST['metakeyselect'] ) ) : '';
@@ -1468,7 +1465,7 @@ function _admin_notice_post_locked() {
 		<div class="post-taken-over">
 			<div class="post-locked-avatar"></div>
 			<p class="wp-tab-first" tabindex="0">
-			<span class="currently-editing"></span><br>
+			<span class="currently-editing"></span><br />
 			<span class="locked-saving hidden"><img src="images/wpspin_light-2x.gif" width="16" height="16" /> <?php _e('Saving revision...'); ?></span>
 			<span class="locked-saved hidden"><?php _e('Your latest changes were saved as a revision.'); ?></span>
 			</p>
@@ -1618,7 +1615,7 @@ function post_preview() {
  *
  * Intended for use with heartbeat and autosave.js
  *
- * @since 3.9
+ * @since 3.9.0
  *
  * @param $post_data Associative array of the submitted post data.
  * @return mixed The value 0 or WP_Error on failure. The saved post ID on success.

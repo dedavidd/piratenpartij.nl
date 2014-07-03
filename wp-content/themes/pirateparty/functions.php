@@ -1137,5 +1137,7 @@ function annointed_admin_bar_remove() {
 
 add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 
+remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
+
 /* End of file functions.php */
 /* Location: ./wp-content/themes/the-bootstrap/functions.php */

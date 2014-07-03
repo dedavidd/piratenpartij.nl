@@ -847,7 +847,7 @@ class WP_Meta_Query {
 	 *
 	 * @param array $meta_query (optional) A meta query
 	 */
-	function __construct( $meta_query = false ) {
+	public function __construct( $meta_query = false ) {
 		if ( !$meta_query )
 			return;
 
@@ -875,7 +875,7 @@ class WP_Meta_Query {
 	 *
 	 * @param array $qv The query variables
 	 */
-	function parse_query_vars( $qv ) {
+	public function parse_query_vars( $qv ) {
 		$meta_query = array();
 
 		// Simple query needs to be first for orderby=meta_value to work correctly
@@ -903,7 +903,7 @@ class WP_Meta_Query {
 	 * @param string $type MySQL type to cast meta_value
 	 * @return string MySQL type
 	 */
-	function get_cast_for_type( $type = '' ) {
+	public function get_cast_for_type( $type = '' ) {
 		if ( empty( $type ) )
 			return 'CHAR';
 
@@ -930,7 +930,7 @@ class WP_Meta_Query {
 	 * @param object $context (optional) The main query object
 	 * @return array( 'join' => $join_sql, 'where' => $where_sql )
 	 */
-	function get_sql( $type, $primary_table, $primary_id_column, $context = null ) {
+	public function get_sql( $type, $primary_table, $primary_id_column, $context = null ) {
 		global $wpdb;
 
 		if ( ! $meta_table = _get_meta_table( $type ) )
@@ -972,6 +972,7 @@ class WP_Meta_Query {
 				$where["key-only-$key"] = $wpdb->prepare( "$meta_table.meta_key = %s", trim( $q['key'] ) );
 		}
 
+		$where_meta_key = array();
 		foreach ( $queries as $k => $q ) {
 			$meta_key = isset( $q['key'] ) ? trim( $q['key'] ) : '';
 			$meta_type = $this->get_cast_for_type( isset( $q['type'] ) ? $q['type'] : '' );
@@ -1014,12 +1015,18 @@ class WP_Meta_Query {
 			$join[$i] .= " ON ($primary_table.$primary_id_column = $alias.$meta_id_column)";
 
 			$where[$k] = '';
-			if ( !empty( $meta_key ) )
-				$where[$k] = $wpdb->prepare( "$alias.meta_key = %s", $meta_key );
+			if ( ! empty( $meta_key ) ) {
+				if ( isset( $q['compare'] ) ) {
+					$where_meta_key[$k] = $wpdb->prepare( "$alias.meta_key = %s", $meta_key );
+				} else {
+					$where[$k] = $wpdb->prepare( "$alias.meta_key = %s", $meta_key );
+				}
+			}
 
 			if ( is_null( $meta_value ) ) {
-				if ( empty( $where[$k] ) )
+				if ( empty( $where[$k] ) && empty( $where_meta_key ) ) {
 					unset( $join[$i] );
+				}
 				continue;
 			}
 
@@ -1059,6 +1066,10 @@ class WP_Meta_Query {
 			$where = '';
 		else
 			$where = ' AND (' . implode( "\n{$this->relation} ", $where ) . ' )';
+
+		if ( ! empty( $where_meta_key ) ) {
+			$where .= "\nAND (" . implode( "\nAND ", $where_meta_key ) . ' )';
+		}
 
 		$join = implode( "\n", $join );
 		if ( ! empty( $join ) )

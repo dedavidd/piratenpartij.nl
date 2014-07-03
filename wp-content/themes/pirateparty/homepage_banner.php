@@ -43,6 +43,15 @@ THE TOOL KIT
 		</p>
 	</div>
 
+	<div class="m2 clearfix">
+		<p class="first"><strong>Ontmoet je bestuurskandidaten</strong></p>
+		<p>Verkiesbaar op de ALV
+			<span style="float:right;margin-bottom:20px">
+				<a href="https://piratenpartij.nl/bestuurskandidaten-2014-07-06/" class="btn btn-primary">meer informatie</a>
+			</span>
+		</p>
+	</div>
+
 	<div class="row-fluid lower">
 	
 		<div class="span4 centre" style="background-color: #643794;">

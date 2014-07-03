@@ -11,18 +11,6 @@
 /** Make sure that the WordPress bootstrap has run before continuing. */
 require( dirname(__FILE__) . '/wp-load.php' );
 
-
-//If this page is directly accessed, redirect to home page.
-
-/*  if( 'wp-login.php' == basename($_SERVER['PHP_SELF']) ) {
-    if ( isset( $_POST['wp-submit'] ) ||   // in case of LOGIN
-      ( isset($_GET['action']) && $_GET['action']=='logout') ||   // in case of LOGOUT
-      ( isset($_GET['checkemail']) && $_GET['checkemail']=='confirm') ||   // in case of LOST PASSWORD
-      ( isset($_GET['checkemail']) && $_GET['checkemail']=='registered') ) return;    // in case of REGISTER
-    else wp_redirect( home_url() ); // or wp_redirect(home_url('/login'));
-    exit();
-  }*/
-
 // Redirect to https login if forced to use SSL
 if ( force_ssl_admin() && ! is_ssl() ) {
 	if ( 0 === strpos($_SERVER['REQUEST_URI'], 'http') ) {
@@ -752,12 +740,6 @@ default:
 	}
 
 	$reauth = empty($_REQUEST['reauth']) ? false : true;
-
-	// If the user was redirected to a secure login form from a non-secure admin page, and secure login is required but secure admin is not, then don't use a secure
-	// cookie and redirect back to the referring non-secure admin page. This allows logins to always be POSTed over SSL while allowing the user to choose visiting
-	// the admin via http or https.
-	if ( !$secure_cookie && is_ssl() && force_ssl_login() && !force_ssl_admin() && ( 0 !== strpos($redirect_to, 'https') ) && ( 0 === strpos($redirect_to, 'http') ) )
-		$secure_cookie = false;
 
 	$user = wp_signon( '', $secure_cookie );
 

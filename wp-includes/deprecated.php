@@ -1309,6 +1309,27 @@ function get_category_children( $id, $before = '/', $after = '', $visited = arra
 }
 
 /**
+ * Retrieves all category IDs.
+ *
+ * @since 2.0.0
+ * @deprecated 4.0.0 Use get_terms() instead.
+ * @see get_terms()
+ * @link http://codex.wordpress.org/Function_Reference/get_all_category_ids
+ *
+ * @return object List of all of the category IDs.
+ */
+function get_all_category_ids() {
+	_deprecated_function( __FUNCTION__, '4.0', 'get_terms()' );
+
+	if ( ! $cat_ids = wp_cache_get( 'all_category_ids', 'category' ) ) {
+		$cat_ids = get_terms( 'category', array('fields' => 'ids', 'get' => 'all') );
+		wp_cache_add( 'all_category_ids', $cat_ids, 'category' );
+	}
+
+	return $cat_ids;
+}
+
+/**
  * Retrieve the description of the author of the current post.
  *
  * @since 1.5.0
@@ -1916,13 +1937,11 @@ function get_attachment_icon_src( $id = 0, $fullsize = false ) {
 		// We have a thumbnail desired, specified and existing
 
 		$src_file = basename($src);
-		$class = 'attachmentthumb';
 	} elseif ( wp_attachment_is_image( $post->ID ) ) {
 		// We have an image without a thumbnail
 
 		$src = wp_get_attachment_url( $post->ID );
 		$src_file = & $file;
-		$class = 'attachmentimage';
 	} elseif ( $src = wp_mime_type_icon( $post->ID ) ) {
 		// No thumb, no image. We'll look for a mime-related icon instead.
 

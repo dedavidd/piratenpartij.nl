@@ -583,17 +583,11 @@ input:-moz-placeholder {
 
 #banner .m2 {
   border: 10px solid #eaeaea;
-  background-image: url(../img/banner/bootkandidaten3.jpg);
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: 50% 90%;
+  background-image: url(../img/banner/kandidaten_banner.jpg);
   min-height: 150px;
   font-size: 30px;
   padding: 0 5%; }
+
 
 #banner .m3 {
   border: 10px solid #eaeaea;

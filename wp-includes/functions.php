@@ -605,11 +605,12 @@ function wp_get_http_headers( $url, $deprecated = false ) {
 }
 
 /**
- * Whether today is a new day.
+ * Whether the publish date of the current post in the loop is different from the
+ * publish date of the previous post in the loop.
  *
  * @since 0.71
- * @uses $day Today
- * @uses $previousday Previous day
+ * @global string $currentday The day of the current post in the loop.
+ * @global string $previousday The day of the previous post in the loop.
  *
  * @return int 1 when new day, 0 if not a new day.
  */
@@ -1921,7 +1922,7 @@ function wp_ext2type( $ext ) {
 		'image'       => array( 'jpg', 'jpeg', 'jpe',  'gif',  'png',  'bmp',   'tif',  'tiff', 'ico' ),
 		'audio'       => array( 'aac', 'ac3',  'aif',  'aiff', 'm3a',  'm4a',   'm4b',  'mka',  'mp1',  'mp2',  'mp3', 'ogg', 'oga', 'ram', 'wav', 'wma' ),
 		'video'       => array( 'asf', 'avi',  'divx', 'dv',   'flv',  'm4v',   'mkv',  'mov',  'mp4',  'mpeg', 'mpg', 'mpv', 'ogm', 'ogv', 'qt',  'rm', 'vob', 'wmv' ),
-		'document'    => array( 'doc', 'docx', 'docm', 'dotm', 'odt',  'pages', 'pdf',  'rtf',  'wp',   'wpd' ),
+		'document'    => array( 'doc', 'docx', 'docm', 'dotm', 'odt',  'pages', 'pdf',  'xps',  'oxps', 'rtf',  'wp',   'wpd' ),
 		'spreadsheet' => array( 'numbers',     'ods',  'xls',  'xlsx', 'xlsm',  'xlsb' ),
 		'interactive' => array( 'swf', 'key',  'ppt',  'pptx', 'pptm', 'pps',   'ppsx', 'ppsm', 'sldx', 'sldm', 'odp' ),
 		'text'        => array( 'asc', 'csv',  'tsv',  'txt' ),
@@ -1987,11 +1988,13 @@ function wp_check_filetype_and_ext( $file, $filename, $mimes = null ) {
 
 	// Do basic extension validation and MIME mapping
 	$wp_filetype = wp_check_filetype( $filename, $mimes );
-	extract( $wp_filetype );
+	$ext = $wp_filetype['ext'];
+	$type = $wp_filetype['type'];
 
 	// We can't do any further validation without a file to work with
-	if ( ! file_exists( $file ) )
+	if ( ! file_exists( $file ) ) {
 		return compact( 'ext', 'type', 'proper_filename' );
+	}
 
 	// We're able to validate images using GD
 	if ( $type && 0 === strpos( $type, 'image/' ) && function_exists('getimagesize') ) {
@@ -2023,12 +2026,13 @@ function wp_check_filetype_and_ext( $file, $filename, $mimes = null ) {
 				$filename_parts[] = $mime_to_ext[ $imgstats['mime'] ];
 				$new_filename = implode( '.', $filename_parts );
 
-				if ( $new_filename != $filename )
+				if ( $new_filename != $filename ) {
 					$proper_filename = $new_filename; // Mark that it changed
-
+				}
 				// Redefine the extension / MIME
 				$wp_filetype = wp_check_filetype( $new_filename, $mimes );
-				extract( $wp_filetype );
+				$ext = $wp_filetype['ext'];
+				$type = $wp_filetype['type'];
 			}
 		}
 	}
@@ -2147,6 +2151,8 @@ function wp_get_mime_types() {
 	'sldx' => 'application/vnd.openxmlformats-officedocument.presentationml.slide',
 	'sldm' => 'application/vnd.ms-powerpoint.slide.macroEnabled.12',
 	'onetoc|onetoc2|onetmp|onepkg' => 'application/onenote',
+	'oxps' => 'application/oxps',
+	'xps' => 'application/vnd.ms-xpsdocument',
 	// OpenOffice formats
 	'odt' => 'application/vnd.oasis.opendocument.text',
 	'odp' => 'application/vnd.oasis.opendocument.presentation',
@@ -2295,7 +2301,7 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 				$title = $error_data['title'];
 		}
 		$errors = $message->get_error_messages();
-		switch ( count( $errors ) ) :
+		switch ( count( $errors ) ) {
 		case 0 :
 			$message = '';
 			break;
@@ -2305,7 +2311,7 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 		default :
 			$message = "<ul>\n\t\t<li>" . join( "</li>\n\t\t<li>", $errors ) . "</li>\n\t</ul>";
 			break;
-		endswitch;
+		}
 	} elseif ( is_string( $message ) ) {
 		$message = "<p>$message</p>";
 	}
@@ -3381,15 +3387,7 @@ function is_ssl() {
  * @return bool True if forced, false if not forced.
  */
 function force_ssl_login( $force = null ) {
-	static $forced = false;
-
-	if ( !is_null( $force ) ) {
-		$old_forced = $forced;
-		$forced = $force;
-		return $old_forced;
-	}
-
-	return $forced;
+	return force_ssl_admin( $force );
 }
 
 /**
@@ -4008,9 +4006,6 @@ function send_nosniff_header() {
  */
 function _wp_mysql_week( $column ) {
 	switch ( $start_of_week = (int) get_option( 'start_of_week' ) ) {
-	default :
-	case 0 :
-		return "WEEK( $column, 0 )";
 	case 1 :
 		return "WEEK( $column, 1 )";
 	case 2 :
@@ -4019,6 +4014,9 @@ function _wp_mysql_week( $column ) {
 	case 5 :
 	case 6 :
 		return "WEEK( DATE_SUB( $column, INTERVAL $start_of_week DAY ), 0 )";
+	case 0 :
+	default :
+		return "WEEK( $column, 0 )";
 	}
 }
 
@@ -4299,9 +4297,6 @@ function wp_auth_check_html() {
 	$current_domain = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'];
 	$same_domain = ( strpos( $login_url, $current_domain ) === 0 );
 
-	if ( $same_domain && force_ssl_login() && ! force_ssl_admin() )
-		$same_domain = false;
-
 	/**
 	 * Filter whether the authentication check originated at the same domain.
 	 *
@@ -4391,7 +4386,7 @@ function _canonical_charset( $charset ) {
 }
 
 /**
- * Sets the mbstring internal encoding to a binary safe encoding whne func_overload is enabled.
+ * Sets the mbstring internal encoding to a binary safe encoding when func_overload is enabled.
  *
  * When mbstring.func_overload is in use for multi-byte encodings, the results from strlen() and
  * similar functions respect the utf8 characters, causing binary data to return incorrect lengths.
@@ -4439,4 +4434,24 @@ function mbstring_binary_safe_encoding( $reset = false ) {
  */
 function reset_mbstring_encoding() {
 	mbstring_binary_safe_encoding( true );
+}
+
+/**
+ * Alternative to filter_var( $var, FILTER_VALIDATE_BOOLEAN )
+ *
+ * @since 4.0.0
+ *
+ * @param mixed $var
+ * @return boolean
+ */
+function wp_validate_boolean( $var ) {
+	if ( is_bool( $var ) ) {
+		return $var;
+	}
+
+	if ( 'false' === $var ) {
+		return false;
+	}
+
+	return (bool) $var;
 }

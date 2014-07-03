@@ -2335,8 +2335,9 @@ function sanitize_email( $email ) {
  * @return string Human readable time difference.
  */
 function human_time_diff( $from, $to = '' ) {
-	if ( empty( $to ) )
+	if ( empty( $to ) ) {
 		$to = time();
+	}
 
 	$diff = (int) abs( $to - $from );
 
@@ -2373,7 +2374,17 @@ function human_time_diff( $from, $to = '' ) {
 		$since = sprintf( _n( '%s year', '%s years', $years ), $years );
 	}
 
-	return $since;
+	/**
+	 * Filter the human readable difference between two timestamps.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param string $since The difference in human readable text.
+	 * @param int    $diff  The difference in seconds.
+	 * @param int    $from  Unix timestamp from which the difference begins.
+	 * @param int    $to    Unix timestamp to end the time difference.
+	 */
+	return apply_filters( 'human_time_diff', $since, $diff, $from, $to );
 }
 
 /**
@@ -3288,6 +3299,14 @@ function sanitize_option($option, $value) {
 		case 'default_role' :
 			if ( ! get_role( $value ) && get_role( 'subscriber' ) )
 				$value = 'subscriber';
+			break;
+
+		case 'moderation_keys':
+		case 'blacklist_keys':
+			$value = explode( "\n", $value );
+			$value = array_filter( array_map( 'trim', $value ) );
+			$value = array_unique( $value );
+			$value = implode( "\n", $value );
 			break;
 	}
 

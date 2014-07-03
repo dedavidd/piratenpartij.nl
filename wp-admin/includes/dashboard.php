@@ -18,11 +18,6 @@ function wp_dashboard_setup() {
 	$wp_dashboard_control_callbacks = array();
 	$screen = get_current_screen();
 
-	$update = false;
-	$widget_options = get_option( 'dashboard_widget_options' );
-	if ( !$widget_options || !is_array($widget_options) )
-		$widget_options = array();
-
 	/* Register Widgets and Controls */
 
 	$response = wp_check_browser_version();
@@ -123,9 +118,6 @@ function wp_dashboard_setup() {
 		exit;
 	}
 
-	if ( $update )
-		update_option( 'dashboard_widget_options', $widget_options );
-
 	/** This action is documented in wp-admin/edit-form-advanced.php */
 	do_action( 'do_meta_boxes', $screen->id, 'normal', '' );
 
@@ -186,16 +178,16 @@ function wp_dashboard() {
 
 ?>
 <div id="dashboard-widgets" class="metabox-holder<?php echo $columns_css; ?>">
-	<div id='postbox-container-1' class='postbox-container'>
+	<div id="postbox-container-1" class="postbox-container">
 	<?php do_meta_boxes( $screen->id, 'normal', '' ); ?>
 	</div>
-	<div id='postbox-container-2' class='postbox-container'>
+	<div id="postbox-container-2" class="postbox-container">
 	<?php do_meta_boxes( $screen->id, 'side', '' ); ?>
 	</div>
-	<div id='postbox-container-3' class='postbox-container'>
+	<div id="postbox-container-3" class="postbox-container">
 	<?php do_meta_boxes( $screen->id, 'column3', '' ); ?>
 	</div>
-	<div id='postbox-container-4' class='postbox-container'>
+	<div id="postbox-container-4" class="postbox-container">
 	<?php do_meta_boxes( $screen->id, 'column4', '' ); ?>
 	</div>
 </div>
@@ -218,11 +210,6 @@ function wp_dashboard() {
  * @since 2.7.0
  */
 function wp_dashboard_right_now() {
-	$theme = wp_get_theme();
-	if ( current_user_can( 'switch_themes' ) )
-		$theme_name = sprintf( '<a href="themes.php">%1$s</a>', $theme->display('Name') );
-	else
-		$theme_name = $theme->display('Name');
 ?>
 	<div class="main">
 	<ul>
@@ -614,16 +601,16 @@ function _wp_dashboard_recent_comments_row( &$comment, $show_date = true ) {
 
 			<?php
 			else :
-				switch ( $comment->comment_type ) :
-				case 'pingback' :
-					$type = __( 'Pingback' );
-					break;
-				case 'trackback' :
-					$type = __( 'Trackback' );
-					break;
-				default :
-					$type = ucwords( $comment->comment_type );
-				endswitch;
+				switch ( $comment->comment_type ) {
+					case 'pingback' :
+						$type = __( 'Pingback' );
+						break;
+					case 'trackback' :
+						$type = __( 'Trackback' );
+						break;
+					default :
+						$type = ucwords( $comment->comment_type );
+				}
 				$type = esc_html( $type );
 			?>
 			<div class="dashboard-comment-wrap">
@@ -712,7 +699,6 @@ function wp_dashboard_recent_posts( $args ) {
 
 		echo '<ul>';
 
-		$i = 0;
 		$today    = date( 'Y-m-d', current_time( 'timestamp' ) );
 		$tomorrow = date( 'Y-m-d', strtotime( '+1 day', current_time( 'timestamp' ) ) );
 
@@ -761,8 +747,6 @@ function wp_dashboard_recent_posts( $args ) {
  * @return bool False if no comments were found. True otherwise.
  */
 function wp_dashboard_recent_comments( $total_items = 5 ) {
-	global $wpdb;
-
 	// Select all comment types and filter out spam later for better query performance.
 	$comments = array();
 

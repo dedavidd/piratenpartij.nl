@@ -233,11 +233,31 @@ function wp_mail( $to, $subject, $message, $headers = '', $attachments = array()
 	 * @param array $args A compacted array of wp_mail() arguments, including the "to" email,
 	 *                    subject, message, headers, and attachments values.
 	 */
-	extract( apply_filters( 'wp_mail', compact( 'to', 'subject', 'message', 'headers', 'attachments' ) ) );
+	$atts = apply_filters( 'wp_mail', compact( 'to', 'subject', 'message', 'headers', 'attachments' ) );
 
-	if ( !is_array($attachments) )
+	if ( isset( $atts['to'] ) ) {
+		$to = $atts['to'];
+	}
+
+	if ( isset( $atts['subject'] ) ) {
+		$subject = $atts['subject'];
+	}
+
+	if ( isset( $atts['message'] ) ) {
+		$message = $atts['message'];
+	}
+
+	if ( isset( $atts['headers'] ) ) {
+		$headers = $atts['headers'];
+	}
+
+	if ( isset( $atts['attachments'] ) ) {
+		$attachments = $atts['attachments'];
+	}
+
+	if ( ! is_array( $attachments ) ) {
 		$attachments = explode( "\n", str_replace( "\r\n", "\n", $attachments ) );
-
+	}
 	global $phpmailer;
 
 	// (Re)create it, if it's gone missing
@@ -608,13 +628,15 @@ function wp_validate_auth_cookie($cookie = '', $scheme = '') {
 		return false;
 	}
 
-	extract($cookie_elements, EXTR_OVERWRITE);
-
-	$expired = $expiration;
+	$scheme = $cookie_elements['scheme'];
+	$username = $cookie_elements['username'];
+	$hmac = $cookie_elements['hmac'];
+	$expired = $expiration = $cookie_elements['expiration'];
 
 	// Allow a grace period for POST and AJAX requests
-	if ( defined('DOING_AJAX') || 'POST' == $_SERVER['REQUEST_METHOD'] )
+	if ( defined('DOING_AJAX') || 'POST' == $_SERVER['REQUEST_METHOD'] ) {
 		$expired += HOUR_IN_SECONDS;
+	}
 
 	// Quick check to see if an honest cookie has expired
 	if ( $expired < time() ) {
@@ -659,8 +681,9 @@ function wp_validate_auth_cookie($cookie = '', $scheme = '') {
 		return false;
 	}
 
-	if ( $expiration < time() ) // AJAX/POST grace period set above
+	if ( $expiration < time() ) {// AJAX/POST grace period set above
 		$GLOBALS['login_grace_period'] = 1;
+	}
 
 	/**
 	 * Fires once an authentication cookie has been validated.
@@ -795,8 +818,12 @@ function wp_set_auth_cookie($user_id, $remember = false, $secure = '') {
 		$expire = 0;
 	}
 
-	if ( '' === $secure )
+	if ( '' === $secure ) {
 		$secure = is_ssl();
+	}
+
+	// Frontend cookie is secure when the auth cookie is secure and the site's home URL is forced HTTPS.
+	$secure_logged_in_cookie = $secure && 'https' === parse_url( get_option( 'home' ), PHP_URL_SCHEME );
 
 	/**
 	 * Filter whether the connection is secure.
@@ -813,11 +840,11 @@ function wp_set_auth_cookie($user_id, $remember = false, $secure = '') {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @param bool $cookie  Whether to use a secure cookie when logged-in.
-	 * @param int  $user_id User ID.
-	 * @param bool $secure  Whether the connection is secure.
+	 * @param bool $secure_logged_in_cookie Whether to use a secure cookie when logged-in.
+	 * @param int  $user_id                 User ID.
+	 * @param bool $secure                  Whether the connection is secure.
 	 */
-	$secure_logged_in_cookie = apply_filters( 'secure_logged_in_cookie', false, $user_id, $secure );
+	$secure_logged_in_cookie = apply_filters( 'secure_logged_in_cookie', $secure_logged_in_cookie, $user_id, $secure );
 
 	if ( $secure ) {
 		$auth_cookie_name = SECURE_AUTH_COOKIE;
