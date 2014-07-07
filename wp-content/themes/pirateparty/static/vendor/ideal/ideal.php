@@ -79,7 +79,7 @@
 			// Customize submit button
 			$oIdeal->setButton('Verder >>');
 
-			$ideal_html .= '<div class="wrapper"><p><img alt="iDEAL" border="0" src="'.static_url().'ideal/ideal/images/ideal.gif"></p><p>Afrekenen via je eigen bank.</p>' . $oIdeal->createForm() . '</div>';
+			$ideal_html .= '<div class="wrapper"><p><img alt="iDEAL" border="0" src="'.static_url().'vendor/ideal/images/ideal.gif"></p><p>Afrekenen via je eigen bank.</p>' . $oIdeal->createForm() . '</div>';
 
 			if(IDEAL_TEST_MODE == false) {
 				$ideal_html .= '<script type="text/javascript"> function doAutoSubmit() { document.getElementById(\'_ideal_form_\').submit(); } setTimeout(\'doAutoSubmit()\', 100); </script>';
