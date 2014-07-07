@@ -267,7 +267,7 @@ function the_bootstrap_register_scripts_styles() {
 		 
 		wp_register_script(
 			'tw-bootstrap',
-			get_template_directory_uri() . "/static/vendor/bootstrap-3.2.0-dist/bootstrap{$suffix}.js",
+			get_template_directory_uri() . "/js/bootstrap{$suffix}.js",
 			array('jquery'),
 			'2.0.3',
 			true
