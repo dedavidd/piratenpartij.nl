@@ -74,7 +74,7 @@
 			// Set order details
 			$oIdeal->setAmount($fPaymentAmount); // Bedrag (in EURO's)
 			$oIdeal->setOrderId($sPaymentId); // Unieke order referentie (tot 16 karakters)
-			$oIdeal->setOrderDescription('Donatie t.b.v. PiratenPartij NL'); // Order omschrijving (tot 32 karakters)
+			$oIdeal->setOrderDescription('Donatie t.b.v. Piratenpartij'); // Order omschrijving (tot 32 karakters)
 
 			// Customize submit button
 			$oIdeal->setButton('Verder >>');
