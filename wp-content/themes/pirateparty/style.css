@@ -29,8 +29,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-@import url('static/vendor/bootstrap-2.3.1/css/bootstrap.min.css'); 
-@import url('static/vendor/bootstrap-2.3.1/css/bootstrap-responsive.min.css');
+@import url('https://piratenpartij.nl/javascript/twitter-bootstrap/css/bootstrap.min.css'); 
+@import url('https://piratenpartij.nl/javascript/twitter-bootstrap/css/bootstrap-responsive.min.css');
 @import url('static/scss/desktop.css');
 .post-thumbnail {
 	margin-right: 7px;
