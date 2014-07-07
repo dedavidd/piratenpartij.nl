@@ -44,16 +44,8 @@
 		<div class="span12">
 			<header>
 				<div id="header">
-					<a id="logo" href="<?= esc_url( home_url( '/' ) ); ?>" rel="home" title="<?= get_bloginfo( 'name' ); ?>">
-						<?php if ( get_header_image() ) : ?>
-							<img src="<?= header_image(); ?>" width="<?= get_custom_header()->width; ?>" height="<?= get_custom_header()->height; ?>" alt="Logo <?= get_bloginfo( 'name' ); ?>">
-						<?php else: ?>
-							<img src="<?= static_url() ?>img/logo.png" width="125" height="124" alt="Logo <?= get_bloginfo( 'name' ); ?>">
-						<?php endif; ?>
-						<?php
-							$title = explode(" ",get_bloginfo( 'name' ));
-						?>
-						<?= $title[0]; ?><span><?= (!empty($title[1]) ? $title[1] : ""); ?></span><br>
+					<a id="logo" href="/">
+						Piratenpartij<span></span><br>
 						<span class="oz">voor een vrije informatiesamenleving</span>
 					</a>
 					<div id="search" class="hidden-phone">
