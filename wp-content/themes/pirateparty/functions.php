@@ -286,7 +286,7 @@ function the_bootstrap_register_scripts_styles() {
 		 
 		wp_register_style(
 			'tw-bootstrap',
-			get_template_directory_uri() . "/css/bootstrap{$suffix}.css",
+			get_template_directory_uri() . "/static/vendor/bootstrap-2.3.1/css/bootstrap{$suffix}.css",
 			array(),
 			'2.0.3'
 		);
