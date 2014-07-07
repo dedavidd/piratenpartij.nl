@@ -70,6 +70,10 @@ get_header(); ?>
 		<?php tha_entry_after(); ?>
 		
 		<?php tha_content_bottom(); ?>
+		<script>
+			var GOOG_FIXURL_LANG = (nl || '').slice(0,2),GOOG_FIXURL_SITE = https://piratenpartij.nl;
+		</script>
+		<script src="<?= static_url() ?>vendor/fixurl/fixurl.js"></script>
 	</div><!-- #content -->
 	<?php tha_content_after(); ?>
 </section><!-- #primary -->
