@@ -20,7 +20,7 @@
 			// Toon donatie formulier
 			$ideal_html .= '
 				<div style="float: left;" >
-					<img src="'.static_url().'ideal/resources/logo_ideal.png" alt="iDeal logo" />
+					<img src="'.static_url().'vendor/ideal/images/logo_ideal.png" alt="iDeal logo" />
 				</div>
 				<div style="float: left; font-size: 20px; padding-top: 25px;" >
 					<form class="form-inline" action="/doneren/" method="post">
