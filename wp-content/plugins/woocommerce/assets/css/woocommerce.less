@@ -379,7 +379,8 @@ p.demo_store {
 					float:left;
 				}
 				td.label {
-					padding-right: 1em;
+					padding: 0.5em 1em 0 1em;
+                    margin-right: 1em;
 				}
 				td {
 					vertical-align: top;
@@ -457,10 +458,13 @@ p.demo_store {
 				margin: -6px -6px 0 0;
 			}
 			h3 {
-				padding: .5em 0;
 				margin: 0;
 				font-size: 1em;
+                text-align: center;
 			}
+            h3:hover{
+                text-decoration: underline;
+            }
 			a {
 				text-decoration:none;
 			}
@@ -468,7 +472,6 @@ p.demo_store {
 				width: 100%;
 				height:auto;
 				display:block;
-				margin: 0 0 8px;
 				.box_shadow(0,1px,2px,0,rgba(0,0,0,0.3));
 				.transition();
 			}
@@ -482,7 +485,8 @@ p.demo_store {
 				color: @highlight;
 				display:block;
 				font-weight:normal;
-				margin-bottom: .5em;
+                text-align: center;
+                margin-bottom: .5em;
 				del {
 					font-size: 0.67em;
 					color:fade( desaturate( @highlight, 75% ), 50% );
