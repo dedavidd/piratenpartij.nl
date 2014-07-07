@@ -8,8 +8,7 @@
 		Website:    http://www.php-solutions.nl
 		Licentie:   http://creativecommons.org/licenses/by/3.0/nl/
 	*/
-//	include(dirname(__FILE__) . '/library/ideallite.cls.php');
-	include(dirname(__FILE__) . '../../../../../idealcheckout/gateways/ideal-professional-v3/gateway.cls.php');
+	include(dirname(__FILE__) . '/library/ideallite.cls.php');
 
 	$ideal_html = '';
 
@@ -20,22 +19,22 @@
 
 			// Toon donatie formulier
 			$ideal_html .= '
-			<div style="float: left;" >
-				<img src="'.static_url().'ideal/resources/logo_ideal.png" alt="iDeal logo" />
-			</div>
-			<div style="float: left; font-size: 20px; padding-top: 25px;" >
-				<form class="form-inline" action="/doneren/" method="post">
-				        <div class="input-group">
-						<label for="inBedrag">Donatiebedrag:</label>
-						<div class="input-append input-prepend">
-							<span class="add-on">&euro;</span>
-							<input required id="inBedrag" class="input-small" name="amount" type="text" placeholder="10,00">
-							<input id="btnDoneer" class="btn btn-primary" type="submit" value="Doneer!">
-						</div>
-					</div>
-				</form>
-			</div>
-			<div style="clear: both;" ></div>';
+				<div style="float: left;" >
+					<img src="'.static_url().'ideal/resources/logo_ideal.png" alt="iDeal logo" />
+				</div>
+				<div style="float: left; font-size: 20px; padding-top: 25px;" >
+					<form class="form-inline" action="/doneren/" method="post">
+            <div class="input-group">
+              <label for="inBedrag">Donatiebedrag:</label>
+              <div class="input-append input-prepend">
+                <span class="add-on">&euro;</span>
+                <input id="inBedrag" class="input-small" name="amount" type="text" placeholder="10,00">
+                <input id="btnDoneer" class="btn btn-primary" type="submit" value="Doneer!">
+              </div>
+            </div>
+					</form>
+				</div>
+				<div style="clear: both;" ></div>';
 		} else {
 			// Meld de status van de betaling
 			$sPaymentId = (empty($_GET['ideal']['id']) ? '' : $_GET['ideal']['id']);
@@ -86,14 +85,14 @@
 				$ideal_html .= '<script type="text/javascript"> function doAutoSubmit() { document.getElementById(\'_ideal_form_\').submit(); } setTimeout(\'doAutoSubmit()\', 100); </script>';
 			}
 		} else {
-			$ideal_html .= '<p>Vanwege de transactiekosten die iDeal rekent is het minimum donatiebedrag 1 euro.<br><br><a href="https://piratenpartij.nl/doneren/">&larr; Terug</a></p>';
+			$ideal_html .= '<p>Vanwege de transactiekosten die iDeal rekent is het minimum donatie bedrag 1 euro.<br><br><a href="ideal.php">Terug</a></p>';
 		}
 	}
-
-	function ideal_shortcode_handler() {
-		global $ideal_html;
-		return ideal_output($ideal_html);
-	}
+  
+  function ideal_shortcode_handler() {
+    global $ideal_html;
+    return ideal_output($ideal_html);
+  }
 
 	function ideal_output($html) {
 		// Bouw deze HTML code naar eigen inzicht om zodat ze aansluit bij jou website
@@ -111,7 +110,7 @@
 			// Create file
 			touch($sPath);
 
-			// When creating a new file, we update file mode
+			// When creating a new file, we update file mode 
 			// to avoid access problems with other tools like FTP.
 			chmod($sPath, 0777);
 		}
