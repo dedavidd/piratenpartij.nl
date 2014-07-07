@@ -57,6 +57,9 @@ function static_url()
 require_once('static/vendor/ideal/ideal.php');
 add_shortcode('ideal', 'ideal_shortcode_handler');
 
+require_once('static/vendor/ideal/lidworden.php');
+add_shortcode('lidworden', 'lidworden_shortcode_handler');
+
 if ( ! function_exists( 'the_bootstrap_setup' ) ):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
