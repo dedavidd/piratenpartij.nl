@@ -28,7 +28,7 @@
 
 	<link href="<?php bloginfo('stylesheet_url');?>" rel="stylesheet">
 	
-	<script src="<?= static_url() ?>js/vendor/modernizr-2.6.2.min.js"></script>
+	<script src="https://piratenpartij.nl/javascript/modernizr/modernizr.min.js"></script>
 	<link rel="shortcut icon" href="<?= static_url() ?>favicon.ico"/>
 	<link rel="image_src" href="<?= static_url() ?>img/logo.png"/>
 	
