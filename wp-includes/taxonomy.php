@@ -346,8 +346,10 @@ function register_taxonomy( $taxonomy, $object_type, $args = array() ) {
 	);
 	$args = wp_parse_args( $args, $defaults );
 
-	if ( strlen( $taxonomy ) > 32 )
+	if ( strlen( $taxonomy ) > 32 ) {
+		_doing_it_wrong( __FUNCTION__, __( 'Taxonomies cannot exceed 32 characters in length' ), '4.0' );
 		return new WP_Error( 'taxonomy_too_long', __( 'Taxonomies cannot exceed 32 characters in length' ) );
+	}
 
 	if ( false !== $args['query_var'] && ! empty( $wp ) ) {
 		if ( true === $args['query_var'] )
@@ -1480,13 +1482,11 @@ function get_terms( $taxonomies, $args = '' ) {
 	}
 
 	if ( ! empty( $args['name__like'] ) ) {
-		$name__like = like_escape( $args['name__like'] );
-		$where .= $wpdb->prepare( " AND t.name LIKE %s", '%' . $name__like . '%' );
+		$where .= $wpdb->prepare( " AND t.name LIKE %s", '%' . $wpdb->esc_like( $args['name__like'] ) . '%' );
 	}
 
 	if ( ! empty( $args['description__like'] ) ) {
-		$description__like = like_escape( $args['description__like'] );
-		$where .= $wpdb->prepare( " AND tt.description LIKE %s", '%' . $description__like . '%' );
+		$where .= $wpdb->prepare( " AND tt.description LIKE %s", '%' . $wpdb->esc_like( $args['description__like'] ) . '%' );
 	}
 
 	if ( '' !== $parent ) {
@@ -1517,8 +1517,8 @@ function get_terms( $taxonomies, $args = '' ) {
 	}
 
 	if ( ! empty( $args['search'] ) ) {
-		$search = like_escape( $args['search'] );
-		$where .= $wpdb->prepare( ' AND ((t.name LIKE %s) OR (t.slug LIKE %s))', '%' . $search . '%', '%' . $search . '%' );
+		$like = '%' . $wpdb->esc_like( $args['search'] ) . '%';
+		$where .= $wpdb->prepare( ' AND ((t.name LIKE %s) OR (t.slug LIKE %s))', $like, $like );
 	}
 
 	$selects = array();
@@ -1573,9 +1573,13 @@ function get_terms( $taxonomies, $args = '' ) {
 	 * @param array        $args       An array of terms query arguments.
 	 */
 	$clauses = apply_filters( 'terms_clauses', compact( $pieces ), $taxonomies, $args );
-	foreach ( $pieces as $piece ) {
-		$$piece = isset( $clauses[ $piece ] ) ? $clauses[ $piece ] : '';
-	}
+	$fields = isset( $clauses[ 'fields' ] ) ? $clauses[ 'fields' ] : '';
+	$join = isset( $clauses[ 'join' ] ) ? $clauses[ 'join' ] : '';
+	$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
+	$orderby = isset( $clauses[ 'orderby' ] ) ? $clauses[ 'orderby' ] : '';
+	$order = isset( $clauses[ 'order' ] ) ? $clauses[ 'order' ] : '';
+	$limits = isset( $clauses[ 'limits' ] ) ? $clauses[ 'limits' ] : '';
+
 	$query = "SELECT $fields FROM $wpdb->terms AS t $join WHERE $where $orderby $order $limits";
 
 	if ( 'count' == $_fields ) {
@@ -1679,7 +1683,8 @@ function get_terms( $taxonomies, $args = '' ) {
  * @param string $taxonomy The taxonomy name to use
  * @param int $parent ID of parent term under which to confine the exists search.
  * @return mixed Returns 0 if the term does not exist. Returns the term ID if no taxonomy is specified
- * 	and the term ID exists. Returns an array of the term ID and the taxonomy if the pairing exists.
+ *               and the term ID exists. Returns an array of the term ID and the term taxonomy ID
+ *               if the taxonomy is specified and the pairing exists.
  */
 function term_exists($term, $taxonomy = '', $parent = 0) {
 	global $wpdb;
@@ -2438,7 +2443,13 @@ function wp_insert_term( $term, $taxonomy, $args = array() ) {
 
 	$slug_provided = ! empty( $args['slug'] );
 	if ( ! $slug_provided ) {
-		$slug = sanitize_title($name);
+		$_name = trim( $name );
+		$existing_term = get_term_by( 'name', $_name, $taxonomy );
+		if ( $existing_term ) {
+			$slug = $existing_term->slug;
+		} else {
+			$slug = sanitize_title( $name );
+		}
 	} else {
 		$slug = $args['slug'];
 	}
@@ -2606,14 +2617,14 @@ function wp_insert_term( $term, $taxonomy, $args = array() ) {
  * @since 2.3.0
  * @uses wp_remove_object_terms()
  *
- * @param int $object_id The object to relate to.
- * @param array|int|string $terms The slug or id of the term, will replace all existing
- * related terms in this taxonomy.
- * @param array|string $taxonomy The context in which to relate the term to the object.
- * @param bool $append If false will delete difference of terms.
- * @return array|WP_Error Affected Term IDs
+ * @param int              $object_id The object to relate to.
+ * @param array|int|string $terms     A single term slug, single term id, or array of either term slugs or ids.
+ *                                    Will replace all existing related terms in this taxonomy.
+ * @param array|string     $taxonomy  The context in which to relate the term to the object.
+ * @param bool             $append    Optional. If false will delete difference of terms. Default false.
+ * @return array|WP_Error Affected Term IDs.
  */
-function wp_set_object_terms($object_id, $terms, $taxonomy, $append = false) {
+function wp_set_object_terms( $object_id, $terms, $taxonomy, $append = false ) {
 	global $wpdb;
 
 	$object_id = (int) $object_id;
@@ -3750,7 +3761,8 @@ function the_taxonomies( $args = array() ) {
 		'before' => '',
 		'sep' => ' ',
 		'after' => '',
-		'template' => '%s: %l.'
+		/* translators: %s: taxonomy label, %l: list of term links */
+		'template' => __( '%s: %l.' )
 	);
 
 	$r = wp_parse_args( $args, $defaults );
@@ -3766,7 +3778,7 @@ function the_taxonomies( $args = array() ) {
  *
  * @since 2.5.0
  *
- * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global `$post`.
+ * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
  * @param array $args Override the defaults.
  * @return array List of taxonomies.
  */
@@ -3774,7 +3786,8 @@ function get_the_taxonomies( $post = 0, $args = array() ) {
 	$post = get_post( $post );
 
 	$args = wp_parse_args( $args, array(
-		'template' => '%s: %l.',
+		/* translators: %s: taxonomy label, %l: list of term links */
+		'template' => __( '%s: %l.' ),
 	) );
 
 	$taxonomies = array();
@@ -3818,7 +3831,7 @@ function get_the_taxonomies( $post = 0, $args = array() ) {
  *
  * @uses get_object_taxonomies()
  *
- * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global `$post`.
+ * @param int|WP_Post $post Optional. Post ID or WP_Post object. Default is global $post.
  * @return array
  */
 function get_post_taxonomies( $post = 0 ) {

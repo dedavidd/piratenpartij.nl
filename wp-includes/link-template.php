@@ -290,7 +290,7 @@ function get_post_permalink( $id = 0, $leavename = false, $sample = false ) {
  *
  * @since 1.0.0
  *
- * @param int|WP_Post $post_id Optional. Post ID or WP_Post object. Default is global `$post`.
+ * @param int|WP_Post $post_id Optional. Post ID or WP_Post object. Default is global $post.
  * @param mixed $deprecated Not used.
  * @return string
  */
@@ -1655,7 +1655,7 @@ function adjacent_posts_rel_link( $title = '%title', $in_same_term = false, $exc
  *
  */
 function adjacent_posts_rel_link_wp_head() {
-	if ( ! is_single() ) {
+	if ( ! is_single() || is_attachment() ) {
 		return;
 	}
 	adjacent_posts_rel_link();
@@ -2626,22 +2626,27 @@ function content_url($path = '') {
 }
 
 /**
- * Retrieve the url to the plugins directory or to a specific file within that directory.
- * You can hardcode the plugin slug in $path or pass __FILE__ as a second argument to get the correct folder name.
+ * Retrieve a URL within the plugins or mu-plugins directory.
+ *
+ * Defaults to the plugins directory URL if no arguments are supplied.
  *
  * @since 2.6.0
  *
- * @param string $path Optional. Path relative to the plugins url.
- * @param string $plugin Optional. The plugin file that you want to be relative to - i.e. pass in __FILE__
- * @return string Plugins url link with optional path appended.
+ * @param  string $path   Optional. Extra path appended to the end of the URL, including
+ *                        the relative directory if $plugin is supplied. Default empty.
+ * @param  string $plugin Optional. A full path to a file inside a plugin or mu-plugin.
+ *                        The URL will be relative to its directory. Default empty.
+ *                        Typically this is done by passing `__FILE__` as the argument.
+ * @return string Plugins URL link with optional paths appended.
 */
-function plugins_url($path = '', $plugin = '') {
+function plugins_url( $path = '', $plugin = '' ) {
 
-	$mu_plugin_dir = WPMU_PLUGIN_DIR;
-	foreach ( array('path', 'plugin', 'mu_plugin_dir') as $var ) {
-		$$var = str_replace('\\' ,'/', $$var); // sanitize for Win32 installs
-		$$var = preg_replace('|/+|', '/', $$var);
-	}
+	$path = str_replace( '\\' ,'/', $path ); // sanitize for Win32 installs
+	$path = preg_replace( '|/+|', '/', $path );
+	$plugin = str_replace( '\\' ,'/', $plugin ); // sanitize for Win32 installs
+	$plugin = preg_replace( '|/+|', '/', $plugin );
+	$mu_plugin_dir = str_replace( '\\' ,'/', WPMU_PLUGIN_DIR ); // sanitize for Win32 installs
+	$mu_plugin_dir = preg_replace( '|/+|', '/', $mu_plugin_dir );
 
 	if ( !empty($plugin) && 0 === strpos($plugin, $mu_plugin_dir) )
 		$url = WPMU_PLUGIN_URL;

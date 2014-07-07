@@ -78,6 +78,7 @@ class wp_xmlrpc_server extends IXR_Server {
 			'wp.editComment'		=> 'this:wp_editComment',
 			'wp.newComment'			=> 'this:wp_newComment',
 			'wp.getCommentStatusList' => 'this:wp_getCommentStatusList',
+			'wp.deleteMediaItem'	=> 'this:wp_deletePost',		// Alias
 			'wp.getMediaItem'		=> 'this:wp_getMediaItem',
 			'wp.getMediaLibrary'	=> 'this:wp_getMediaLibrary',
 			'wp.getPostFormats'     => 'this:wp_getPostFormats',
@@ -1100,6 +1101,21 @@ class wp_xmlrpc_server extends IXR_Server {
 
 		if ( ! $user = $this->login( $username, $password ) )
 			return $this->error;
+
+		// convert the date field back to IXR form
+		if ( isset( $content_struct['post_date'] ) ) {
+			$content_struct['post_date'] = $this->_convert_date( $content_struct['post_date'] );
+		}
+
+		// ignore the existing GMT date if it is empty or a non-GMT date was supplied in $content_struct,
+		// since _insert_post will ignore the non-GMT date if the GMT date is set
+		if ( isset( $content_struct['post_date_gmt'] ) ) {
+			if ( $content_struct['post_date_gmt'] == '0000-00-00 00:00:00' || isset( $content_struct['post_date'] ) ) {
+				unset( $content_struct['post_date_gmt'] );
+			} else {
+				$content_struct['post_date_gmt'] = $this->_convert_date( $content_struct['post_date_gmt'] );
+			}
+		}
 
 		/** This action is documented in wp-includes/class-wp-xmlrpc-server.php */
 		do_action( 'xmlrpc_call', 'wp.newPost' );
@@ -5764,7 +5780,7 @@ class wp_xmlrpc_server extends IXR_Server {
 			} elseif ( is_string($urltest['fragment']) ) {
 				// ...or a string #title, a little more complicated
 				$title = preg_replace('/[^a-z0-9]/i', '.', $urltest['fragment']);
-				$sql = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_title RLIKE %s", like_escape( $title ) );
+				$sql = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_title RLIKE %s", $title );
 				if (! ($post_ID = $wpdb->get_var($sql)) ) {
 					// returning unknown error '0' is better than die()ing
 			  		return $this->pingback_error( 0, '' );

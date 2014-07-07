@@ -443,8 +443,14 @@ class WP_Comment_Query {
 		 * @param WP_Comment_Query &$this  Current instance of WP_Comment_Query, passed by reference.
 		 */
 		$clauses = apply_filters_ref_array( 'comments_clauses', array( compact( $pieces ), &$this ) );
-		foreach ( $pieces as $piece )
-			$$piece = isset( $clauses[ $piece ] ) ? $clauses[ $piece ] : '';
+
+		$fields = isset( $clauses[ 'fields' ] ) ? $clauses[ 'fields' ] : '';
+		$join = isset( $clauses[ 'join' ] ) ? $clauses[ 'join' ] : '';
+		$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
+		$orderby = isset( $clauses[ 'orderby' ] ) ? $clauses[ 'orderby' ] : '';
+		$order = isset( $clauses[ 'order' ] ) ? $clauses[ 'order' ] : '';
+		$limits = isset( $clauses[ 'limits' ] ) ? $clauses[ 'limits' ] : '';
+		$groupby = isset( $clauses[ 'groupby' ] ) ? $clauses[ 'groupby' ] : '';
 
 		if ( $groupby ) {
 			$groupby = 'GROUP BY ' . $groupby;
@@ -481,11 +487,14 @@ class WP_Comment_Query {
 	 * @return string
 	 */
 	protected function get_search_sql( $string, $cols ) {
-		$string = esc_sql( like_escape( $string ) );
+		global $wpdb;
+
+		$like = '%' . $wpdb->esc_like( $string ) . '%';
 
 		$searches = array();
-		foreach ( $cols as $col )
-			$searches[] = "$col LIKE '%$string%'";
+		foreach ( $cols as $col ) {
+			$searches[] = $wpdb->prepare( "$col LIKE %s", $like );
+		}
 
 		return ' AND (' . implode(' OR ', $searches) . ')';
 	}
@@ -709,9 +718,10 @@ function wp_set_comment_cookies($comment, $user) {
 	 * @param int $seconds Comment cookie lifetime. Default 30000000.
 	 */
 	$comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );
-	setcookie('comment_author_' . COOKIEHASH, $comment->comment_author, time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN);
-	setcookie('comment_author_email_' . COOKIEHASH, $comment->comment_author_email, time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN);
-	setcookie('comment_author_url_' . COOKIEHASH, esc_url($comment->comment_author_url), time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN);
+	$secure = is_https_url( home_url() );
+	setcookie( 'comment_author_' . COOKIEHASH, $comment->comment_author, time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN, $secure );
+	setcookie( 'comment_author_email_' . COOKIEHASH, $comment->comment_author_email, time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN, $secure );
+	setcookie( 'comment_author_url_' . COOKIEHASH, esc_url($comment->comment_author_url), time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN, $secure );
 }
 
 /**
@@ -1732,6 +1742,12 @@ function wp_throttle_comment_flood($block, $time_lastcomment, $time_newcomment) 
  * @return int|bool The ID of the comment on success, false on failure.
  */
 function wp_new_comment( $commentdata ) {
+	if ( isset( $commentdata['user_ID'] ) ) {
+		$commentdata['user_id'] = $commentdata['user_ID'] = (int) $commentdata['user_ID'];
+	}
+
+	$prefiltered_user_id = ( isset( $commentdata['user_id'] ) ) ? (int) $commentdata['user_id'] : 0;
+
 	/**
 	 * Filter a comment's data before it is sanitized and inserted into the database.
 	 *
@@ -1742,10 +1758,11 @@ function wp_new_comment( $commentdata ) {
 	$commentdata = apply_filters( 'preprocess_comment', $commentdata );
 
 	$commentdata['comment_post_ID'] = (int) $commentdata['comment_post_ID'];
-	if ( isset($commentdata['user_ID']) )
+	if ( isset( $commentdata['user_ID'] ) && $prefiltered_user_id !== (int) $commentdata['user_ID'] ) {
 		$commentdata['user_id'] = $commentdata['user_ID'] = (int) $commentdata['user_ID'];
-	elseif ( isset($commentdata['user_id']) )
+	} elseif ( isset( $commentdata['user_id'] ) ) {
 		$commentdata['user_id'] = (int) $commentdata['user_id'];
+	}
 
 	$commentdata['comment_parent'] = isset($commentdata['comment_parent']) ? absint($commentdata['comment_parent']) : 0;
 	$parent_status = ( 0 < $commentdata['comment_parent'] ) ? wp_get_comment_status($commentdata['comment_parent']) : '';

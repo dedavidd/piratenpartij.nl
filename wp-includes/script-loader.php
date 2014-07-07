@@ -303,7 +303,7 @@ function wp_default_scripts( &$scripts ) {
 
 	$scripts->add( 'mediaelement', "/wp-includes/js/mediaelement/mediaelement-and-player.min.js", array('jquery'), '2.14.2', 1 );
 	did_action( 'init' ) && $scripts->localize( 'mediaelement', 'mejsL10n', array(
-		'language' => get_bloginfo( 'language' ),
+		'language' => substr( get_bloginfo( 'language' ), 0, 2 ),
 		'strings'  => array(
 			'Close'               => __( 'Close' ),
 			'Fullscreen'          => __( 'Fullscreen' ),
@@ -476,7 +476,7 @@ function wp_default_scripts( &$scripts ) {
 			'error' => __('Error while saving the changes.'),
 			'ntdeltitle' => __('Remove From Bulk Edit'),
 			'notitle' => __('(no title)'),
-			'comma' => _x( ',', 'tag delimiter' ),
+			'comma' => trim( _x( ',', 'tag delimiter' ) ),
 		) );
 
 		$scripts->add( 'inline-edit-tax', "/wp-admin/js/inline-edit-tax$suffix.js", array( 'jquery' ), false, 1 );
@@ -506,7 +506,8 @@ function wp_default_scripts( &$scripts ) {
 		$scripts->add( 'dashboard', "/wp-admin/js/dashboard$suffix.js", array( 'jquery', 'admin-comments', 'postbox' ), false, 1 );
 
 		$scripts->add( 'list-revisions', "/wp-includes/js/wp-list-revisions$suffix.js" );
-
+		
+		$scripts->add( 'media-grid', "/wp-includes/js/media-grid$suffix.js", array( 'media-editor' ), false, 1 );
 		$scripts->add( 'media', "/wp-admin/js/media$suffix.js", array( 'jquery' ), false, 1 );
 		did_action( 'init' ) && $scripts->localize( 'media', 'attachMediaBoxL10n', array(
 			'error' => __( 'An error has occurred. Please reload the page and try again.' ),
@@ -530,7 +531,8 @@ function wp_default_scripts( &$scripts ) {
 		did_action( 'init' ) && $scripts->localize( 'nav-menu', 'navMenuL10n', array(
 			'noResultsFound' => _x('No results found.', 'search results'),
 			'warnDeleteMenu' => __( "You are about to permanently delete this menu. \n 'Cancel' to stop, 'OK' to delete." ),
-			'saveAlert' => __('The changes you made will be lost if you navigate away from this page.')
+			'saveAlert' => __( 'The changes you made will be lost if you navigate away from this page.' ),
+			'untitled' => _x( '(no label)', 'missing menu item navigation label' )
 		) );
 
 		$scripts->add( 'custom-header', "/wp-admin/js/custom-header.js", array( 'jquery-masonry' ), false, 1 );

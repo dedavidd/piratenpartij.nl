@@ -1449,7 +1449,97 @@ class WP_Query {
 	 * @since 1.5.0
 	 * @access public
 	 *
-	 * @param string|array $query Optional query.
+	 * @param string|array $query {
+	 *     Optional. Array or string of Query parameters.
+	 *
+	 *     @type int          $attachment_id           Attachment post ID. Used for 'attachment' post_type.
+	 *     @type int|string   $author                  Author ID, or comma-separated list of IDs.
+	 *     @type string       $author_name             User 'user_nicename'.
+	 *     @type array        $author__in              An array of author IDs to query from.
+	 *     @type array        $author__not_in          An array of author IDs not to query from.
+	 *     @type bool         $cache_results           Whether to cache post information. Default true.
+	 *     @type int|string   $cat                     Category ID or comma-separated list of IDs (this or any children).
+	 *     @type array        $category__and           An array of category IDs (AND in).
+	 *     @type array        $category__in            An array of category IDs (OR in, no children).
+	 *     @type array        $category__not_in        An array of category IDs (NOT in).
+	 *     @type string       $category_name           Use category slug (not name, this or any children).
+	 *     @type int          $comments_per_page       The number of comments to return per page.
+	 *                                                 Default 'comments_per_page' option.
+	 *     @type int|string   $comments_popup          Whether the query is within the comments popup. Default empty.
+	 *     @type array        $date_query              An associative array of WP_Date_Query arguments.
+	 *                                                 {@see WP_Date_Query::__construct()}
+	 *     @type int          $day                     Day of the month. Default empty. Accepts numbers 1-31.
+	 *     @type bool         $exact                   Whether to search by exact keyword. Default false.
+	 *     @type string|array $fields                  Which fields to return. Single field or all fields (string),
+	 *                                                 or array of fields. 'id=>parent' uses 'id' and 'post_parent'.
+	 *                                                 Default all fields. Accepts 'ids', 'id=>parent'.
+	 *     @type int          $hour                    Hour of the day. Default empty. Accepts numbers 0-23.
+	 *     @type bool         $ignore_sticky_posts     Whether to ignore sticky posts or not. Setting this to false
+	 *                                                 excludes stickies from 'post__in'. Default 0|false. Accepts
+	 *                                                 1|true, 0|false.
+	 *     @type int          $m                       Combination YearMonth. Default empty. Accepts any four-digit
+	 *                                                 year and month numbers 1-12.
+	 *     @type string       $meta_compare            Comparison operator to test the 'meta_value'.
+	 *     @type string       $meta_key                Custom field key.
+	 *     @type array        $meta_query              An associative array of WP_Meta_Query arguments.
+	 *                                                 {@see WP_Meta_Query->queries}
+	 *     @type string       $meta_value              Custom field value.
+	 *     @type int          $meta_value_num          Custom field value number.
+	 *     @type int          $menu_order              The menu order of the posts.
+	 *     @type int          $monthnum                The two-digit month. Default empty. Accepts numbers 1-12.
+	 *     @type string       $name                    Post slug.
+	 *     @type bool         $nopaging                Show all posts (true) or paginate (false). Default false.
+	 *     @type bool         $no_found_rows           Whether to count the total rows found. Disabling can improve
+	 *                                                 performance. Default true.
+	 *     @type int          $offset                  The number of posts to offset before retrieval.
+	 *     @type string       $order                   Designates ascending or descending order of posts. Default 'DESC'.
+	 *                                                 Accepts 'ASC', 'DESC'.
+	 *     @type string       $orderby                 Sort retrieved posts by parameter. One or more options can be
+	 *                                                 passed. To use 'meta_value', or 'meta_value_num',
+	 *                                                 'meta_key=keyname' must be also be defined. Default 'date'.
+	 *                                                 Accepts 'none', 'name', 'author', 'date', 'title', 'modified',
+	 *                                                 'menu_order', 'parent', 'ID', 'rand', 'comment_count'.
+	 *     @type int          $p                       Post ID.
+	 *     @type int          $page                    Show the number of posts that would show up on page X of a
+	 *                                                 static front page.
+	 *     @type int          $paged                   The number of the current page.
+	 *     @type int          $page_id                 Page ID.
+	 *     @type string       $pagename                Page slug.
+	 *     @type string       $perm                    Show posts if user has the appropriate capability.
+	 *     @type array        $post__in                An array of post IDs to retrieve, sticky posts will be included
+	 *     @type string       $post_mime_type          The mime type of the post. Used for 'attachment' post_type.
+	 *     @type array        $post__not_in            An array of post IDs not to retrieve. Note: a string of comma-
+	 *     @type int          $post_parent             Page ID to retrieve child pages for. Use 0 to only retrieve
+	 *                                                 top-level pages.
+	 *     @type array        $post_parent__in         An array containing parent page IDs to query child pages from.
+	 *     @type array        $post_parent__not_in     An array containing parent page IDs not to query child pages from.
+	 *                                                 separated IDs will NOT work.
+	 *     @type string|array $post_type               A post type slug (string) or array of post type slugs.
+	 *                                                 Default 'any' if using 'tax_query'.
+	 *     @type string|array $post_status             A post status (string) or array of post statuses.
+	 *     @type int          $posts_per_page          The number of posts to query for. Use -1 to request all posts.
+	 *     @type int          $posts_per_archive_page  The number of posts to query for by archive page. Overrides
+	 *                                                 'posts_per_page' when is_archive(), or is_search() are true.
+	 *     @type string       $s                       Search keyword.
+	 *     @type int          $second                  Second of the minute. Default empty. Accepts numbers 0-60.
+	 *     @type array        $search_terms            Array of search terms.
+	 *     @type bool         $sentence                Whether to search by phrase. Default false.
+	 *     @type bool         $suppress_filters        Whether to suppress filters. Default false.
+	 *     @type string       $tag                     Tag slug. Comma-separated (either), Plus-separated (all).
+	 *     @type array        $tag__and                An array of tag ids (AND in).
+	 *     @type array        $tag__in                 An array of tag ids (OR in).
+	 *     @type array        $tag__not_in             An array of tag ids (NOT in).
+	 *     @type int          $tag_id                  Tag id or comma-separated list of IDs.
+	 *     @type array        $tag_slug__and           An array of tag slugs (AND in).
+	 *     @type array        $tag_slug__in            An array of tag slugs (OR in). unless 'ignore_sticky_posts' is
+	 *                                                 true. Note: a string of comma-separated IDs will NOT work.
+	 *     @type array        $tax_query               An associative array of WP_Tax_Query arguments.
+	 *                                                 {@see WP_Tax_Query->queries}
+	 *     @type bool         $update_post_meta_cache  Whether to update the post meta cache. Default true.
+	 *     @type bool         $update_post_term_cache  Whether to update the post term cache. Default true.
+	 *     @type int          $w                       The week number of the year. Default empty. Accepts numbers 0-53.
+	 *     @type int          $year                    The four-digit year. Default empty. Accepts any four-digit year.
+	 * }
 	 */
 	public function parse_query( $query =  '' ) {
 		if ( ! empty( $query ) ) {
@@ -1732,7 +1822,7 @@ class WP_Query {
 	 *
 	 * @param array &$q The query variables
 	 */
-	protected function parse_tax_query( &$q ) {
+	function parse_tax_query( &$q ) {
 		if ( ! empty( $q['tax_query'] ) && is_array( $q['tax_query'] ) ) {
 			$tax_query = $q['tax_query'];
 		} else {
@@ -1830,8 +1920,6 @@ class WP_Query {
 				'field' => 'term_id',
 				'include_children' => false
 			);
-		} elseif ( isset( $this->query['category__in'] ) ) {
-			$q['category__in'] = false;
 		}
 
 		if ( ! empty($q['category__not_in']) ) {
@@ -1889,8 +1977,6 @@ class WP_Query {
 				'taxonomy' => 'post_tag',
 				'terms' => $q['tag__in']
 			);
-		} elseif ( isset( $this->query['tag__in'] ) ) {
-			$q['tag__in'] = false;
 		}
 
 		if ( !empty($q['tag__not_in']) ) {
@@ -1918,8 +2004,6 @@ class WP_Query {
 				'terms' => $q['tag_slug__in'],
 				'field' => 'slug'
 			);
-		} elseif ( isset( $this->query['tag_slug__in'] ) ) {
-			$q['tag_slug__in'] = false;
 		}
 
 		if ( !empty($q['tag_slug__and']) ) {
@@ -1983,11 +2067,13 @@ class WP_Query {
 		$searchand = '';
 		$q['search_orderby_title'] = array();
 		foreach ( $q['search_terms'] as $term ) {
-			$term = like_escape( esc_sql( $term ) );
-			if ( $n )
-				$q['search_orderby_title'][] = "$wpdb->posts.post_title LIKE '%$term%'";
+			if ( $n ) {
+				$like = '%' . $wpdb->esc_like( $term ) . '%';
+				$q['search_orderby_title'][] = $wpdb->prepare( "$wpdb->posts.post_title LIKE %s", $like );
+			}
 
-			$search .= "{$searchand}(($wpdb->posts.post_title LIKE '{$n}{$term}{$n}') OR ($wpdb->posts.post_content LIKE '{$n}{$term}{$n}'))";
+			$like = $n . $wpdb->esc_like( $term ) . $n;
+			$search .= $wpdb->prepare( "{$searchand}(($wpdb->posts.post_title LIKE %s) OR ($wpdb->posts.post_content LIKE %s))", $like, $like );
 			$searchand = ' AND ';
 		}
 
@@ -2086,11 +2172,11 @@ class WP_Query {
 
 		if ( $q['search_terms_count'] > 1 ) {
 			$num_terms = count( $q['search_orderby_title'] );
-			$search_orderby_s = like_escape( esc_sql( $q['s'] ) );
+			$like = '%' . $wpdb->esc_like( $q['s'] ) . '%';
 
 			$search_orderby = '(CASE ';
 			// sentence match in 'post_title'
-			$search_orderby .= "WHEN $wpdb->posts.post_title LIKE '%{$search_orderby_s}%' THEN 1 ";
+			$search_orderby .= $wpdb->prepare( "WHEN $wpdb->posts.post_title LIKE %s THEN 1 ", $like );
 
 			// sanity limit, sort as sentence when more than 6 terms
 			// (few searches are longer than 6 terms and most titles are not)
@@ -2103,7 +2189,7 @@ class WP_Query {
 			}
 
 			// sentence match in 'post_content'
-			$search_orderby .= "WHEN $wpdb->posts.post_content LIKE '%{$search_orderby_s}%' THEN 4 ";
+			$search_orderby .= $wpdb->prepare( "WHEN $wpdb->posts.post_content LIKE %s THEN 4 ", $like );
 			$search_orderby .= 'ELSE 5 END)';
 		} else {
 			// single word or sentence search
@@ -2376,11 +2462,11 @@ class WP_Query {
 				if ( !$ptype_obj || !$ptype_obj->query_var || empty($q[ $ptype_obj->query_var ]) )
 					continue;
 
-				if ( ! $ptype_obj->hierarchical || strpos($q[ $ptype_obj->query_var ], '/') === false ) {
-					// Non-hierarchical post_types & parent-level-hierarchical post_types can directly use 'name'
+				if ( ! $ptype_obj->hierarchical ) {
+					// Non-hierarchical post types can directly use 'name'.
 					$q['name'] = $q[ $ptype_obj->query_var ];
 				} else {
-					// Hierarchical post_types will operate through the
+					// Hierarchical post types will operate through 'pagename'.
 					$q['pagename'] = $q[ $ptype_obj->query_var ];
 					$q['name'] = '';
 				}
@@ -2451,9 +2537,6 @@ class WP_Query {
 		} elseif ( $q['post__in'] ) {
 			$post__in = implode(',', array_map( 'absint', $q['post__in'] ));
 			$where .= " AND {$wpdb->posts}.ID IN ($post__in)";
-		} elseif ( isset( $this->query['post__in'] ) ) {
-			$post__in = 0;
-			$where .= " AND 1=0 ";
 		} elseif ( $q['post__not_in'] ) {
 			$post__not_in = implode(',',  array_map( 'absint', $q['post__not_in'] ));
 			$where .= " AND {$wpdb->posts}.ID NOT IN ($post__not_in)";
@@ -2464,9 +2547,6 @@ class WP_Query {
 		} elseif ( $q['post_parent__in'] ) {
 			$post_parent__in = implode( ',', array_map( 'absint', $q['post_parent__in'] ) );
 			$where .= " AND {$wpdb->posts}.post_parent IN ($post_parent__in)";
-		} elseif ( isset( $this->query['post_parent__in'] ) ) {
-			$post_parent__in = 0;
-			$where .= " AND 1=0 ";
 		} elseif ( $q['post_parent__not_in'] ) {
 			$post_parent__not_in = implode( ',',  array_map( 'absint', $q['post_parent__not_in'] ) );
 			$where .= " AND {$wpdb->posts}.post_parent NOT IN ($post_parent__not_in)";
@@ -2482,8 +2562,6 @@ class WP_Query {
 		// If a search pattern is specified, load the posts that match.
 		if ( ! empty( $q['s'] ) ) {
 			$search = $this->parse_search( $q );
-		} elseif ( ! $this->is_admin && $this->is_search ) {
-			$search = ' AND 0';
 		}
 
 		/**
@@ -2504,13 +2582,6 @@ class WP_Query {
 
 			$join .= $clauses['join'];
 			$where .= $clauses['where'];
-		}
-
-		// If *__in is passed to WP_Query as an empty array, don't return results
-		foreach ( array( 'category', 'tag', 'tag_slug' ) as $in ) {
-			if ( isset( $q["{$in}__in"] ) && false === $q["{$in}__in"] ) {
-				$where = " AND 1=0 $where";
-			}
 		}
 
 		if ( $this->is_tax ) {
@@ -2604,9 +2675,6 @@ class WP_Query {
 		} elseif ( ! empty( $q['author__in'] ) ) {
 			$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
 			$where .= " AND {$wpdb->posts}.post_author IN ($author__in) ";
-		} elseif ( isset( $this->query['author__in'] ) ) {
-			$author__in = 0;
-			$where .= ' AND 1=0 ';
 		}
 
 		// Author stuff for nice URLs
@@ -2896,7 +2964,7 @@ class WP_Query {
 				$page = 1;
 
 			if ( empty($q['offset']) ) {
-				$pgstrt = ($page - 1) * $q['posts_per_page'] . ', ';
+				$pgstrt = absint( ( $page - 1 ) * $q['posts_per_page'] ) . ', ';
 			} else { // we're ignoring $page and using 'offset'
 				$q['offset'] = absint($q['offset']);
 				$pgstrt = $q['offset'] . ', ';
@@ -3080,9 +3148,13 @@ class WP_Query {
 			 */
 			$clauses = (array) apply_filters_ref_array( 'posts_clauses', array( compact( $pieces ), &$this ) );
 
-			foreach ( $pieces as $piece ) {
-				$$piece = isset( $clauses[ $piece ] ) ? $clauses[ $piece ] : '';
-			}
+			$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
+			$groupby = isset( $clauses[ 'groupby' ] ) ? $clauses[ 'groupby' ] : '';
+			$join = isset( $clauses[ 'join' ] ) ? $clauses[ 'join' ] : '';
+			$orderby = isset( $clauses[ 'orderby' ] ) ? $clauses[ 'orderby' ] : '';
+			$distinct = isset( $clauses[ 'distinct' ] ) ? $clauses[ 'distinct' ] : '';
+			$fields = isset( $clauses[ 'fields' ] ) ? $clauses[ 'fields' ] : '';
+			$limits = isset( $clauses[ 'limits' ] ) ? $clauses[ 'limits' ] : '';
 		}
 
 		/**
@@ -3199,8 +3271,14 @@ class WP_Query {
 			 * @param WP_Query &$this  The WP_Query instance (passed by reference).
 			 */
 			$clauses = (array) apply_filters_ref_array( 'posts_clauses_request', array( compact( $pieces ), &$this ) );
-			foreach ( $pieces as $piece )
-				$$piece = isset( $clauses[ $piece ] ) ? $clauses[ $piece ] : '';
+
+			$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
+			$groupby = isset( $clauses[ 'groupby' ] ) ? $clauses[ 'groupby' ] : '';
+			$join = isset( $clauses[ 'join' ] ) ? $clauses[ 'join' ] : '';
+			$orderby = isset( $clauses[ 'orderby' ] ) ? $clauses[ 'orderby' ] : '';
+			$distinct = isset( $clauses[ 'distinct' ] ) ? $clauses[ 'distinct' ] : '';
+			$fields = isset( $clauses[ 'fields' ] ) ? $clauses[ 'fields' ] : '';
+			$limits = isset( $clauses[ 'limits' ] ) ? $clauses[ 'limits' ] : '';
 		}
 
 		if ( ! empty($groupby) )
