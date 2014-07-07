@@ -82,7 +82,7 @@
 					<i class="icon-th-list"></i> Menu
 				</button>
 				<a href="<?= donate_page_uri() ?>" class="hidden-desktop btn btn-danger pull-right mobile-menu-button" title="Doneren">Doneren</a>
-				a href="<?= join_page_uri() ?>" class="hidden-desktop btn btn-warning pull-right mobile-menu-button" title="Word lid">Word lid</a>
+				<a href="<?= join_page_uri() ?>" class="hidden-desktop btn btn-warning pull-right mobile-menu-button" title="Word lid">Word lid</a>
 
 				<div class="nav-collapse collapse">
 <?php
