@@ -330,7 +330,7 @@ function the_bootstrap_print_ie_scripts() {
 	?>
 	<!--[if lt IE 9]>
 		<script src="<?php echo get_template_directory_uri(); ?>/static/vendor/html5shiv/html5shiv.min.js" type="text/javascript"></script>
-		<script src="<?php echo get_template_directory_uri(); ?>/js/respond.min.js" type="text/javascript"></script>
+		<script src="<?php echo get_template_directory_uri(); ?>/static/vendor/respond/respond.min.js" type="text/javascript"></script>
 	<![endif]-->
 	<?php
 }
