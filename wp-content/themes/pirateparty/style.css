@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 @import url('static/vendor/bootstrap-2.3.1/css/bootstrap.min.css'); 
 @import url('static/vendor/bootstrap-2.3.1/css/bootstrap-responsive.min.css');
-@import url('static/scss/desktop.css');
+@import url('static/css/desktop.css');
 .post-thumbnail {
 	margin-right: 7px;
 }
