@@ -1112,7 +1112,7 @@ function _the_bootstrap_version() {
 		$theme_version	=	wp_get_theme()->get( 'Version' );
 	}
 	else {
-		$theme_data		=	get_theme_data( get_template_directory() . '/style.css' );
+		$theme_data		=	get_theme_data( get_template_directory() . '/style.min.css' );
 		$theme_version	=	$theme_data['Version'];
 	}
 	
