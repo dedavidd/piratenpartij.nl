@@ -38,14 +38,14 @@ THE TOOL KIT
 	
 		<div class="span4 centre" style="background-color: #643794;">
 			<p class="first centre" style="margin-top: 20px;font-size: 26px;line-height:26px;"><strong>Doneer aan de Piratenpartij</strong></p>
-			<p style="margin-top: 10px;"><a class="btn btn-success sidebar-action-item pig" href="<?php echo donate_page_uri() ?>"><i class="is2-donate"></i>Doneren</a></p>
+			<p style="margin-top: 10px;"><a class="btn btn-success sidebar-action-item pig" href="<?php echo donate_page_uri() ?>" title="Doneren"><i class="is2-donate"></i>Doneren</a></p>
 		</div>
 		
 		<div class="span4" style="background-color: #643794;">
 			<p class="first centre" style="margin-top: 15px;font-size: 22px; line-height: 26px;"><strong>Waarom Piraten?</strong></p>
 			<p class="first centre" style="margin-top: 15px;font-size: 18px; line-height: 22px;">Onze standpunten</p>
 			<p class="read-more centre" style="margin-top: 10px;">
-				<a href="/standpunten/" class="btn btn-primary">
+				<a href="/standpunten/" class="btn btn-primary" title="Onze standpunten">
 					lees meer
 				</a>
 			</p>
@@ -55,7 +55,7 @@ THE TOOL KIT
 			<p style="margin-top: 25px;"><strong>Ontvang onze nieuwsbrief</strong></p>
 			<p>direct in je inbox!</p>
 			<p class="read-more">
-				<a href="nieuwsbrief/" class="btn btn-primary">abonneren</a>
+				<a href="nieuwsbrief/" class="btn btn-primary" title="Ontvang onze nieuwsbrief">abonneren</a>
 			</p>
 		</div>
 		

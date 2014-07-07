@@ -23,10 +23,10 @@
 						<div class="span6">
 							<p>
 								Piratenpartij<br />
-								<a href="/privacybeleid">Privacybeleid</a> | <a href="/anbi">ANBI</a>
+								<a href="/privacybeleid" title="Privacybeleid">Privacybeleid</a> | <a href="/anbi" title="ANBI">ANBI</a>
               </p>
               <p>
-               Hosting gesponsord door <a href="http://www.seeas.nl/" target="_blank">Seeas BV</a><br/><a href="http://www.seeas.nl/" target="_blank"><img src="<?= static_url() ?>img/logo_seeaskl.png" style="height: 15px; border: 1px solid black;"/></a>
+               Hosting gesponsord door <a href="http://www.seeas.nl/" target="_blank">Seeas BV</a><br/><a href="http://www.seeas.nl/" target="_blank" title="Seeas BV><img src="<?= static_url() ?>img/logo_seeaskl.png" style="height: 15px; border: 1px solid black;"/ title="Logo Seeas BV"></a>
 							</p>
 						</div>
 						<div class="span6">
@@ -34,7 +34,7 @@
                 CC0 1.0 Universal Public Domain Dedication
               </p>
               <p>
-								<a href="https://creativecommons.org/publicdomain/zero/1.0/"><img src="<?= static_url() ?>img/cc80x15.png" alt="Voor zover wettelijk mogelijk, heeft de Piratenpartij alle auteursrecht en naburige rechten opgegeven op de inhoud van deze website. Dit werk is gepubliceerd vanuit: Nederland."></a>
+								<a href="https://creativecommons.org/publicdomain/zero/1.0/"  title="Voor zover wettelijk mogelijk, heeft de Piratenpartij alle auteursrecht en naburige rechten opgegeven op de inhoud van deze website. Dit werk is gepubliceerd vanuit: Nederland."><img src="<?= static_url() ?>img/cc80x15.png" alt="Voor zover wettelijk mogelijk, heeft de Piratenpartij alle auteursrecht en naburige rechten opgegeven op de inhoud van deze website. Dit werk is gepubliceerd vanuit: Nederland."></a>
 							</p>
 						</div>
 					</div>

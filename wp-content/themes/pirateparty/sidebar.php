@@ -12,12 +12,12 @@ tha_sidebars_before(); ?>
 	<section id="secondary" class="widget-area" role="complementary">
 
 				<div id="join-donate" style="padding-bottom: 0px;" class="hidden-phone hidden-tablet">
-					<a href="<?php echo join_page_uri() ?>" class="button-orange sidebar-action-item">
+					<a href="<?php echo join_page_uri() ?>" class="button-orange sidebar-action-item" title="Word lid">
 						<i class="is2-group"></i>
 						Word lid
 					</a>
 						
-					<a href="<?php echo donate_page_uri() ?>" class="button-red sidebar-action-item pig">
+					<a href="<?php echo donate_page_uri() ?>" class="button-red sidebar-action-item pig" title="Doneren">
 						<i class="is2-donate"></i>
 						Doneren
 					</a>

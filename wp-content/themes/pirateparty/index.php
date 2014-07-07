@@ -22,7 +22,7 @@ get_header(); ?>
 		
 		<?php require_once('homepage_banner.php'); ?>
 		
-		<div class="news-header">Nieuwste artikelen van de Piratenpartij</div>
+		<div class="news-header">Nieuwste artikelen van de <?= bloginfo('name'); ?></div>
 		
 	<?php endif; ?>
 	

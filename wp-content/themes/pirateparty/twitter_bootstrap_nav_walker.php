@@ -58,7 +58,7 @@ class twitter_bootstrap_nav_walker extends Walker_Nav_Menu {
 
 			$output .= $indent . '<li' . $id . $value . $class_names .'>';
 
-			$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+			$attributes  = ' title="'  . esc_attr( ! empty( $item->attr_title ) ? $item->attr_title : $item->title ) .'"';
 			$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
 			$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
 			$attributes .= ! empty( $item->url ) && ! ($args->has_children) ? ' href="'   . esc_attr( $item->url        ) .'"' : ' href="#"';

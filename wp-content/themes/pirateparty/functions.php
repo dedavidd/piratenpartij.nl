@@ -32,6 +32,17 @@ function privacy_page_uri()
 	return "/privacybeleid";
 }
 
+function social_media_fb_uri() {
+	return "https://facebook.com/Piratenpartij";
+}
+
+function social_media_twitter_uri() {
+	return "https://twitter.com/Piratenpartij";
+}
+
+function social_media_youtube_uri() {
+	return "https://youtube.com/user/depiratenpartij";
+}
 
 require_once('twitter_bootstrap_nav_walker.php');
 

@@ -42,15 +42,20 @@
 
 	<div class="row-fluid" id="header_real">
 		<div class="span12">
-
 			<header>
-
 				<div id="header">
-					<a id="logo" href="/">
-						Piratenpartij<span></span><br>
-						<span class="oz">voor een vrije informatiesamenleving</span>
+					<a id="logo" href="<?= esc_url( home_url( '/' ) ); ?>" rel="home" title="<?= get_bloginfo( 'name' ); ?>">
+						<?php if ( get_header_image() ) : ?>
+							<img src="<?= header_image(); ?>" width="<?= get_custom_header()->width; ?>" height="<?= get_custom_header()->height; ?>" alt="Logo <?= get_bloginfo( 'name' ); ?>">
+						<?php else: ?>
+							<img src="<?= static_url() ?>img/logo.png" width="125" height="124" alt="Logo <?= get_bloginfo( 'name' ); ?>">
+						<?php endif; ?>
+						<?php
+							$title = explode(" ",get_bloginfo( 'name' ));
+						?>
+						<?= $title[0]; ?><span><?= (!empty($title[1]) ? $title[1] : ""); ?></span><br>
+						<span class="oz"><?= bloginfo( 'description' ); ?></span>
 					</a>
-	
 					<div id="search" class="hidden-phone">
 						<form id="id_search_form" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 							<input type="text" class="input-medium field-search notext" name="s" placeholder="Ik ben op zoek naar...">
@@ -59,11 +64,10 @@
 	
 						<div id="social">
 							<span>Volg ons:<br></span>
-							<a href="https://www.facebook.com/piratenpartij"><img src="<?= static_url() ?>img/icons/social/facebook_32.png"></a>
-							<a href="https://twitter.com/piratenpartij"><img src="<?= static_url() ?>img/icons/social/twitter_32.png"></a>
-							<!---<a href="https://plus.google.com/u/0/b/114061517635295816057/114061517635295816057/posts"><img src="<?= static_url() ?>img/icons/social/google_plus_2_32.png"></a>-->
-							<a href="http://www.youtube.com/user/depiratenpartij"><img src="<?= static_url() ?>img/icons/social/youtube_32x32.png"></a>
-							<a href="https://piratenpartij.nl/feed"><img src="<?= static_url() ?>img/icons/social/rss_32.png"></a>
+							<a href="<?= social_media_fb_uri() ?>" target="_blank" title="<?php bloginfo( 'name' ); ?> op Facebook"><img src="<?= static_url() ?>img/icons/social/facebook_32.png" alt="Facebook icon"></a>
+ 							<a href="<?= social_media_twitter_uri() ?>" target="_blank" title="<?php bloginfo( 'name' ); ?> op Twitter"><img src="<?= static_url() ?>img/icons/social/twitter_32.png" alt="Twitter icon"></a>
+ 							<a href="<?= social_media_youtube_uri() ?>" target="_blank" title="<?php bloginfo( 'name' ); ?> op Youtube"><img src="<?= static_url() ?>img/icons/social/youtube_32x32.png" alt="Youtube icon"></a>
+ 							<a href="/feed" target="_blank" title="RSS feed <?php bloginfo( 'name' ); ?>"><img src="<?= static_url() ?>img/icons/social/rss_32.png" alt="RSS icon"></a>
 						</div>
 					</div>
 				</div>
@@ -77,11 +81,9 @@
 				<button id="responsive-menu-button" data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
 					<i class="icon-th-list"></i> Menu
 				</button>
-				
-				<a href="<?php echo donate_page_uri() ?>" class="hidden-desktop btn btn-danger pull-right mobile-menu-button">Doneren</a>
-				<a href="<?php echo join_page_uri() ?>" class="hidden-desktop btn btn-warning pull-right mobile-menu-button">Word lid</a>
-				
-				
+				<a href="<?= donate_page_uri() ?>" class="hidden-desktop btn btn-danger pull-right mobile-menu-button" title="Doneren">Doneren</a>
+				a href="<?= join_page_uri() ?>" class="hidden-desktop btn btn-warning pull-right mobile-menu-button" title="Word lid">Word lid</a>
+
 				<div class="nav-collapse collapse">
 <?php
 
@@ -107,8 +109,8 @@ $defaults = array(
 						<?php wp_nav_menu($defaults); ?>
 						
 						<ul id="menu-action" class="sf-menu hidden-phone hidden-tablet">
-							<li><a href="<?php echo join_page_uri() ?>" class="action left">Word lid!</a></li>
-							<li><a href="<?php echo help_us_page_uri() ?>" class="action right">Help mee!</a></li>
+							<li><a href="<?= join_page_uri() ?>" class="action left" title="Word Lid!">Word lid!</a></li>
+							<li><a href="<?= help_us_page_uri() ?>" class="action right" title="Help mee!">Help mee!</a></li>
 						</ul>
 
 <?php
