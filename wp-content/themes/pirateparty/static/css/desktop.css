@@ -569,7 +569,7 @@ input:-moz-placeholder {
 
 #banner .m1 {
   border: 10px solid #eaeaea;
-  background-image: url(../img/banner/vote_banner.png);
+  background-image: url(../img/blocks/vote_banner.png);
   min-height: 150px;
   font-size: 30px;
   padding: 0 5%; }
@@ -583,7 +583,7 @@ input:-moz-placeholder {
 
 #banner .m2 {
   border: 10px solid #eaeaea;
-  background-image: url(../img/banner/kandidaten_banner.jpg);
+  background-image: url(../img/blocks/kandidaten_banner.jpg);
   min-height: 150px;
   font-size: 30px;
   padding: 0 5%; }
@@ -607,7 +607,7 @@ input:-moz-placeholder {
   max-width: 220px !important; }
 
 #banner .lower .t2 {
-  background: #3F1D63 url(../img/banner/right_sept_2013.png) no-repeat;
+  background: #3F1D63 url(../img/blocks/right_sept_2013.png) no-repeat;
   background-repeat: no-repeat;
   background-size: 100% auto;
   -webkit-background-size: cover;
@@ -621,7 +621,7 @@ input:-moz-placeholder {
   font-size: 1.4em; }
 
 #banner .lower .t1 {
-  background: black url(../img/banner/newsletter.jpg) no-repeat;
+  background: black url(../img/blocks/newsletter.jpg) no-repeat;
   background-position: 100% 50%;
   text-align: center; }
 
@@ -630,7 +630,7 @@ input:-moz-placeholder {
   font-size: 1.2em; }
 
 #banner .lower .t3 {
-  background: black url(../img/banner/left_jan_2013.png) no-repeat;
+  background: black url(../img/blocks/left_jan_2013.png) no-repeat;
   background-position: 100% 50%;
   text-align: center;
   padding-right: 85px; }
@@ -857,7 +857,7 @@ input:-moz-placeholder {
     letter-spacing: 1px; } }
 @media (min-width: 768px) and (max-width: 1144px) {
   #banner .t3 {
-    background: black url(../img/banner/left_jan_2013_dark.png) no-repeat !important;
+    background: black url(../img/blocks/left_jan_2013_dark.png) no-repeat !important;
     background-position: 100% 50% !important;
     padding-right: 0 !important; } }
 @media (min-width: 979px) {
