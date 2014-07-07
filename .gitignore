@@ -3,5 +3,5 @@ idealcheckout/configuration/*
 idealcheckout/temp/*
 wp-config.php
 wp-content/cache/*
-wp-content/themes/pirateparty/inc/ideal/library/ideallite.cfg.php
+wp-content/themes/pirateparty/static/vendor/ideal/library/ideallite.cfg.php
 wp-content/uploads/*

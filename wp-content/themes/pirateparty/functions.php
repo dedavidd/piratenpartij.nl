@@ -54,7 +54,7 @@ function static_url()
 /*
  * iDeal integratie
  */
-require_once('inc/ideal/ideal.php');
+require_once('static/vendor/ideal/ideal.php');
 add_shortcode('ideal', 'ideal_shortcode_handler');
 
 if ( ! function_exists( 'the_bootstrap_setup' ) ):
