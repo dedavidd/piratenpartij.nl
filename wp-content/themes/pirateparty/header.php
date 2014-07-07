@@ -54,7 +54,7 @@
 							$title = explode(" ",get_bloginfo( 'name' ));
 						?>
 						<?= $title[0]; ?><span><?= (!empty($title[1]) ? $title[1] : ""); ?></span><br>
-						<span class="oz"><?= bloginfo( 'description' ); ?></span>
+						<span class="oz">voor een vrije informatiesamenleving</span>
 					</a>
 					<div id="search" class="hidden-phone">
 						<form id="id_search_form" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
