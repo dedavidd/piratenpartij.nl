@@ -85,7 +85,7 @@
 				$ideal_html .= '<script type="text/javascript"> function doAutoSubmit() { document.getElementById(\'_ideal_form_\').submit(); } setTimeout(\'doAutoSubmit()\', 100); </script>';
 			}
 		} else {
-			$ideal_html .= '<p>Vanwege de transactiekosten die iDeal rekent is het minimum donatie bedrag 1 euro.<br><br><a href="ideal.php">Terug</a></p>';
+			$ideal_html .= '<p>Vanwege de transactiekosten die iDeal rekent is het minimum donatiebedrag 1 euro.<br><br><a href="https://piratenpartij.nl/doneren/">Terug</a></p>';
 		}
 	}
   
