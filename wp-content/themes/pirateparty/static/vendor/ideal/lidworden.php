@@ -27,7 +27,7 @@
 								<div class="input-group">
 									<div class="input-append input-prepend">
 										<input id="inBedrag" class="input-small" name="amount" type="hidden" value="17,50">
-										<input id="btnLidworden" class="btn btn-primary" type="submit" value="Verzenden (&euro17,50)">
+										<input id="btnLidworden" class="btn btn-primary" type="submit" value="Verzenden (&euro;17,50)">
 									</div>
 								</div>
 							</div>
