@@ -1153,5 +1153,11 @@ add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 
 remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
 
+if ( is_page( 'lid-worden' ) {
+	wp_enqueue_script( 'lw-jquery', get_stylesheet_directory_uri() . 'https://piratenpartij.nl/javascript/jquery/jquery.min.js', false, 0.1 );
+	wp_enqueue_script( 'lw-angular', get_stylesheet_directory_uri() . 'https://piratenpartij.nl/javascript/angular.js/angular.min.js', false, 0.1 );
+	wp_enqueue_script( 'lw-join', get_stylesheet_directory_uri() . 'https://piratenpartij.nl/wp-content/themes/pirateparty/static/js/join.js', false, 0.1 );
+}
+
 /* End of file functions.php */
 /* Location: ./wp-content/themes/the-bootstrap/functions.php */
