@@ -8,6 +8,7 @@
 		Website:    http://www.php-solutions.nl
 		Licentie:   http://creativecommons.org/licenses/by/3.0/nl/
 	*/
+
 	include(dirname(__FILE__) . '/library/ideallite.cls.php');
 
 	$ideal_html = '';
@@ -17,21 +18,20 @@
 		// No amount if this is not a result-request, then show the form.
 		if(empty($_GET['ideal']['status'])) {
 
-			// Toon donatie formulier
+			// Toon lidworden formulier
 			$ideal_html .= '
-				<div style="float: left;" >
-					<img src="'.static_url().'vendor/ideal/images/logo_ideal.png" alt="iDeal logo" />
-				</div>
-				<div style="float: left; font-size: 20px; padding-top: 25px;" >
-					<form class="form-inline" action="/doneren/" method="post">
-            <div class="input-group">
-              <label for="inBedrag">Donatiebedrag:</label>
-              <div class="input-append input-prepend">
-                <span class="add-on">&euro;</span>
-                <input id="inBedrag" class="input-small" name="amount" type="text" placeholder="10,00">
-                <input id="btnDoneer" class="btn btn-primary" type="submit" value="Doneer!">
-              </div>
-            </div>
+				<div style="font-size: 20px;" >
+					<form class="form-inline" action="/lid-worden/" method="post">
+						<div class="input-group">
+							<div class="input-append input-prepend">
+								<div class="input-group">
+									<div class="input-append input-prepend">
+										<input id="inBedrag" class="input-small" name="amount" type="hidden" value="17,50">
+										<input id="btnLidworden" class="btn btn-primary" type="submit" value="Verzenden (&euro;17,50)">
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div style="clear: both;" ></div>';
@@ -44,22 +44,22 @@
 			// Send confirmation to screen
 			if(strcasecmp($sPaymentStatus, 'success') === 0) {
 				//$html .= '<p>Uw betaling is met succes ontvangen.</p>';.
-				header('Location: /doneren/ideal-succes/');
-				die('<center><br/><br/>Je donatie is met succes ontvangen.<br/><a href="/doneren/ideal-succes/">Klik hier als je niet word doorgestuurd.</a></center>');
+				header('Location: /lid-worden/ideal-succes/');
+				die('<center><br/><br/>Je betaling is met succes ontvangen.<br/><a href="/lid-worden/ideal-succes/">Klik hier als je niet word doorgestuurd.</a></center>');
 			} else {
 				$ideal_html .= '
-					<p class="bg-danger">Er is helaas een fout opgetreden bij het verwerken van je donatie.<br/><br/></p>';
+					<p class="bg-danger">Er is helaas een fout opgetreden bij het verwerken van je betaling.<br/><br/></p>';
 			}
 		}
 	} else { // Toon iDEAL Lite formulier (met AUTO SUBMIT)
 		$sPaymentId = date('YmdHis');
-		$sPaymentCode = randomCode(32);
-		$fPaymentAmount = floatval(str_replace(',', '.', $_POST['amount']));
+		$sPaymentCode = lidwordenRandomCode(32);
+		$fPaymentAmount = floatval(17.50);
 
 		if($fPaymentAmount >= 1) { // Minimaal 1 euro
 			// Save order in folder
 			$aPaymentData = array('id' => $sPaymentId, 'code' => $sPaymentCode, 'amount' => $fPaymentAmount, 'date' => date('Y-m-d'), 'time' => date('H:i:s'), 'ip' => $_SERVER['REMOTE_ADDR'], 'status' => 'open');
-			//writeToFile($sPaymentFile, serialize($aPaymentData));
+			//lidwordenWriteToFile($sPaymentFile, serialize($aPaymentData));
 
 			$oIdeal = new IdealLite();
 
@@ -74,7 +74,7 @@
 			// Set order details
 			$oIdeal->setAmount($fPaymentAmount); // Bedrag (in EURO's)
 			$oIdeal->setOrderId($sPaymentId); // Unieke order referentie (tot 16 karakters)
-			$oIdeal->setOrderDescription('Donatie t.b.v. Piratenpartij'); // Order omschrijving (tot 32 karakters)
+			$oIdeal->setOrderDescription('iDEAL betaling contributie'); // Order omschrijving (tot 32 karakters)
 
 			// Customize submit button
 			$oIdeal->setButton('Verder >>');
@@ -85,27 +85,27 @@
 				$ideal_html .= '<script type="text/javascript"> function doAutoSubmit() { document.getElementById(\'_ideal_form_\').submit(); } setTimeout(\'doAutoSubmit()\', 100); </script>';
 			}
 		} else {
-			$ideal_html .= '<p>Vanwege de transactiekosten die iDeal rekent is het minimum donatiebedrag 1 euro.<br><br><a href="https://piratenpartij.nl/doneren/">Terug</a></p>';
+			$ideal_html .= '<p>Vanwege de transactiekosten die iDeal rekent is het minimum bedrag 1 euro.<br><br><a href="https://piratenpartij.nl/lid-worden/">Terug</a></p>';
 		}
 	}
-  
-  function ideal_shortcode_handler() {
+
+  function lidworden_shortcode_handler() {
     global $ideal_html;
-    return ideal_output($ideal_html);
+    return lidworden_output($ideal_html);
   }
 
-	function ideal_output($html) {
+	function lidworden_output($html) {
 		// Bouw deze HTML code naar eigen inzicht om zodat ze aansluit bij jou website
 		return '<div id="ppnl-ideal">'.$html.'</div>';
 	}
 
 	// Read content from file
-	function readFromFile($sPath) {
+	function lidwordenReadFromFile($sPath) {
 		return file_get_contents($sPath);
 	}
 
 	// Write content to file
-	function writeToFile($sPath, $sContent, $bClearFile = false) {
+	function lidwordenWriteToFile($sPath, $sContent, $bClearFile = false) {
 		if(file_exists($sPath) == false) {
 			// Create file
 			touch($sPath);
@@ -125,7 +125,7 @@
 	}
 
 	// Create a random code with N digits.
-	function randomCode($iLength = 64) {
+	function lidwordenRandomCode($iLength = 64) {
 		$aCharacters = array('a', 'b', 'c', 'd', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 
 		$sResult = '';

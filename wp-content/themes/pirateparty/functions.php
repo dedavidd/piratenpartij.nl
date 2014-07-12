@@ -57,6 +57,9 @@ function static_url()
 require_once('static/vendor/ideal/ideal.php');
 add_shortcode('ideal', 'ideal_shortcode_handler');
 
+//require_once('static/vendor/ideal/lidworden.php');
+//add_shortcode('lidworden', 'lidworden_shortcode_handler');
+
 if ( ! function_exists( 'the_bootstrap_setup' ) ):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -1149,6 +1152,12 @@ function annointed_admin_bar_remove() {
 add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 
 remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
+
+if ( is_page( 'lid-worden' )) {
+	wp_enqueue_script( 'lw-jquery', 'https://piratenpartij.nl/javascript/jquery/jquery.min.js', false, 0.1 );
+	wp_enqueue_script( 'lw-angular', 'https://piratenpartij.nl/javascript/angular.js/angular.min.js', false, 0.1 );
+	wp_enqueue_script( 'lw-join', 'https://piratenpartij.nl/wp-content/themes/pirateparty/static/js/join.js', false, 0.1 );
+}
 
 /* End of file functions.php */
 /* Location: ./wp-content/themes/the-bootstrap/functions.php */
