@@ -630,6 +630,10 @@ input:-moz-placeholder {
   text-align: center;
   padding-right: 85px; }
 
+#banner .lower .t4 p {
+  margin-top: 5px;
+  font-size: 1.2em; }
+
 #banner .lower .c {
   font-size: 18px; }
 
