@@ -70,7 +70,7 @@ if ( ! function_exists( 'the_bootstrap_setup' ) ):
  * @return	void
  */
 function the_bootstrap_setup() {
-	$themename = 'Pirate Party Australia';
+	$themename = 'Piratenpartij';
 	global $content_width;
 	
 	if ( ! isset( $content_width ) ) {
