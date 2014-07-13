@@ -607,18 +607,13 @@ input:-moz-placeholder {
   max-width: 220px !important; }
 
 #banner .lower .t2 {
-  background: #3F1D63 url(../img/blocks/right_sept_2013.png) no-repeat;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: 50% 50%; }
+  background: #3F1D63 url(../opinie.jpg) no-repeat;
+  background-position: 100% 50%;
+  text-align: center; }
 
 #banner .lower .t2 p {
   margin-top: 5px;
-  font-size: 1.4em; }
+  font-size: 1.2em; }
 
 #banner .lower .t1 {
   background: black url(../img/blocks/newsletter.jpg) no-repeat;
