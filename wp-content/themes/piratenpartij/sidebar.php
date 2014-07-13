@@ -32,7 +32,7 @@ tha_sidebars_before(); ?>
 						<li>burgerrechten en digitale vrijheden</li>
 						<li>privacy en anonimiteit</li>
 						<li>overheidstransparantie</li>
-						<li>participatieve democratie</li>
+						<li>directere democratie</li>
 					</ul>
 				</aside>
 
