@@ -1,7 +1,7 @@
 <div id="banner">
 	<div class="row-fluid lower">
 
-		<div class="span4 t2" style="background-color: #643794;">
+		<div class="span4 t2">
 			<p class="first centre" style="margin-top: 25px;"><strong>Lorem ipsum</strong></p>
 			<p>dolor sit amet</p>
 			<p class="read-more">
