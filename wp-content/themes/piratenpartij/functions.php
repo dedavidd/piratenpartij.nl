@@ -1159,5 +1159,7 @@ if ( is_page( 'lid-worden' )) {
 	wp_enqueue_script( 'lw-join', 'https://piratenpartij.nl/wp-content/themes/pirateparty/static/js/join.js', false, 0.1 );
 }
 
+add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 16;' ), 20 );
+
 /* End of file functions.php */
 /* Location: ./wp-content/themes/the-bootstrap/functions.php */
