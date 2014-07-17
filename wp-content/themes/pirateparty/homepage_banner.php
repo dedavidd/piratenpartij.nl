@@ -46,8 +46,14 @@ THE TOOL KIT
 	<div class="row-fluid lower">
 	
 		<div class="span4 centre" style="background-color: #643794;">
-			<p class="first centre" style="margin-top: 20px;font-size: 26px;line-height:26px;"><strong>Doneer aan de Piratenpartij</strong></p>
-			<p style="margin-top: 10px;"><a class="btn btn-success sidebar-action-item pig" href="<?php echo donate_page_uri() ?>"><i class="is2-donate"></i>Doneren</a></p>
+					<span>Wij zijn</span> een politieke beweging met de kernpunten:
+					<ul>
+						<li>vrijheid van informatie en cultuur</li>
+						<li>burgerrechten en digitale vrijheden</li>
+						<li>privacy en anonimiteit</li>
+						<li>overheidstransparantie</li>
+						<li>participatieve democratie</li>
+					</ul>
 		</div>
 		
 		<div class="span4" style="background-color: #643794;">

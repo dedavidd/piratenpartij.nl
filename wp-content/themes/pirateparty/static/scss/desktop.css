@@ -626,6 +626,11 @@ input:-moz-placeholder {
   margin-top: 5px;
   font-size: 1.4em; }
 
+#banner .lower .t4 {
+  background: black url(../img/privacykeyboard.jpg) no-repeat;
+  background-position: 100% 50%;
+  text-align: center; }
+
 #banner .lower .t1 {
   background: black url(../img/banner/newsletter.jpg) no-repeat;
   background-position: 100% 50%;
