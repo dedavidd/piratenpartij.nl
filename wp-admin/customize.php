@@ -63,7 +63,7 @@ $body_class = 'wp-core-ui wp-customizer js';
 if ( wp_is_mobile() ) :
 	$body_class .= ' mobile';
 
-	?><meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=0.8, minimum-scale=0.5, maximum-scale=1.2"><?php
+	?><meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=0.8, minimum-scale=0.5, maximum-scale=1.2" /><?php
 endif;
 
 $is_ios = wp_is_mobile() && preg_match( '/iPad|iPod|iPhone/', $_SERVER['HTTP_USER_AGENT'] );
@@ -142,8 +142,12 @@ do_action( 'customize_controls_print_scripts' );
 
 			<div id="customize-theme-controls"><ul>
 				<?php
-				foreach ( $wp_customize->sections() as $section )
+				foreach ( $wp_customize->panels() as $panel ) {
+					$panel->maybe_render();
+				}
+				foreach ( $wp_customize->sections() as $section ) {
 					$section->maybe_render();
+				}
 				?>
 			</ul></div>
 		</div>

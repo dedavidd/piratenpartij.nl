@@ -233,6 +233,8 @@ foreach ( $themes as $theme ) :
 </div>
 <div class="theme-overlay"></div>
 
+<p class="no-themes"><?php _e( 'No themes found. Try a different search.' ); ?></p>
+
 <?php
 // List broken themes, if any.
 if ( ! is_multisite() && current_user_can('edit_themes') && $broken_themes = wp_get_themes( array( 'errors' => true ) ) ) {
@@ -367,4 +369,4 @@ if ( ! is_multisite() && current_user_can('edit_themes') && $broken_themes = wp_
 	</div>
 </script>
 
-<?php require( ABSPATH . 'wp-admin/admin-footer.php' ); ?>
+<?php require( ABSPATH . 'wp-admin/admin-footer.php' );

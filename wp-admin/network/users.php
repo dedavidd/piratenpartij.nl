@@ -28,7 +28,7 @@ function confirm_delete_users( $users ) {
 	<?php
 	wp_nonce_field( 'ms-users-delete' );
 	$site_admins = get_super_admins();
-	$admin_out = "<option value='$current_user->ID'>$current_user->user_login</option>";
+	$admin_out = '<option value="' . $current_user->ID . '">' . $current_user->user_login . '</option>';
 
 	foreach ( ( $allusers = (array) $_POST['allusers'] ) as $key => $val ) {
 		if ( $val != '' && $val != '0' ) {
@@ -76,6 +76,9 @@ function confirm_delete_users( $users ) {
 			}
 		}
 	}
+
+	/** This action is documented in wp-admin/users.php */
+	do_action( 'delete_user_form', $current_user );
 
 	submit_button( __('Confirm Deletion'), 'delete' );
 	?>
@@ -285,7 +288,7 @@ if ( isset( $_REQUEST['updated'] ) && $_REQUEST['updated'] == 'true' && ! empty(
 		<?php $wp_list_table->search_box( __( 'Search Users' ), 'all-user' ); ?>
 	</form>
 
-	<form id="form-user-list" action='users.php?action=allusers' method='post'>
+	<form id="form-user-list" action="users.php?action=allusers" method="post">
 		<?php $wp_list_table->display(); ?>
 	</form>
 </div>

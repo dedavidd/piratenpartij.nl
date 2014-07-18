@@ -321,7 +321,11 @@ class Ai1ec_Loader {
 	 * @return string Abbreviated path name.
 	 */
 	public function path_name_shortening( $name ) {
+<<<<<<< HEAD
 		return strtoupper( $name{0} );
+=======
+		return strtoupper( $name[0] );
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	}
 
 	/**

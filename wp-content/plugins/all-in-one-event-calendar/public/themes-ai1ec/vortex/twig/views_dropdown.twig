@@ -1,8 +1,12 @@
 {% if available_views | length > 1 %}
 	<li class="ai1ec-views-dropdown ai1ec-dropdown">
 		<a class="ai1ec-dropdown-toggle" data-toggle="ai1ec-dropdown">
+<<<<<<< HEAD
 			<img src="{{ ( current_view ~ '-view.png' ) | theme_img_url }}"
 				alt="{{ view_names[current_view] }}" />
+=======
+			<i class="ai1ec-icon-{{ current_view }} ai1ec-view-icon"></i>
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 			{{ view_names[current_view] }}
 			<span class="ai1ec-caret"></span>
 		</a>
@@ -14,8 +18,12 @@
 						{{ data_type | raw }}
 						class="ai1ec-load-view {{ key }}"
 						href="{{ available_views[key].href }}">
+<<<<<<< HEAD
 						<img src="{{ ( key ~ '-view.png' ) | theme_img_url }}"
 							alt="{{ available_views[key].desc }}" />
+=======
+						<i class="ai1ec-icon-{{ key }} ai1ec-view-icon"></i>
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 						{{ available_views[key].desc }}
 					</a>
 				</div>

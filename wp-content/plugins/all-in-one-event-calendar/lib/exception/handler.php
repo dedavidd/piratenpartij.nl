@@ -101,6 +101,90 @@ class Ai1ec_Exception_Handler {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Return add-on, which caused the exception or null if it was Core.
+	 *
+	 * Relies on `plugin_to_disable` method which may be implemented by
+	 * an exception. If it returns non empty value - it is returned.
+	 *
+	 * @param Exception $exception Actual exception which was thrown.
+	 *
+	 * @return string|null Add-on identifier (plugin url), or null.
+	 */
+	public function is_caused_by_addon( Exception $exception ) {
+		$addon = null;
+		if ( method_exists( $exception, 'plugin_to_disable' ) ) {
+			$addon = $exception->plugin_to_disable();
+			if ( empty( $addon ) ) {
+				$addon = null;
+			}
+		}
+		if ( null === $addon ) {
+			$position   = strlen( dirname( AI1EC_PATH ) ) + 1;
+			$length     = strlen( AI1EC_PLUGIN_NAME );
+			$trace_list = $exception->getTrace();
+			array_unshift(
+				$trace_list,
+				array( 'file' => $exception->getFile() )
+			);
+			foreach ( $trace_list as $trace ) {
+				if (
+					! isset( $trace['file'] ) ||
+					! isset( $trace['file'][$position] )
+				) {
+					continue;
+				}
+				$file = substr(
+					$trace['file'],
+					$position,
+					strpos( $trace['file'], '/', $position ) - $position
+				);
+				if ( 0 === strncmp( AI1EC_PLUGIN_NAME, $file, $length ) ) {
+					if ( AI1EC_PLUGIN_NAME !== $file ) {
+						$addon = $file . '/' . $file . '.php';
+					}
+				}
+			}
+		}
+		if ( 'core' === strtolower( $addon ) ) {
+			return null;
+		}
+		return $addon;
+	}
+
+	/**
+	 * Get tag-line for disabling.
+	 *
+	 * Extracts plugin name from file.
+	 *
+	 * @param string $addon Name of disabled add-on.
+	 *
+	 * @return string Message to display before full trace.
+	 */
+	public function get_disabled_line( $addon ) {
+		$file = dirname( AI1EC_PATH ) . DIRECTORY_SEPARATOR . $addon;
+		$line = '';
+		if (
+			is_file( $file ) &&
+			preg_match(
+				'|Plugin Name:\s*(.+)|',
+				file_get_contents( $file ),
+				$matches
+			)
+		) {
+			$line = '<h4>' .
+				sprintf(
+					__( 'Disabled add-on "%s" due to an error' ),
+					__( trim( $matches[1] ), dirname( $addon ) )
+				) .
+				'</h4>';
+		}
+		return $line;
+	}
+
+	/**
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * Global exceptions handling method
 	 *
 	 * @param Exception $exception Previously thrown exception to handle
@@ -110,18 +194,51 @@ class Ai1ec_Exception_Handler {
 	public function handle_exception( Exception $exception ) {
 		if ( defined( 'AI1EC_DEBUG' ) && true === AI1EC_DEBUG ) {
 			echo '<pre>';
+<<<<<<< HEAD
 			var_dump( $exception );
+=======
+			$this->var_debug( $exception );
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 			echo '</pre>';
 			die();
 		}
 		// if it's something we handle, handle it
 		$backtrace = '<br><br>' . nl2br( $exception );
 		if ( $exception instanceof $this->_exception_class ) {
+<<<<<<< HEAD
 			// check if it has a methof for deatiled html
 			$message = method_exists( $exception, 'get_html_message' ) ?
 					$exception->get_html_message() :
 					$exception->getMessage();
 			$this->soft_deactivate_plugin( $message . $backtrace );
+=======
+			// check if it's a plugin instead of core
+			$disable_addon = $this->is_caused_by_addon( $exception );
+			$message       = method_exists( $exception, 'get_html_message' )
+				? $exception->get_html_message()
+				: $exception->getMessage();
+			$message .= $backtrace .
+				'<br><br>Request Uri: ' . $_SERVER['REQUEST_URI'];
+			if ( null !== $disable_addon ) {
+				include_once ABSPATH . 'wp-admin/includes/plugin.php';
+				// deactivate the plugin. Fire handlers to hide options.
+				deactivate_plugins( $disable_addon );
+				global $ai1ec_registry;
+				$ai1ec_registry->get( 'notification.admin' )
+					->store( 
+						$this->get_disabled_line( $disable_addon ) . $message,
+						'error',
+						2,
+						array( Ai1ec_Notification_Admin::RCPT_ADMIN ),
+						true
+					);
+				$this->redirect();
+			} else {
+				// check if it has a methof for deatiled html
+				$this->soft_deactivate_plugin( $message );
+			}
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		}
 		// if it's a PHP error in our plugin files, deactivate and redirect
 		else if ( $exception instanceof $this->_error_exception_class ) {
@@ -157,7 +274,12 @@ class Ai1ec_Exception_Handler {
 		$errcontext
 	) {
 		// if the error is not in our plugin, let PHP handle things.
+<<<<<<< HEAD
 		if ( false === strpos( $errfile, AI1EC_PLUGIN_NAME ) ) {
+=======
+		$position = strpos( $errfile, AI1EC_PLUGIN_NAME );
+		if ( false === $position ) {
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 			if ( is_callable( $this->_prev_er_handler ) ) {
 				return call_user_func_array(
 					$this->_prev_er_handler,
@@ -181,6 +303,36 @@ class Ai1ec_Exception_Handler {
 			);
 			return error_log( $message, 0 );
 		}
+<<<<<<< HEAD
+=======
+		// let's get the plugin folder
+		$tail = substr( $errfile, $position );
+		$exploded = explode( DIRECTORY_SEPARATOR, $tail );
+		$plugin_dir = $exploded[0];
+		// if the error doesn't belong to core, throw the plugin exception to trigger disabling
+		// of the plugin in the exception handler
+		if ( AI1EC_PLUGIN_NAME !== $plugin_dir ) {
+			$exc = implode(
+				array_map(
+					array( $this, 'return_first_char' ),
+					explode( '-', $plugin_dir )
+				)
+			);
+			// all plugins should implement an exception based on this convention
+			// which is the same convention we use for constants, only with just first letter uppercase
+			$exc = str_replace( 'aioec', 'Ai1ec', $exc ) . '_Exception';
+			if ( class_exists( $exc ) ) {
+				$message = sprintf(
+					'All-in-One Event Calendar: %s @ %s:%d #%d',
+					$errstr,
+					$errfile,
+					$errline,
+					$errno
+				);
+				throw new $exc( $message );
+			}
+		}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		throw new Ai1ec_Error_Exception(
 			$errstr,
 			$errno,
@@ -190,6 +342,12 @@ class Ai1ec_Exception_Handler {
 		);
 	}
 
+<<<<<<< HEAD
+=======
+	public function return_first_char( $name ) {
+		return $name[0];
+	}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	/**
 	 * Perform what's needed to deactivate the plugin softly
 	 *
@@ -287,5 +445,145 @@ class Ai1ec_Exception_Handler {
 			Ai1ec_Http_Response_Helper::redirect( get_site_url() );
 		}
 	}
+<<<<<<< HEAD
 
 }
+=======
+	/**
+	 * Had to add it as var_dump was locking my browser.
+	 *
+	 * Taken from http://www.leaseweblabs.com/2013/10/smart-alternative-phps-var_dump-function/
+	 *
+	 * @param mixed $variable
+	 * @param int $strlen
+	 * @param int $width
+	 * @param int $depth
+	 * @param int $i
+	 * @param array $objects
+	 * 
+	 * @return string
+	 */
+	public function var_debug( 
+		$variable, 
+		$strlen = 400, 
+		$width = 25, 
+		$depth = 10, 
+		$i = 0, 
+		&$objects = array() 
+	) {
+		$search  = array( "\0", "\a", "\b", "\f", "\n", "\r", "\t", "\v" );
+		$replace = array( '\0', '\a', '\b', '\f', '\n', '\r', '\t', '\v' );
+		$string  = '';
+
+		switch ( gettype( $variable ) ) {
+			case 'boolean' :
+				$string .= $variable ? 'true' : 'false';
+				break;
+			case 'integer' :
+				$string .= $variable;
+				break;
+			case 'double' :
+				$string .= $variable;
+				break;
+			case 'resource' :
+				$string .= '[resource]';
+				break;
+			case 'NULL' :
+				$string .= "null";
+				break;
+			case 'unknown type' :
+				$string .= '???';
+				break;
+			case 'string' :
+				$len = strlen( $variable );
+				$variable = str_replace( 
+					$search, 
+					$replace, 
+					substr( $variable, 0, $strlen ), 
+					$count );
+				$variable = substr( $variable, 0, $strlen );
+				if ( $len < $strlen ) {
+					$string .= '"' . $variable . '"';
+				} else {
+					$string .= 'string(' . $len . '): "' . $variable . '"...';
+				}
+				break;
+			case 'array' :
+				$len = count( $variable );
+				if ( $i == $depth ) {
+					$string .= 'array(' . $len . ') {...}';
+				} elseif ( ! $len) {
+					$string .= 'array(0) {}';
+				} else {
+					$keys    = array_keys( $variable );
+					$spaces  = str_repeat( ' ', $i * 2 );
+					$string .= "array($len)\n" . $spaces . '{';
+					$count   = 0;
+					foreach ( $keys as $key ) {
+						if ( $count == $width ) {
+							$string .= "\n" . $spaces . "  ...";
+							break;
+						}
+						$string .= "\n" . $spaces . "  [$key] => ";
+						$string .= $this->var_debug( 
+							$variable[$key],
+							$strlen,
+							$width,
+							$depth,
+							$i + 1,
+							$objects
+						);
+						$count ++;
+					}
+					$string .= "\n" . $spaces . '}';
+				}
+				break;
+			case 'object':
+				$id = array_search( $variable, $objects, true );
+				if ( $id !== false ) {
+					$string .= get_class( $variable ) . '#' . ( $id + 1 ) . ' {...}';
+				} else if ( $i == $depth ) {
+					$string .= get_class( $variable ) . ' {...}';
+				} else {
+					$id = array_push( $objects, $variable );
+					$array = ( array ) $variable;
+					$spaces = str_repeat( ' ', $i * 2 );
+					$string .= get_class( $variable ) . "#$id\n" . $spaces . '{';
+					$properties = array_keys( $array );
+					foreach ( $properties as $property ) {
+						$name    = str_replace( "\0", ':', trim( $property ) );
+						$string .= "\n" . $spaces . "  [$name] => ";
+						$string .= $this->var_debug(
+							$array[$property],
+							$strlen,
+							$width,
+							$depth,
+							$i + 1,
+							$objects
+						);
+					}
+					$string .= "\n" . $spaces . '}';
+				}
+				break;
+		}
+
+		if ( $i > 0 ) {
+			return $string;
+		}
+
+		$backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+		do {
+			$caller = array_shift( $backtrace );
+		} while (
+			$caller &&
+			! isset( $caller['file'] )
+		);
+		if ( $caller ) {
+			$string = $caller['file'] . ':' . $caller['line'] . "\n" . $string;
+		}
+
+		echo nl2br( str_replace( ' ', '&nbsp;', htmlentities( $string ) ) );
+	}
+
+}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f

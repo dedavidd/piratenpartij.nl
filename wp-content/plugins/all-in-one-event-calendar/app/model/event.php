@@ -46,11 +46,20 @@ class Ai1ec_Event extends Ai1ec_Base {
 	 * Wrapper to get property value.
 	 *
 	 * @param string $property Name of property to get.
+<<<<<<< HEAD
 	 *
 	 * @return mixed Actual property.
 	 */
 	public function get( $property ) {
 		return $this->_entity->get( $property );
+=======
+	 * @param mixed  $default  Default value to return.
+	 *
+	 * @return mixed Actual property.
+	 */
+	public function get( $property, $default = null ) {
+		return $this->_entity->get( $property, $default );
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	}
 
 	/**
@@ -99,6 +108,41 @@ class Ai1ec_Event extends Ai1ec_Base {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Set the event is all day, during the specified number of days
+	 *
+	 * @param number $length
+	 */
+	public function set_all_day( $length = 1 ) {
+		// set allday as true
+		$this->set( 'allday', true );
+		$start = $this->get( 'start' );
+		// reset time component
+		$start->set_time( 0, 0, 0 );
+		$end   = $this->_registry->get( 'date.time', $start );
+		// set the correct length
+		$end->adjust_day( $length );
+		$this->set( 'end', $end );
+	}
+
+	/**
+	 * Set the event as if it has no end time
+	 */
+	public function set_no_end_time() {
+		$this->set( 'instant_event', true );
+		$start = $this->get( 'start' );
+		$end   = $this->_registry->get( 'date.time', $start );
+		$end->set_time(
+			$start->format( 'H' ),
+			$start->format( 'i' ) + 30,
+			$start->format( 's' )
+		);
+		$this->set( 'end', $end );
+	}
+
+	/**
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * Set object fields from arbitrary array.
 	 *
 	 * @param array $data Supposedly map of fields to initiate.
@@ -494,6 +538,12 @@ class Ai1ec_Event extends Ai1ec_Base {
 		$table_name = $dbi->get_table_name( 'ai1ec_events' );
 		$post_id    = $columns['post_id'];
 
+<<<<<<< HEAD
+=======
+		if ( $this->get( 'end' )->format() <= 0 ) {
+			$this->set_no_end_time();
+		}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		if ( $post_id ) {
 
 			$success = false;
@@ -678,6 +728,18 @@ class Ai1ec_Event extends Ai1ec_Base {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Allow properties to be modified after cloning.
+	 *
+	 * @return void
+	 */
+	public function __clone() {
+		$this->_entity = clone $this->_entity;
+	}
+
+	/**
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * Decode timezone to use for event.
 	 *
 	 * Following algorythm is used to detect a value:

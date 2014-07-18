@@ -232,10 +232,11 @@ if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 	* Filter the default date formats.
 	*
 	* @since 2.7.0
+	* @since 4.0.0 Added ISO date standard YYYY-MM-DD format.
 	*
 	* @param array $default_date_formats Array of default date formats.
 	*/
-	$date_formats = array_unique( apply_filters( 'date_formats', array( __( 'F j, Y' ), 'Y/m/d', 'm/d/Y', 'd/m/Y' ) ) );
+	$date_formats = array_unique( apply_filters( 'date_formats', array( __( 'F j, Y' ), 'Y-m-d', 'm/d/Y', 'd/m/Y' ) ) );
 
 	$custom = true;
 
@@ -251,8 +252,6 @@ if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 	echo '	<label><input type="radio" name="date_format" id="date_format_custom_radio" value="\c\u\s\t\o\m"';
 	checked( $custom );
 	echo '/> ' . __('Custom:') . ' </label><input type="text" name="date_format_custom" value="' . esc_attr( get_option('date_format') ) . '" class="small-text" /> <span class="example"> ' . date_i18n( get_option('date_format') ) . "</span> <span class='spinner'></span>\n";
-
-	echo "\t<p>" . __('<a href="http://codex.wordpress.org/Formatting_Date_and_Time">Documentation on date and time formatting</a>.') . "</p>\n";
 ?>
 	</fieldset>
 </td>
@@ -285,7 +284,8 @@ if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 	echo '	<label><input type="radio" name="time_format" id="time_format_custom_radio" value="\c\u\s\t\o\m"';
 	checked( $custom );
 	echo '/> ' . __('Custom:') . ' </label><input type="text" name="time_format_custom" value="' . esc_attr( get_option('time_format') ) . '" class="small-text" /> <span class="example"> ' . date_i18n( get_option('time_format') ) . "</span> <span class='spinner'></span>\n";
-	;
+
+	echo "\t<p>" . __('<a href="http://codex.wordpress.org/Formatting_Date_and_Time">Documentation on date and time formatting</a>.') . "</p>\n";
 ?>
 	</fieldset>
 </td>
@@ -304,14 +304,17 @@ endfor;
 <?php do_settings_fields('general', 'default'); ?>
 <?php
 	$languages = get_available_languages();
-	if ( is_multisite() && !empty( $languages ) ):
+	if ( $languages ) :
 ?>
 	<tr>
 		<th width="33%" scope="row"><?php _e('Site Language') ?></th>
 		<td>
-			<select name="WPLANG" id="WPLANG">
-				<?php mu_dropdown_languages( $languages, get_option('WPLANG') ); ?>
-			</select>
+			<?php wp_dropdown_languages( array(
+				'name'      => 'WPLANG',
+				'id'        => 'WPLANG',
+				'selected'  => get_option( 'WPLANG' ),
+				'languages' => $languages,
+			) ); ?>
 		</td>
 	</tr>
 <?php

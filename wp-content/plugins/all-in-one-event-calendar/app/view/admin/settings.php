@@ -99,7 +99,11 @@ class Ai1ec_View_Admin_Settings extends Ai1ec_View_Admin_Abstract {
 
 	/**
 	 * Renders the Timely blog meta box
+<<<<<<< HEAD
 	 * 
+=======
+	 *
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * @param mixed $object
 	 * @param mixed $box
 	 */
@@ -110,12 +114,21 @@ class Ai1ec_View_Admin_Settings extends Ai1ec_View_Admin_Abstract {
 		$feed      = fetch_feed( AI1EC_RSS_FEED );
 		$newsItems = is_wp_error( $feed ) ? array() : $feed->get_items( 0, 5 );
 		$loader    = $this->_registry->get( 'theme.loader' );
+<<<<<<< HEAD
 		$file      = $loader->get_file( 
 			'box_support.php',
 			array(
 				'news' => $newsItems,
 			), 
 			true 
+=======
+		$file      = $loader->get_file(
+			'box_support.php',
+			array(
+				'news' => $newsItems,
+			),
+			true
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		);
 		$file->render();
 	}
@@ -198,6 +211,10 @@ class Ai1ec_View_Admin_Settings extends Ai1ec_View_Admin_Abstract {
 	 * @return array
 	 */
 	protected function _get_tabs_to_show( array $plugin_settings, array $tabs ) {
+<<<<<<< HEAD
+=======
+		$index = 0;
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		foreach ( $plugin_settings as $id => $setting ) {
 			// if the setting is shown
 			if ( isset ( $setting['renderer'] ) ) {
@@ -226,8 +243,21 @@ class Ai1ec_View_Admin_Settings extends Ai1ec_View_Admin_Abstract {
 					);
 				}
 				// render the settings
+<<<<<<< HEAD
 				$tabs[$tab_to_use]['elements'][] = array(
 					'html' => $renderer->render()
+=======
+				$weight = 10;
+				if ( isset( $setting['renderer']['weight'] ) ) {
+					$weight = (int)$setting['renderer']['weight'];
+				}
+				// NOTICE: do NOT change order of two first
+				// elements {weight,index}, otherwise sorting will fail.
+				$tabs[$tab_to_use]['elements'][] = array(
+					'weight' => $weight,
+					'index'  => ++$index,
+					'html'   => $renderer->render(),
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 				);
 				// if the settings has an item tab, set the item as active.
 				if ( isset( $setting['renderer']['item'] ) ) {
@@ -240,6 +270,13 @@ class Ai1ec_View_Admin_Settings extends Ai1ec_View_Admin_Abstract {
 		$tabs_to_display = array();
 		// now let's see what tabs to display.
 		foreach ( $tabs as $name => $tab ) {
+<<<<<<< HEAD
+=======
+			// sort by weights
+			if ( isset( $tab['elements'] ) ) {
+				asort( $tab['elements'] );
+			}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 			// if a tab has more than one item.
 			if ( isset( $tab['items'] ) ) {
 				// if no item is active, nothing is shown

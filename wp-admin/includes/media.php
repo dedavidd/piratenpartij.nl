@@ -514,6 +514,9 @@ document.body.className = document.body.className.replace('no-js', 'js');
  * @param string $editor_id
  */
 function media_buttons($editor_id = 'content') {
+	static $instance = 0;
+	$instance++;
+
 	$post = get_post();
 	if ( ! $post && ! empty( $GLOBALS['post_ID'] ) )
 		$post = $GLOBALS['post_ID'];
@@ -524,8 +527,12 @@ function media_buttons($editor_id = 'content') {
 
 	$img = '<span class="wp-media-buttons-icon"></span> ';
 
-	echo '<a href="#" id="insert-media-button" class="button insert-media add_media" data-editor="' . esc_attr( $editor_id ) . '" title="' . esc_attr__( 'Add Media' ) . '">' . $img . __( 'Add Media' ) . '</a>';
-
+	printf( '<a href="#" id="insert-media-button-%d" class="button insert-media add_media" data-editor="%s" title="%s">%s</a>',
+		$instance,
+		esc_attr( $editor_id ),
+		esc_attr__( 'Add Media' ),
+		$img . __( 'Add Media' )
+	);
 	/**
 	 * Filter the legacy (pre-3.5.0) media buttons.
 	 *
@@ -766,18 +773,16 @@ function wp_media_upload_handler() {
 		return media_send_to_editor($html);
 	}
 
-	if ( !empty($_POST) ) {
+	if ( isset( $_POST['save'] ) ) {
+		$errors['upload_notice'] = __('Saved.');
+		return media_upload_gallery();
+	} elseif ( ! empty( $_POST ) ) {
 		$return = media_upload_form_handler();
 
 		if ( is_string($return) )
 			return $return;
 		if ( is_array($return) )
 			$errors = $return;
-	}
-
-	if ( isset($_POST['save']) ) {
-		$errors['upload_notice'] = __('Saved.');
-		return media_upload_gallery();
 	}
 
 	if ( isset($_GET['tab']) && $_GET['tab'] == 'type_url' ) {
@@ -800,28 +805,25 @@ function wp_media_upload_handler() {
  * @param string $desc Optional. Description of the image
  * @return string|WP_Error Populated HTML img tag on success
  */
-function media_sideload_image($file, $post_id, $desc = null) {
-	if ( ! empty($file) ) {
-		// Download file to temp location
-		$tmp = download_url( $file );
-
+function media_sideload_image( $file, $post_id, $desc = null ) {
+	if ( ! empty( $file ) ) {
 		// Set variables for storage
 		// fix file filename for query strings
 		preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches );
-		$file_array['name'] = basename($matches[0]);
-		$file_array['tmp_name'] = $tmp;
+		$file_array['name'] = basename( $matches[0] );
+		// Download file to temp location
+		$file_array['tmp_name'] = download_url( $file );
 
-		// If error storing temporarily, unlink
-		if ( is_wp_error( $tmp ) ) {
-			@unlink($file_array['tmp_name']);
-			$file_array['tmp_name'] = '';
+		// If error storing temporarily, return the error.
+		if ( is_wp_error( $file_array['tmp_name'] ) ) {
+			return $file_array['tmp_name'];
 		}
 
 		// do the validation and storage stuff
 		$id = media_handle_sideload( $file_array, $post_id, $desc );
 		// If error storing permanently, unlink
-		if ( is_wp_error($id) ) {
-			@unlink($file_array['tmp_name']);
+		if ( is_wp_error( $id ) ) {
+			@unlink( $file_array['tmp_name'] );
 			return $id;
 		}
 
@@ -829,8 +831,8 @@ function media_sideload_image($file, $post_id, $desc = null) {
 	}
 
 	// Finally check to make sure the file has been saved, then return the html
-	if ( ! empty($src) ) {
-		$alt = isset($desc) ? esc_attr($desc) : '';
+	if ( ! empty( $src ) ) {
+		$alt = isset( $desc ) ? esc_attr( $desc ) : '';
 		$html = "<img src='$src' alt='$alt' />";
 		return $html;
 	}
@@ -1031,9 +1033,9 @@ function image_attachment_fields_to_edit($form_fields, $post) {
  *
  * @since 2.5.0
  *
- * @param array $form_fields
- * @param object $post {@internal $post not used}}
- * @return array
+ * @param array   $form_fields An array of attachment form fields.
+ * @param WP_Post $post        The WP_Post attachment object.
+ * @return array Filtered attachment form fields.
  */
 function media_single_attachment_fields_to_edit( $form_fields, $post ) {
 	unset($form_fields['url'], $form_fields['align'], $form_fields['image-size']);
@@ -1045,9 +1047,9 @@ function media_single_attachment_fields_to_edit( $form_fields, $post ) {
  *
  * @since 2.8.0
  *
- * @param array $form_fields
- * @param object $post {@internal $post not used}}
- * @return array
+ * @param array   $form_fields An array of attachment form fields.
+ * @param WP_Post $post        The WP_Post attachment object.
+ * @return array Filtered attachment form fields.
  */
 function media_post_single_attachment_fields_to_edit( $form_fields, $post ) {
 	unset($form_fields['image_url']);
@@ -1063,9 +1065,9 @@ function media_post_single_attachment_fields_to_edit( $form_fields, $post ) {
  *
  * @since 2.5.0
  *
- * @param object $post
- * @param array $attachment {@internal $attachment not used}}
- * @return array
+ * @param WP_Post $post       The WP_Post attachment object.
+ * @param array   $attachment An array of attachment metadata.
+ * @return array Filtered attachment post object.
  */
 function image_attachment_fields_to_save( $post, $attachment ) {
 	if ( substr( $post['post_mime_type'], 0, 5 ) == 'image' ) {
@@ -1285,7 +1287,13 @@ function get_media_item( $attachment_id, $args = null ) {
 	$post = get_post( $attachment_id );
 	$current_post_id = !empty( $_GET['post_id'] ) ? (int) $_GET['post_id'] : 0;
 
-	$default_args = array( 'errors' => null, 'send' => $current_post_id ? post_type_supports( get_post_type( $current_post_id ), 'editor' ) : true, 'delete' => true, 'toggle' => true, 'show_title' => true );
+	$default_args = array(
+		'errors' => null,
+		'send' => $current_post_id ? post_type_supports( get_post_type( $current_post_id ), 'editor' ) : true,
+		'delete' => true,
+		'toggle' => true,
+		'show_title' => true
+	);
 	$args = wp_parse_args( $args, $default_args );
 
 	/**
@@ -1297,8 +1305,7 @@ function get_media_item( $attachment_id, $args = null ) {
 	 *
 	 * @param array $args An array of arguments.
 	 */
-	$args = apply_filters( 'get_media_item_args', $args );
-	extract( $args, EXTR_SKIP );
+	$r = apply_filters( 'get_media_item_args', $args );
 
 	$toggle_on  = __( 'Show' );
 	$toggle_off = __( 'Hide' );
@@ -1311,10 +1318,10 @@ function get_media_item( $attachment_id, $args = null ) {
 	$type = array_shift( $keys );
 	$type_html = "<input type='hidden' id='type-of-$attachment_id' value='" . esc_attr( $type ) . "' />";
 
-	$form_fields = get_attachment_fields_to_edit( $post, $errors );
+	$form_fields = get_attachment_fields_to_edit( $post, $r['errors'] );
 
-	if ( $toggle ) {
-		$class = empty( $errors ) ? 'startclosed' : 'startopen';
+	if ( $r['toggle'] ) {
+		$class = empty( $r['errors'] ) ? 'startclosed' : 'startopen';
 		$toggle_links = "
 	<a class='toggle describe-toggle-on' href='#'>$toggle_on</a>
 	<a class='toggle describe-toggle-off' href='#'>$toggle_off</a>";
@@ -1324,7 +1331,7 @@ function get_media_item( $attachment_id, $args = null ) {
 	}
 
 	$display_title = ( !empty( $title ) ) ? $title : $filename; // $title shouldn't ever be empty, but just in case
-	$display_title = $show_title ? "<div class='filename new'><span class='title'>" . wp_html_excerpt( $display_title, 60, '&hellip;' ) . "</span></div>" : '';
+	$display_title = $r['show_title'] ? "<div class='filename new'><span class='title'>" . wp_html_excerpt( $display_title, 60, '&hellip;' ) . "</span></div>" : '';
 
 	$gallery = ( ( isset( $_REQUEST['tab'] ) && 'gallery' == $_REQUEST['tab'] ) || ( isset( $redir_tab ) && 'gallery' == $redir_tab ) );
 	$order = '';
@@ -1398,8 +1405,11 @@ function get_media_item( $attachment_id, $args = null ) {
 		'extra_rows' => array(),
 	);
 
-	if ( $send )
-		$send = get_submit_button( __( 'Insert into Post' ), 'button', "send[$attachment_id]", false );
+	if ( $r['send'] ) {
+		$r['send'] = get_submit_button( __( 'Insert into Post' ), 'button', "send[$attachment_id]", false );
+	}
+
+	$delete = empty( $r['delete'] ) ? '' : $r['delete'];
 	if ( $delete && current_user_can( 'delete_post', $attachment_id ) ) {
 		if ( !EMPTY_TRASH_DAYS ) {
 			$delete = "<a href='" . wp_nonce_url( "post.php?action=delete&amp;post=$attachment_id", 'delete-post_' . $attachment_id ) . "' id='del[$attachment_id]' class='delete-permanently'>" . __( 'Delete Permanently' ) . '</a>';
@@ -1419,19 +1429,20 @@ function get_media_item( $attachment_id, $args = null ) {
 
 	$thumbnail = '';
 	$calling_post_id = 0;
-	if ( isset( $_GET['post_id'] ) )
+	if ( isset( $_GET['post_id'] ) ) {
 		$calling_post_id = absint( $_GET['post_id'] );
-	elseif ( isset( $_POST ) && count( $_POST ) ) // Like for async-upload where $_GET['post_id'] isn't set
+	} elseif ( isset( $_POST ) && count( $_POST ) ) {// Like for async-upload where $_GET['post_id'] isn't set
 		$calling_post_id = $post->post_parent;
+	}
 	if ( 'image' == $type && $calling_post_id && current_theme_supports( 'post-thumbnails', get_post_type( $calling_post_id ) )
 		&& post_type_supports( get_post_type( $calling_post_id ), 'thumbnail' ) && get_post_thumbnail_id( $calling_post_id ) != $attachment_id ) {
 		$ajax_nonce = wp_create_nonce( "set_post_thumbnail-$calling_post_id" );
 		$thumbnail = "<a class='wp-post-thumbnail' id='wp-post-thumbnail-" . $attachment_id . "' href='#' onclick='WPSetAsThumbnail(\"$attachment_id\", \"$ajax_nonce\");return false;'>" . esc_html__( "Use as featured image" ) . "</a>";
 	}
 
-	if ( ( $send || $thumbnail || $delete ) && !isset( $form_fields['buttons'] ) )
-		$form_fields['buttons'] = array( 'tr' => "\t\t<tr class='submit'><td></td><td class='savesend'>$send $thumbnail $delete</td></tr>\n" );
-
+	if ( ( $r['send'] || $thumbnail || $delete ) && !isset( $form_fields['buttons'] ) ) {
+		$form_fields['buttons'] = array( 'tr' => "\t\t<tr class='submit'><td></td><td class='savesend'>" . $r['send'] . " $thumbnail $delete</td></tr>\n" );
+	}
 	$hidden_fields = array();
 
 	foreach ( $form_fields as $id => $field ) {
@@ -1758,11 +1769,6 @@ $plupload_init = array(
 	),
 	'multipart_params'    => $post_params,
 );
-
-// Multi-file uploading doesn't currently work in iOS Safari,
-// single-file allows the built-in camera to be used as source for images
-if ( wp_is_mobile() )
-	$plupload_init['multi_selection'] = false;
 
 /**
  * Filter the default Plupload settings.
@@ -2095,7 +2101,6 @@ function media_upload_gallery_form($errors) {
 ?>
 
 <script type="text/javascript">
-<!--
 jQuery(function($){
 	var preloaded = $(".media-item.preloaded");
 	if ( preloaded.length > 0 ) {
@@ -2103,7 +2108,6 @@ jQuery(function($){
 		updateMediaForm();
 	}
 });
--->
 </script>
 <div id="sort-buttons" class="hide-if-no-js">
 <span>
@@ -2288,7 +2292,7 @@ if ( empty($_GET['post_mime_type']) || $_GET['post_mime_type'] == 'all' )
 	$class = ' class="current"';
 else
 	$class = '';
-$type_links[] = "<li><a href='" . esc_url(add_query_arg(array('post_mime_type'=>'all', 'paged'=>false, 'm'=>false))) . "'$class>".__('All Types')."</a>";
+$type_links[] = '<li><a href="' . esc_url(add_query_arg(array('post_mime_type'=>'all', 'paged'=>false, 'm'=>false))) . '"' . $class . '>' . __('All Types') . '</a>';
 foreach ( $post_mime_types as $mime_type => $label ) {
 	$class = '';
 
@@ -2298,7 +2302,7 @@ foreach ( $post_mime_types as $mime_type => $label ) {
 	if ( isset($_GET['post_mime_type']) && wp_match_mime_types($mime_type, $_GET['post_mime_type']) )
 		$class = ' class="current"';
 
-	$type_links[] = "<li><a href='" . esc_url(add_query_arg(array('post_mime_type'=>$mime_type, 'paged'=>false))) . "'$class>" . sprintf( translate_nooped_plural( $label[2], $num_posts[$mime_type] ), "<span id='$mime_type-counter'>" . number_format_i18n( $num_posts[$mime_type] ) . '</span>') . '</a>';
+	$type_links[] = '<li><a href="' . esc_url(add_query_arg(array('post_mime_type'=>$mime_type, 'paged'=>false))) . '"' . $class . '>' . sprintf( translate_nooped_plural( $label[2], $num_posts[$mime_type] ), '<span id="' . $mime_type . '-counter">' . number_format_i18n( $num_posts[$mime_type] ) . '</span>') . '</a>';
 }
 /**
  * Filter the media upload mime type list items.

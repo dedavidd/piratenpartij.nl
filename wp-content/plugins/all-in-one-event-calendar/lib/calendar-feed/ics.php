@@ -126,16 +126,31 @@ class Ai1ecIcsConnectorPlugin extends Ai1ec_Connector_Plugin {
 						'controller.import-export'
 					);
 
+<<<<<<< HEAD
 					$search = $this->_registry->get( 'model.search' );
 					$events_in_db = $search->get_event_ids_for_feed( $feed->feed_url );
 					// flip the array. We will use keys to check events which are imported.
 					$events_in_db = array_flip( $events_in_db );
 					$args = array();
+=======
+					$search       = $this->_registry->get( 'model.search' );
+					$events_in_db = $search->get_event_ids_for_feed( $feed->feed_url );
+					// flip the array. We will use keys to check events which are imported.
+					$events_in_db = array_flip( $events_in_db );
+					$args         = array();
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 					$args['events_in_db'] = $events_in_db;
 					$args['feed'] = $feed;
 
 					$args['comment_status'] = 'open';
+<<<<<<< HEAD
 					if ( isset( $feed->comments_enabled ) && $feed->comments_enabled < 1 ) {
+=======
+					if (
+						isset( $feed->comments_enabled ) &&
+						$feed->comments_enabled < 1
+					) {
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 						$args['comment_status'] = 'closed';
 					}
 
@@ -148,7 +163,11 @@ class Ai1ecIcsConnectorPlugin extends Ai1ec_Connector_Plugin {
 					}
 					$args['source'] = $response['body'];
 					$result = $import_export->import_events( 'ics', $args );
+<<<<<<< HEAD
 					$count = $result['count'];
+=======
+					$count  = $result['count'];
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 					// we must flip again the array to iterate over it
 					$events_to_delete = array_flip( $result['events_to_delete'] );
 					foreach ( $events_to_delete as $event_id ) {

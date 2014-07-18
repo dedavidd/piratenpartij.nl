@@ -15,6 +15,19 @@ class Ai1ec_Html_Setting_Select extends Ai1ec_Html_Element_Settings {
 	 * @see Ai1ec_Html_Element_Settings::render()
 	 */
 	public function render( $output = '' ) {
+<<<<<<< HEAD
+=======
+		if ( isset( $this->_args['renderer']['condition'] ) ) {
+			$callback = explode( ':', $this->_args['renderer']['condition'] );
+			$render   = $this->_registry->dispatch(
+				$callback[0],
+				$callback[1]
+			);
+			if ( ! $render ) {
+				return '';
+			}
+		}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		$options = $this->_args['renderer']['options'];
 		if ( ! is_array( $options ) ) {
 			$callback = explode( ':', $options );
@@ -31,11 +44,22 @@ class Ai1ec_Html_Setting_Select extends Ai1ec_Html_Element_Settings {
 				);
 			}
 		}
+<<<<<<< HEAD
 		foreach ( $options as &$option ) {
 			if ( $option['value'] === $this->_args['value'] ) {
 				$option['args'] = array(
 					'selected' => 'selected',
 				);
+=======
+		foreach ( $options as $key => &$option ) {
+			// if the key is a string, it's an optgroup
+			if ( is_string( $key ) ) {
+				foreach ( $option as &$opt ) {
+					$opt = $this->_set_selected_value( $opt );
+				}
+			} else {
+				$option = $this->_set_selected_value( $option );
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 			}
 		}
 		$select_args = array();
@@ -51,6 +75,25 @@ class Ai1ec_Html_Setting_Select extends Ai1ec_Html_Element_Settings {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Toggle `selected` attribute according to current selection.
+	 *
+	 * @param array $option Option being checked.
+	 *
+	 * @return array Optionally modified option entry.
+	 */
+	protected function _set_selected_value( array $option ) {
+		if ( $option['value'] === $this->_args['value'] ) {
+			$option['args'] = array(
+				'selected' => 'selected',
+			);
+		}
+		return $option;
+	}
+
+	/**
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * Gets the options for the "Starting day of week" select.
 	 *
 	 * @return array

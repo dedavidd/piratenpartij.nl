@@ -151,12 +151,25 @@ abstract class Ai1ec_Base_Extension_Controller {
 		}
 		$plugin        = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 		$referer       = 'deactivate-plugin_' . $plugin;
+<<<<<<< HEAD
 		$wp_list_table = _get_list_table( 'WP_Plugins_List_Table' );
 		$action        = $wp_list_table->current_action();
 		if ( 'deactivate-selected' === $action ) {
 			$referer = 'bulk-plugins';
 		}
 		check_admin_referer( $referer );
+=======
+		// if we are disabling the plugin in the exception handler, this can't be done.
+		// but i want to disable options
+		if ( function_exists( '_get_list_table' ) ) {
+			$wp_list_table = _get_list_table( 'WP_Plugins_List_Table' );
+			$action        = $wp_list_table->current_action();
+			if ( 'deactivate-selected' === $action ) {
+				$referer = 'bulk-plugins';
+			}
+			check_admin_referer( $referer );
+		}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		$settings = $this->_registry->get( 'model.settings' );
 		foreach ( $this->_settings as $name => $params ) {
 			$settings->hide_option( $name );

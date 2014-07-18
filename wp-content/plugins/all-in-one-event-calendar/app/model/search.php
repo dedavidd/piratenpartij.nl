@@ -121,6 +121,10 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 				`e`.`contact_name`,
 				`e`.`contact_phone`,
 				`e`.`contact_email`,
+<<<<<<< HEAD
+=======
+				`e`.`contact_url`,
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 				`e`.`cost`,
 				`e`.`ticket_url`,
 				`e`.`ical_feed_url`,
@@ -211,8 +215,13 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 	) {
 		$localization_helper = $this->_registry->get( 'p28n.wpml' );
 		$settings = $this->_registry->get( 'model.settings' );
+<<<<<<< HEAD
 	
 	
+=======
+
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		// Even if there ARE more than 5 times the limit results - we shall not
 		// try to fetch and display these, as it would crash system
 		$upper_boundary = $limit;
@@ -222,13 +231,21 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 		) {
 			$upper_boundary *= 5;
 		}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		// Convert timestamp to GMT time
 		$time = $this->_registry->get( 'date.time' )->format_to_gmt();
 		// Get post status Where snippet and associated SQL arguments
 		$where_parameters  = $this->_get_post_status_sql();
 		$post_status_where = $where_parameters['post_status_where'];
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		// Get the Join (filter_join) and Where (filter_where) statements based
 		// on $filter elements specified
 		$filter = $this->_get_filter_sql( $filter );
@@ -236,12 +253,17 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 		// Query arguments
 		$args = array( $time );
 		$args = array_merge( $args, $where_parameters['args'] );
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		if( $page_offset >= 0 ) {
 			$first_record = $page_offset * $limit;
 		} else {
 			$first_record = ( -$page_offset - 1 ) * $limit;
 		}
+<<<<<<< HEAD
 	
 	
 		$wpml_join_particle  = $localization_helper
@@ -250,6 +272,16 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 		$wpml_where_particle = $localization_helper
 			->get_wpml_table_where();
 	
+=======
+
+
+		$wpml_join_particle  = $localization_helper
+			->get_wpml_table_join( 'p.ID' );
+
+		$wpml_where_particle = $localization_helper
+			->get_wpml_table_where();
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		$filter_date_clause = ( $page_offset >= 0 )
 			? 'i.end >= %d '
 			: 'i.start < %d ';
@@ -298,21 +330,35 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 		);
 
 		$events = $this->_dbi->get_results( $query, ARRAY_A );
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		// Limit the number of records to convert to data-object
 		$events = $this->_limit_result_set(
 			$events,
 			$limit,
 			( false !== $last_day )
 		);
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		// Reorder records if in negative page offset
 		if( $page_offset < 0 ) {
 			$events = array_reverse( $events );
 		}
+<<<<<<< HEAD
 	
 		$date_first = $date_last = NULL;
 	
+=======
+
+		$date_first = $date_last = NULL;
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		foreach ( $events as &$event ) {
 			$event['allday'] = $this->_is_all_day( $event );
 			$event           = $this->_registry->get( 'model.event', $event );
@@ -387,6 +433,7 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Get event by UID. Uid must be unique.
 	 * 
 	 * @param string $uid
@@ -399,19 +446,57 @@ class Ai1ec_Event_Search extends Ai1ec_Base {
 						ical_uid = %s AND
 						ical_feed_url = %s';
 		return $dbi->get_var( $dbi->prepare( $query, array( $uid, $url ) ) );
+=======
+	 * Get event by UID. UID must be unique.
+	 *
+	 * NOTICE: deletes events with that UID if they have different URLs.
+	 *
+	 * @param string $uid UID from feed.
+	 * @param string $uid Feed URL.
+	 *
+	 * @return int|null Matching Event ID or NULL if none found.
+	 */
+	public function get_matching_event_by_uid_and_url( $uid, $url ) {
+		if ( ! isset( $uid{1} ) ) {
+			return null;
+		}
+		$dbi        = $this->_registry->get( 'dbi.dbi' );
+		$table_name = $dbi->get_table_name( 'ai1ec_events' );
+		$argv       = array( $uid, $url );
+		// fix issue where invalid feed URLs were assigned
+		$delete     = 'SELECT `post_id` FROM `'. $table_name .
+			'` WHERE `ical_uid` = %s AND `ical_feed_url` != %s';
+		$post_ids   = $dbi->get_col( $dbi->prepare( $delete, $argv ) );
+		foreach ( $post_ids as $pid ) {
+			wp_delete_post( $pid, true );
+		}
+		// retrieve actual feed ID if any
+		$select = 'SELECT `post_id` FROM `' . $table_name .
+			'` WHERE `ical_uid` = %s';
+		return $dbi->get_var( $dbi->prepare( $select, $argv ) );
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	}
 
 	/**
 	 * Get event ids for the passed feed url
+<<<<<<< HEAD
 	 * 
+=======
+	 *
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * @param string $feed_url
 	 */
 	public function get_event_ids_for_feed( $feed_url ) {
 		$dbi        = $this->_registry->get( 'dbi.dbi' );
 		$table_name = $dbi->get_table_name( 'ai1ec_events' );
+<<<<<<< HEAD
 		$query      = 'SELECT `post_id` FROM ' . $table_name . '
 						WHERE
 						ical_feed_url = %s';
+=======
+		$query      = 'SELECT `post_id` FROM ' . $table_name .
+						' WHERE ical_feed_url = %s';
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		return $dbi->get_col( $dbi->prepare( $query, array( $feed_url ) ) );
 	}
 

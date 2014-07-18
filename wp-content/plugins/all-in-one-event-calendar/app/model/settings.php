@@ -370,6 +370,23 @@ class Ai1ec_Settings extends Ai1ec_App {
 					),
 				),
 			),
+<<<<<<< HEAD
+=======
+			'timezone_string' => array(
+				'type' => 'wp_option',
+				'renderer' => array(
+					'class'     => 'select',
+					'tab'       => 'viewing-events',
+					'item'      => 'viewing-events',
+					'label'     => Ai1ec_I18n::__( 'Timezone' ),
+					'options'   => 'Ai1ec_Date_Timezone:get_timezones',
+					'condition' => 'Ai1ec_Date_Timezone:is_timezone_not_set',
+				),
+				'default'  => $this->_registry->get( 'model.option' )->get(
+					'timezone_string'
+				),
+			),
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 			'default_tags_categories' => array(
 				'type' => 'array',
 				'renderer' => array(

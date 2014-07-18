@@ -40,6 +40,7 @@ class Ai1ec_Command_Save_Settings extends Ai1ec_Command_Save_Abstract {
 				} else {
 
 					switch ( $data['type'] ) {
+<<<<<<< HEAD
 						case 'bool';
 							$value  = true;
 							break;
@@ -57,6 +58,29 @@ class Ai1ec_Command_Save_Settings extends Ai1ec_Command_Save_Abstract {
 							$method = '_handle_saving_' . $name;
 							$value  = $this->$method( $_POST[$name] );
 							break;
+=======
+						case 'bool':
+							$value  = true;
+							break;
+						case 'int':
+							$value  = (int)$_POST[$name];
+							break;
+						case 'string':
+							$value  = (string)$_POST[$name];
+							break;
+						case 'array':
+							$method = '_handle_saving_' . $name;
+							$value  = $this->$method();
+							break;
+						case 'mixed':
+							$method = '_handle_saving_' . $name;
+							$value  = $this->$method( $_POST[$name] );
+							break;
+						case 'wp_option': // set the corresponding WP option
+							$this->_registry->get( 'model.option' )
+								->set( $name, $_POST[$name], true );
+							$value = null;
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 					}
 				}
 			} else {

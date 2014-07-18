@@ -65,8 +65,11 @@ class Ai1ec_Less_Lessphp extends Ai1ec_Base {
 			'style.less',
 			'event.less',
 			'calendar.less',
+<<<<<<< HEAD
 			'override.less',
 			'../style.less',
+=======
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		);
 	}
 
@@ -111,6 +114,10 @@ class Ai1ec_Less_Lessphp extends Ai1ec_Base {
 
 		// Allow extensions to add their own LESS files.
 		$this->files = apply_filters( 'ai1ec_less_files', $this->files );
+<<<<<<< HEAD
+=======
+		$this->files[] = 'override.less';
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 
 		// Find out the active theme URL.
 		$option      = $this->_registry->get( 'model.option' );
@@ -135,6 +142,7 @@ class Ai1ec_Less_Lessphp extends Ai1ec_Base {
 					continue;
 				}
 			}
+<<<<<<< HEAD
 			// If the file is a CSS file, no need to parse it, just serve it as usual.
 			$ext = pathinfo( $file_to_parse->get_name(), PATHINFO_EXTENSION );
 			if ( 'css' === $ext ) {
@@ -142,6 +150,8 @@ class Ai1ec_Less_Lessphp extends Ai1ec_Base {
 				continue;
 			}
 
+=======
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 			// We prepend the unparsed variables.less file we got earlier.
 			// We do this as we do not import that anymore in the less files.
 			$this->unparsed_variable_file .= $file_to_parse->get_content();
@@ -156,12 +166,21 @@ class Ai1ec_Less_Lessphp extends Ai1ec_Base {
 			}
 		}
 		$variables['fontdir'] = '~"' . $theme['theme_url'] . '/font"';
+<<<<<<< HEAD
 		$variables['fontdir_default'] = '~"' . $this->default_theme_url . '/font"';
 		$variables['imgdir'] = '~"' . $theme['theme_url'] . '/img"';
 		$variables['imgdir_default'] = '~"' . $this->default_theme_url . '/img"';
 
 		try {
 			$this->parsed_css .= $this->lessc->parse(
+=======
+		$variables['fontdir_default'] = '~"' . $this->default_theme_url . 'font"';
+		$variables['imgdir'] = '~"' . $theme['theme_url'] . '/img"';
+		$variables['imgdir_default'] = '~"' . $this->default_theme_url . 'img"';
+
+		try {
+			$this->parsed_css = $this->lessc->parse(
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 				$this->unparsed_variable_file,
 				$variables
 			);

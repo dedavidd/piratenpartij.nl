@@ -450,6 +450,57 @@ class Ai1ec_Date_Timezone extends Ai1ec_Base {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Check if timezone is set in wp_option
+	 * 
+	 */
+	public function is_timezone_not_set() {
+		$timezone = $this->_registry->get( 'model.option' )
+			->get( 'timezone_string' );
+		return empty( $timezone );
+	}
+
+	/**
+	 * Render options for select in settings
+	 * 
+	 * @return array
+	 */
+	public function get_timezones() {
+		$zones = DateTimeZone::listIdentifiers();
+		if (
+			empty( $zones )
+		) {
+			return array();
+		}
+		$manual =  __( 'Manual Offset', AI1EC_PLUGIN_NAME );
+		$options = array();
+		$options[$manual][] = array(
+			'text'  => __( 'Choose your timezone', AI1EC_PLUGIN_NAME ),
+			'value' => '',
+			'args'  => array(
+				'selected' => 'selected'
+			)
+		);
+		foreach ( $zones as $zone ) {
+			$exploded_zone = explode( '/', $zone );
+			if ( ! isset( $exploded_zone[1] ) ) {
+				$exploded_zone[1] = $exploded_zone[0];
+				$exploded_zone[0] = $manual;
+			}
+			$optgroup = $exploded_zone[0];
+			unset( $exploded_zone[0] );
+			$options[$optgroup][] = array(
+				'text'  => implode( '/', $exploded_zone ),
+				'value' => $zone,
+			);
+		}
+		
+		return $options;
+	}
+
+	/**
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * Guess valid timezone identifier from arbitrary input.
 	 *
 	 * @param string $meta_name Arbitrary input.

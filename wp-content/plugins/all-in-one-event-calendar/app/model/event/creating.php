@@ -138,6 +138,7 @@ class Ai1ec_Event_Creating extends Ai1ec_Base {
 			->get( 'date.time', $start_time, $timezone_name );
 		$end_time_entry   = $this->_registry
 			->get( 'date.time', $end_time,   $timezone_name );
+<<<<<<< HEAD
 		// If the events is marked as instant, make it last 30 minutes
 		if ( $instant_event ) {
 			$end_time_entry   = $this->_registry
@@ -148,6 +149,9 @@ class Ai1ec_Event_Creating extends Ai1ec_Base {
 				$end_time_entry->format( 's' )
 			);
 		}
+=======
+
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		$timezone_name = $start_time_entry->get_timezone();
 		if ( null === $timezone_name ) {
 			$timezone_name = $start_time_entry->get_default_format_timezone();
@@ -155,10 +159,20 @@ class Ai1ec_Event_Creating extends Ai1ec_Base {
 
 		$event->set( 'post_id',          $post_id );
 		$event->set( 'start',            $start_time_entry );
+<<<<<<< HEAD
 		$event->set( 'end',              $end_time_entry );
 		$event->set( 'timezone_name',    $timezone_name );
 		$event->set( 'allday',           $all_day );
 		$event->set( 'instant_event',    $instant_event );
+=======
+		if ( $instant_event ) {
+			$event->set_no_end_time();
+		} else {
+			$event->set( 'end',          $end_time_entry );
+		}
+		$event->set( 'timezone_name',    $timezone_name );
+		$event->set( 'allday',           $all_day );
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 		$event->set( 'venue',            $venue );
 		$event->set( 'address',          $address );
 		$event->set( 'city',             $city );

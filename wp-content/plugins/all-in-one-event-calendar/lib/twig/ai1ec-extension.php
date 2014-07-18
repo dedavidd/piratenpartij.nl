@@ -17,7 +17,11 @@ class Ai1ec_Twig_Ai1ec_Extension extends Twig_Extension {
 	protected $_registry;
 
 	/**
+<<<<<<< HEAD
 	 * Injkects the registry object.
+=======
+	 * Inject the registry object.
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 *
 	 * @param Ai1ec_Registry_Object $registry
 	 */
@@ -36,6 +40,14 @@ class Ai1ec_Twig_Ai1ec_Extension extends Twig_Extension {
 		);
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * Twig callback - return a list of filters registered by this extension.
+	 *
+	 * @return array
+	 */
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	public function getFilters() {
 		return array(
 			new Twig_SimpleFilter( 'truncate',          array( $this, 'truncate' ) ),
@@ -53,6 +65,20 @@ class Ai1ec_Twig_Ai1ec_Extension extends Twig_Extension {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Twig callback - return a list of tests registered by this extension.
+	 *
+	 * @return array
+	 */
+	public function getTests() {
+		return array(
+			new Twig_SimpleTest( 'string', array( $this, 'is_string' ) ),
+		);
+	}
+
+	/**
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * Get HTML markup for the post's "avatar" image according conditional
 	 * fallback model.
 	 *
@@ -84,6 +110,20 @@ class Ai1ec_Twig_Ai1ec_Extension extends Twig_Extension {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Check if provided value is a string.
+	 *
+	 * @param mixed $var Suspected string
+	 *
+	 * @return boolean True if it is a string, false otherwise.
+	 */
+	public function is_string( $var ) {
+		return is_string( $var );
+	}
+
+	/**
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
 	 * Convert an hour to an Ai1ec_Date_Time object.
 	 *
 	 * @param int $hour
@@ -296,4 +336,8 @@ class Ai1ec_Twig_Ai1ec_Extension extends Twig_Extension {
 		return 'ai1ec';
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9efb4dcb7bab652eca0d348558c1d99ac49cc27f
